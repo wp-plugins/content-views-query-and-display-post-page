@@ -41,7 +41,7 @@ Query posts, pages and display result in different kind of layouts (grid, scroll
 * Enable/Disable pagination
 * Open an item in new tab, current tab
 
-Also, you can export 'View' to query posts, pages in your other WordPress sites (Please check **Frequently Asked Questions** tab to know what is 'View')
+Also, you can export 'View' to query posts, pages in your other WordPress sites (Please check **FAQ** tab to know what is 'View')
 
 **Want more features, such as**
 
@@ -50,11 +50,10 @@ Also, you can export 'View' to query posts, pages in your other WordPress sites 
 * Drag & Drop to change display order of title, content, meta fields
 * Customize Font settings
 * More pagination options
-* More "Open item in" options
+* And much more...
 
 please check [Content Views PRO](http://wordpressquery.com "Get Content Views Pro plugin") version.
 
-Have questions? Please check **FAQ** tab
 
 == Installation ==
 
