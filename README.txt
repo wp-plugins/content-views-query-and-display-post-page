@@ -12,10 +12,10 @@ Query posts, pages and display result in different kind of layouts (grid, scroll
 
 == Description ==
 
-[Content Views](http://wordpressquery.com "Visit Content Views website") is a WordPress plugin helps you to display posts, pages in different kind of **responsive** layouts (grid, scrollable list, collapsible list), in very 3 simple steps:
+[Content Views](http://wordpressquery.com "Visit Content Views website") is a WordPress plugin helps you to query and display posts, pages in different kind of **responsive** layouts (grid, scrollable list, collapsible list), in very 3 simple steps:
 
-* Step 1 : Select criteria to querying posts, pages
-* Step 2 : Select layout which you want to displaying your entries
+* Step 1 : Select criteria to query posts, pages
+* Step 2 : Select layout which you want to display your entries
 * Step 3 : Paste this shortcode **[pt_view id="UNIQUE_ID"]** to a post, page or a widget text, it will show up your desired content. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`**. (Check FAQ to know how to get UNIQUE_ID of View)
 
 = And here is your power with this plugin: =
