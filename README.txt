@@ -110,12 +110,12 @@ Unlimited
 
 == Screenshots ==
 
-1. Plugin screenshot overview
-2. Display Setting options
-3. Grid layout (Show Title, Thumbnail)
-4. Grid layout (Show Title, Thumbnail, Content, Meta fields), with Pagination
-5. Collapsible List
-6. Scrollable List
+1. Plugin screenshot overview. Filter settings to query posts
+2. Display Setting options (to display posts)
+3. Query and display in Grid layout (Show Title, Thumbnail)
+4. Query and display in Grid layout (Show Title, Thumbnail, Content, Meta fields), with Pagination
+5. Query and display in Collapsible List
+6. Query and display in Scrollable List
 
 
 
