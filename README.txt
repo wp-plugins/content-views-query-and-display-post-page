@@ -22,13 +22,13 @@ Query posts, pages and display result in different kind of layouts (grid, scroll
 
 **in Step 1, you can:**
 
-* Query & display a specific post, page
-* Query & display list of posts, pages
-* Query posts, pages written by, not written by any authors
-* Query posts, pages in, not in any tags, categories
-* Query posts, pages in any statuses (publish, draft, private...)
+* query & display a specific post, page
+* query & display list of posts, pages
+* query posts, pages written by, not written by any authors
+* query posts, pages in, not in any tags, categories
+* query posts, pages in any statuses (publish, draft, private...)
 * Sort posts, pages by Id, Title, Created date, Modified date in ascending, descending order
-* Query posts, pages which contain a specific keyword
+* query posts, pages which contain a specific keyword
 
 **in Step 2, you can:**
 
