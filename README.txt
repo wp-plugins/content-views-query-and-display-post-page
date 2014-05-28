@@ -43,7 +43,8 @@ Query posts, pages and display result in different kind of layouts (grid, scroll
 
 Also, you can export 'View' to query posts, pages in your other WordPress sites (Please check **Frequently Asked Questions** tab to know what is 'View')
 
-**Want more features, such as:**
+**Want more features, such as**
+
 * Advanced output & settings for Grid, Collapsible List, Scrollable List
 * Pinterest, Timeline layout
 * Drag & Drop to change display order of title, content, meta fields
@@ -53,7 +54,7 @@ Also, you can export 'View' to query posts, pages in your other WordPress sites 
 
 please check [Content Views PRO](http://wordpressquery.com "Get Content Views Pro plugin") version.
 
-Have questions? Please check **Frequently Asked Questions** tab
+Have questions? Please check **FAQ** tab
 
 == Installation ==
 
