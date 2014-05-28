@@ -12,11 +12,11 @@ Query posts, pages and display result in different kind of layouts (grid, scroll
 
 == Description ==
 
-[Content Views](http://wordpressquery.com "Visit Content Views website") is a WordPress plugin that enable you to display posts, pages in different kind of **responsive** layouts (grid, scrollable list, collapsible list), in very 3 simple steps:
+[Content Views](http://wordpressquery.com "Visit Content Views website") is a WordPress plugin helps you to display posts, pages in different kind of **responsive** layouts (grid, scrollable list, collapsible list), in very 3 simple steps:
 
 * Step 1 : Select criteria to querying posts, pages
 * Step 2 : Select layout which you want to displaying your entries
-* Step 3 : Click 'Save' button, you will be taken to a page which its URL contains 'admin.php?page=content-views-add&id=UNIQUE_ID' (*UNIQUE_ID* is a random generated string). Then paste this shortcode **[pt_view id="UNIQUE_ID"]** to a post, page or a widget text, it will show up your desired content. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** any where you want
+* Step 3 : Paste this shortcode **[pt_view id="UNIQUE_ID"]** to a post, page or a widget text, it will show up your desired content. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`**. (Check FAQ to know how to get UNIQUE_ID of View)
 
 = And here is your power with this plugin: =
 
@@ -89,20 +89,23 @@ In left menu of your Admin dashboard, click Content View Settings > Add View
 
 = What is 'View'? =
 
-'View' is a custom post type which "Content View" uses to store all settings of a 'view' (see next question to know what is 'view')
-
-= What is 'view'? =
-
-'view' is a output container which will display your posts, pages... in a specific layout
-
-= How many Views I can create? =
-
-Unlimited
+'View' is a custom post type which "Content View" uses to store all settings to query & display your posts.
 
 = How can I see all created Views? =
 
 In left menu of your Admin dashboard, click Content View Settings > All Views
 
+= How can I edit a View? =
+
+Firstly, you should go to "All Views" page (please check above question). Then click on Title of View you want to edit. You will be forwarded to editing page of View.
+
+= How to get UNIQUE_ID of View? =
+
+You can get View ID in the editing page of View (please check above question), it looks like: 'admin.php?page=content-views-add&id=UNIQUE_ID'
+
+= How many Views I can create? =
+
+Unlimited
 
 
 == Screenshots ==
