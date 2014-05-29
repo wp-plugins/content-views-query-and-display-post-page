@@ -8,7 +8,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Content Views
- * Plugin URI:        http://wordpress.org/plugins/content-views-query-and-display-post-page/developers/
+ * Plugin URI:        http://wordpress.org/plugins/content-views-query-and-display-post-page/
  * Description:       Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid, scrollable list, collapsible list</strong>) easier than ever, without coding!
  * Version:           1.0.0
  * Author:            Palace Of Themes
