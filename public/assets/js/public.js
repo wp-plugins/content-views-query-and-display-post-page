@@ -73,6 +73,11 @@
 			var spinner = this_.next('.' + _prefix + 'spinner');
 			var pages_holder = this_.prev('.' + _prefix + 'view');
 
+			// For Timeline
+			if ( pages_holder.hasClass(_prefix + 'timeline') ) {
+				pages_holder = pages_holder.children('.tl-items');
+			}
+
 			$self._get_page(view_id, selected_page, spinner, pages_holder, callback);
 		},
 

@@ -508,7 +508,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			 * Output Pagination
 			 */
 			$current_page = ( isset( $pargs['page'] ) && $pargs['page'] > 1 ) ? $pargs['page'] : 1;
-			$html         = PT_CV_Html::content_items_wrap( $content_items, $dargs, $current_page );
+			$html         = PT_CV_Html::content_items_wrap( $content_items, $dargs, $current_page, $args['posts_per_page'] );
 
 			// Append Pagination HTML if this is first page, or not Ajax calling
 			if ( $args['posts_per_page'] > 0 && $current_page === 1 ) {

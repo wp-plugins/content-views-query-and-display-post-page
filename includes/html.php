@@ -243,11 +243,12 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
 		 * @param array $dargs         The array of Display settings
-		 * @param array $current_page  The current page
+		 * @param int $current_page  The current page
+		 * @param int $post_per_page  The number of posts per page
 		 *
 		 * @return string Full HTML output for Content View
 		 */
-		static function content_items_wrap( $content_items, $dargs, $current_page ) {
+		static function content_items_wrap( $content_items, $dargs, $current_page, $post_per_page ) {
 			if ( empty( $content_items ) ) {
 				return '';
 			}
@@ -286,7 +287,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						$content[] = PT_CV_Html::content_item_wrap( $content_item );
 					}
 
-					$content = apply_filters( PT_CV_PREFIX_ . 'content_items_wrap', $content, $content_items, $dargs, $current_page );
+					$content = apply_filters( PT_CV_PREFIX_ . 'content_items_wrap', $content, $content_items, $dargs, $current_page, $post_per_page );
 
 					break;
 			}
