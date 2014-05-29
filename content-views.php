@@ -8,8 +8,8 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Content Views
- * Plugin URI:        @TODO
- * Description:       Display <strong>posts, pages</strong> in nice layouts (<strong>grid, scrollable list, collapsible list</strong>) easier than ever, without coding.
+ * Plugin URI:        http://wordpress.org/plugins/content-views-query-and-display-post-page/developers/
+ * Description:       Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid, scrollable list, collapsible list</strong>) easier than ever, without coding!
  * Version:           1.0.0
  * Author:            Palace Of Themes
  * Author URI:        http://profiles.wordpress.org/pt-guy

@@ -1,4 +1,4 @@
-=== Content Views - Admin UI to query and displaying post, page ===
+=== Content Views - Query and display posts, pages without coding ===
 Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, query, search, display, show, querying, displaying, grid, scrollable, collapsible, list, slide, layout, ui
@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Query posts, pages and display result in different kind of layouts (grid, scrollable list, collapsible list) easier than ever, without coding!
+Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid, scrollable list, collapsible list</strong>) easier than ever, without coding!
 
 == Description ==
 
@@ -32,7 +32,7 @@ Query posts, pages and display result in different kind of layouts (grid, scroll
 
 **in Step 2, you can:**
 
-* Select a specific layout to show posts, page: Grid, Collapsible List, Scrollable List. More awesome layouts are available in PRO version!
+* Select a specific layout to show posts, page: Grid, Collapsible List, Scrollable List. More awesome layouts are available in [Content Views PRO](http://wordpressquery.com "Get Content Views Pro plugin") version!
 * Choose a layout format of each item (item is a content block of a post, page when it is shown): 1 column, 2 columns
 * Select content fields to show (thumbnail, title, content, meta fields)
 * Select a specific dimensions of thumbnail
@@ -110,8 +110,8 @@ Unlimited
 
 == Screenshots ==
 
-1. Plugin screenshot overview. Filter settings to query posts
-2. Display Setting options (to display posts)
+1. Plugin overview. Filter settings form to query posts
+2. Display Setting form to display posts at frontend
 3. Query and display in Grid layout (Show Title, Thumbnail)
 4. Query and display in Grid layout (Show Title, Thumbnail, Content, Meta fields), with Pagination
 5. Query and display in Collapsible List
