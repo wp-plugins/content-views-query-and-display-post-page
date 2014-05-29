@@ -369,7 +369,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 					$this_size[] = get_option( $size_name . '_size_h' );
 
 					// Add official sizes to result
-					$result[$size_name] = ucfirst( $size_name ) . ' (' . implode( ' x ', $this_size ) . ')';
+					$result[$size_name] = ucfirst( $size_name ) . ' (' . implode( ' &times; ', $this_size ) . ')';
 				} else {
 					if ( isset( $_wp_additional_image_sizes ) && isset( $_wp_additional_image_sizes[$size_name] ) ) {
 
@@ -385,7 +385,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 						$this_size = array( 0, 0 );
 					}
 
-					$sizes_to_sort[$size_name] = ucfirst( preg_replace( '/[\-_]/', ' ', $size_name ) ) . ' (' . implode( ' x ', $this_size ) . ')';
+					$sizes_to_sort[$size_name] = ucfirst( preg_replace( '/[\-_]/', ' ', $size_name ) ) . ' (' . implode( ' &times; ', $this_size ) . ')';
 				}
 			}
 			// Add full sizes

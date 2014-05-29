@@ -32,7 +32,7 @@ Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid
 
 **in Step 2, you can:**
 
-* Select a layout to show queried posts, pages: Grid, Collapsible List, Scrollable List. More awesome layouts are available in [Content Views PRO](http://wordpressquery.com "Get Content Views Pro plugin") version!
+* Select a layout to show queried posts, pages: Grid, Collapsible List, Scrollable List. More awesome layouts are available in **[Content Views PRO](http://wordpressquery.com "Content Views Pro plugin")**
 * Choose a layout format of each item (item is the output of a post, page at frontend): 1 column, 2 columns
 * Select fields to show (thumbnail, title, content, meta fields)
 * Select size of thumbnail
@@ -43,7 +43,8 @@ Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid
 
 Also, you can import/export 'View' to use in other WordPress sites (Please check **FAQ** tab to know what is 'View')
 
-**Want more features, such as**
+
+= More amazing features: =
 
 * Be able to query custom post types (Woocommerce products, FAQ...)
 * Advanced output & settings of Grid, Collapsible List, Scrollable List layout
@@ -53,7 +54,7 @@ Also, you can import/export 'View' to use in other WordPress sites (Please check
 * More Pagination options
 * And much more...
 
-please check [Content Views PRO](http://wordpressquery.com "Content Views Pro plugin").
+are available in **[Content Views PRO](http://wordpressquery.com "Content Views Pro plugin")**
 
 
 == Installation ==

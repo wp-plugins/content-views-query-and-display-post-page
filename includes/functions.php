@@ -162,7 +162,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		static function field_thumbnail_dimensions( $fargs ) {
 			$size = $fargs['size'];
 
-			return (array) explode( 'x', str_replace( ' ', '', $size ) );
+			return (array) explode( '&times;', str_replace( ' ', '', $size ) );
 		}
 
 		/**
