@@ -216,7 +216,7 @@ class PT_Content_Views {
 	 * @since    1.0.0
 	 */
 	private static function single_deactivate() {
-		// @TODO: Define deactivation functionality here
+		delete_option( PT_CV_OPTION_VERSION );
 	}
 
 	/**
