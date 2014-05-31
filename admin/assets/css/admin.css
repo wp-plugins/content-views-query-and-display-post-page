@@ -60,7 +60,7 @@ html {
 	display: none;
 }
 
-.pt-wrap * {
+#pt-cv-form-view *, .preview-wrapper label {
 	font-size: 14px;
 }
 
@@ -177,4 +177,9 @@ html {
 /* Sortable */
 .pt-wrap .ui-sortable {
 	background: #FFF9D7;
+}
+
+/* Custom css for Settings Group/Option */
+#pt-cv-group-excerpt-settings {
+	margin-bottom: 20px;
 }

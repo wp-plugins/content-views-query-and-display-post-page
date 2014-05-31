@@ -42,7 +42,7 @@
 /* Title */
 .pt-cv-title {
 	margin-top: 0;
-	font-size:  1.5em;
+	font-size:  20px;
 }
 
 .pt-cv-title a {
@@ -69,8 +69,8 @@
 }
 
 /* Content */
-.pt-cv-content {
-	font-size:   1em;
+.pt-cv-content, .pt-cv-content * {
+	font-size:   14px;
 	zoom:        1;
 	line-height: 1.6em;
 }
@@ -113,6 +113,9 @@
 .pt-cv-spinner.active {
 	opacity: 1;
 	filter:  alpha(opacity=100);
+}
+.pt-cv-clear-pagination {
+	margin-bottom: 50px;
 }
 
 /* View type : Collapsible List */

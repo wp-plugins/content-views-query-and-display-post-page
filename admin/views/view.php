@@ -42,25 +42,27 @@ PT_CV_Functions::view_submit();
 
 <h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
-<?php
-// Preview
-$options = array(
-	array(
-		'label'  => array(
-			'text' => __( 'Preview', PT_CV_DOMAIN ),
-		),
-		'params' => array(
-			array(
-				'type'    => 'html',
-				'name'    => 'preview',
-				'content' => PT_CV_Html::html_preview_box(),
-				'desc'    => __( 'Click "Show Preview" or "Update Preview" button to show, "Hide Preview" button to hide the output', PT_CV_DOMAIN ),
+<div class="preview-wrapper">
+	<?php
+	// Preview
+	$options = array(
+		array(
+			'label'  => array(
+				'text' => __( 'Preview', PT_CV_DOMAIN ),
+			),
+			'params' => array(
+				array(
+					'type'    => 'html',
+					'name'    => 'preview',
+					'content' => PT_CV_Html::html_preview_box(),
+					'desc'    => __( 'Click "Show Preview" or "Update Preview" button to show, "Hide Preview" button to hide the output', PT_CV_DOMAIN ),
+				),
 			),
 		),
-	),
-);
-echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
-?>
+	);
+	echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
+	?>
+</div>
 
 <!-- Show Preview -->
 <a class="btn btn-success" id="<?php echo esc_attr( PT_CV_PREFIX ); ?>show-preview"><?php _e( 'Show Preview', PT_CV_DOMAIN ); ?></a>

@@ -123,6 +123,10 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.0.1 =
+* Fix some bugs
+* Adjust styles
+
 = 1.0.0 =
 * Initial release
 
@@ -130,4 +134,4 @@ You can create Unlimited Views, in Unlimited websites
 
 == Upgrade Notice ==
 
-Initial release
+Fix some bugs. Adjust styles.

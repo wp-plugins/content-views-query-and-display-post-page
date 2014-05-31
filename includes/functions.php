@@ -709,8 +709,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			/**
 			 * Fields settings
 			 */
-			$cfields = PT_CV_Functions::settings_keys( 'show-field-', PT_CV_Settings::field_display() );
-
+			$cfields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'show-field-', $settings_ );
+			$cfields = (array) array_keys( (array) $cfields_settings );
 			foreach ( $cfields as $field ) {
 				// If show this field
 				if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'show-field-' . $field, $settings_ ) ) {
@@ -739,7 +739,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 							$field_setting = array();
 
 							$prefix = PT_CV_PREFIX . 'meta-fields-';
-							$fields = PT_CV_Functions::settings_keys( 'meta-fields-', PT_CV_Settings::field_meta_fields( 'meta-fields-' ) );
+							$meta_fields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'meta-fields-', $settings_ );
+							$fields = (array) array_keys( (array) $meta_fields_settings );
 
 							PT_CV_Functions::settings_values( $fields, $field_setting, $settings_, $prefix );
 
