@@ -404,7 +404,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					switch ( $fargs['content']['show'] ) {
 						case 'excerpt':
 							$length   = (int) $fargs['content']['length'];
-							$readmore = '<br />' . PT_CV_Html::link_button( get_permalink(), 'success', __( 'Read more' ), PT_CV_PREFIX . 'readmore', 'btn-sm' );
+							$readmore = '<br />' . PT_CV_Html::link_button( get_permalink(), 'success', __( 'Read More' ), PT_CV_PREFIX . 'readmore', 'btn-sm' );
 							$content  = wp_trim_words( get_the_content(), $length, ' ...' . apply_filters( PT_CV_PREFIX_ . 'field_content_readmore', $readmore, $fargs['content'], get_permalink() ) );
 							break;
 
