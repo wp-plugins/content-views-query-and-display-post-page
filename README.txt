@@ -12,7 +12,7 @@ Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid
 
 == Description ==
 
-[Content Views](http://wordpressquery.com "Visit Content Views website") is a WordPress plugin helps you to query and display posts, pages in different kind of **responsive** layouts (grid, scrollable list, collapsible list), in very 3 simple steps:
+[Content Views](http://www.wordpressquery.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Visit Content Views website") is a WordPress plugin helps you to query and display posts, pages in different kind of **responsive** layouts (grid, scrollable list, collapsible list), in very 3 simple steps:
 
 * Step 1 : Select criteria to query posts, pages
 * Step 2 : Select layout which you want to display your queried entries
@@ -32,7 +32,7 @@ Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid
 
 **in Step 2, you can:**
 
-* Select a layout to show queried posts, pages: Grid, Collapsible List, Scrollable List. More awesome layouts are available in **[Content Views PRO](http://wordpressquery.com "Content Views Pro plugin")**
+* Select a layout to show queried posts, pages: Grid, Collapsible List, Scrollable List. More awesome layouts are available in **[Content Views PRO](http://www.wordpressquery.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
 * Choose a layout format of each item (item is the output of a post, page at frontend): 1 column, 2 columns
 * Select fields to show (thumbnail, title, content, meta fields)
 * Select size of thumbnail
@@ -54,7 +54,7 @@ Also, you can import/export 'View' to use in other WordPress sites (Please check
 * More Pagination options
 * And much more...
 
-are available in **[Content Views PRO](http://wordpressquery.com "Content Views Pro plugin")**
+are available in **[Content Views PRO](http://www.wordpressquery.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
 
 
 == Installation ==
@@ -103,7 +103,7 @@ Firstly, you should go to "All Views" page (please check above question). Then c
 
 = How to get UNIQUE_ID of View? =
 
-You can get View ID in URL of editing page of View (please check above question), it has this format: http://your_domain/wp-admin/admin.php?page=content-views-add&id=UNIQUE_ID
+You can get View ID in URL of editing page of View (please check above question). The url has following format: http://your_domain/wp-admin/admin.php?page=content-views-add&id=UNIQUE_ID
 
 = How many Views I can create? =
 
