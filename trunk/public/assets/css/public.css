@@ -1,0 +1,194 @@
+/* This stylesheet is used to style the public-facing components of the plugin. */
+
+.pt-cv-view {
+	position: relative;
+	margin-bottom: 50px;
+	clear: both;
+}
+
+/* Common */
+.pt-cv-page {
+	position: relative;
+}
+
+/* Link */
+.pt-cv-view a {
+	color:           #000;
+	text-decoration: none !important;
+}
+
+.pt-cv-view a:hover, .pt-cv-view .panel-heading:hover a {
+	color: #ff3c1f;
+}
+
+/* Read more */
+.pt-cv-readmore {
+	color:  #fff !important;
+	margin: 10px 0;
+}
+
+/* An Item */
+.pt-cv-content-item {
+	margin-bottom: 1.875em;
+	position:      relative;
+	overflow:      hidden;
+}
+
+/* For the output which shows only Title */
+.pt-cv-only-title {
+	margin-bottom: 0;
+}
+
+/* Title */
+.pt-cv-title {
+	margin-top: 0;
+	font-size:  20px;
+}
+
+.pt-cv-title a {
+	font-weight: 600;
+}
+
+/* Thumbnail */
+.pt-cv-thumbnail {
+	max-width:     100% !important;
+	margin-bottom: 15px;
+}
+
+.pt-cv-thumbnail.pull-left {
+	margin-right: 10px;
+}
+
+.pt-cv-thumbnail.pull-right {
+	margin-left: 10px;
+}
+
+.pt-cv-no-image {
+	min-width:  80px;
+	min-height: 80px;
+}
+
+/* Content */
+.pt-cv-content, .pt-cv-content * {
+	font-size:   14px;
+	zoom:        1;
+	line-height: 1.6em;
+}
+
+/* Meta fields */
+.pt-cv-meta-fields {
+	font-size:      13px;
+	margin-top: 15px;
+	padding-bottom: 15px;
+}
+
+.pt-cv-meta-fields * {
+	color:          rgba(0, 0, 0, .5);
+}
+
+.pt-cv-meta-fields a {
+	color: #41b7d8;
+}
+
+/* Pagination */
+.pt-cv-view + .pagination {
+	float: left;
+	margin: 0 auto !important;
+}
+.pt-cv-spinner {
+	display:            inline-block;
+	opacity:            0;
+	filter:             alpha(opacity=0);
+	color:              #0470ec;
+
+	margin-top:         12px;
+	margin-left:        10px;
+
+	-webkit-transition: opacity 0.25s, width 0.25s;
+	-moz-transition:    opacity 0.25s, width 0.25s;
+	-o-transition:      opacity 0.25s, width 0.25s;
+	transition:         opacity 0.25s, width 0.25s;
+}
+
+.pt-cv-spinner.active {
+	opacity: 1;
+	filter:  alpha(opacity=100);
+}
+.pt-cv-clear-pagination {
+	margin-bottom: 50px;
+}
+
+/* View type : Collapsible List */
+.pt-cv-collapsible .panel-heading {
+	padding: 0;
+}
+
+.pt-cv-collapsible .panel-heading a {
+	display: block;
+	padding: 10px 15px;
+}
+
+/* View type : Scrollable List */
+
+/* Caption */
+.pt-cv-view .carousel-caption {
+	text-align: left;
+	left:       0;
+	right:      15px;
+	bottom:     15px;
+}
+
+.pt-cv-view .carousel-caption * {
+	text-shadow: none;
+}
+
+/* Caption with image */
+.pt-cv-cap-w-img {
+	background:   rgba(0, 0, 0, 0.6);
+	text-shadow:  0px 1px 1px #000;
+	left:         15px !important;
+	padding-left: 10px;
+}
+
+.pt-cv-cap-w-img * {
+	color: #fff;
+}
+
+.pt-cv-cap-w-img .pt-cv-title a {
+	color: #fff !important;
+}
+
+/* Caption without image */
+.pt-cv-cap-wo-img {
+	position: relative;
+}
+
+.pt-cv-cap-wo-img * {
+	color: #000;
+}
+
+/* Control */
+.pt-cv-view .carousel-control {
+	background-image: none !important;
+	z-index:          1000;
+	height:           30px;
+	width:            40px;
+	bottom:           0;
+	top:              auto;
+}
+
+/* Indicator */
+.pt-cv-view .carousel-indicators {
+	bottom:        0;
+	margin-bottom: 4px;
+}
+
+.pt-cv-view .carousel-indicators li {
+	background: #cecece;
+	border:     1px solid #cecece;
+}
+
+.pt-cv-view .carousel-indicators li.active {
+	background: #428bca;
+	border:     1px solid #428bca;
+}
