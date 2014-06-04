@@ -170,7 +170,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 *
 		 * @param string      $field        The full name of setting to get value
 		 * @param array       $array_to_get Array to get values of wanted setting
-		 * @param type | null $assign       The value to assign if setting is not found
+		 * @param mixed|null  $assign       The value to assign if setting is not found
 		 */
 		static function setting_value( $field, $array_to_get, $assign = NULL ) {
 			return isset( $array_to_get[$field] ) ? $array_to_get[$field] : $assign;
@@ -806,20 +806,10 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 				// Set 'posts_per_page' parameter
 				$args['posts_per_page'] = $posts_per_page;
-
-				// Get offset
-				if ( isset( $pargs['page'] ) ) {
-					$offset = $posts_per_page * ( (int) $pargs['page'] - 1 );
-
-					// Reaching out of limit
-					if ( $offset > $limit ) {
-						return '';
-					}
-
-					// Set 'offset' parameter
-					$args['offset'] = $offset;
-				}
 			}
+
+			$args = apply_filters( PT_CV_PREFIX_ . 'settings_args_offset', $args, $pagination, $pargs, isset( $posts_per_page ) ? $posts_per_page : $limit, $settings_, $limit );
+
 		}
 
 		/**

@@ -1,10 +1,10 @@
-=== Content Views - Query and display posts, pages without coding ===
+=== Query and display posts without coding: Content Views ===
 Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
-Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, grid, scrollable, collapsible, list, slide, layout, ui
+Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,18 +12,17 @@ Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid
 
 == Description ==
 
-[Content Views](http://www.wordpressquery.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Visit Content Views website") is a WordPress plugin helps you to query and display posts, pages in different kind of **responsive** layouts (grid, scrollable list, collapsible list), in very 3 simple steps:
+[Content Views](http://www.wordpressquery.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Visit Content Views website") is a WordPress plugin helps you to query and display posts, pages in different kind of **responsive** layouts (grid, scrollable list, collapsible list), in very 3 simple steps:
 
 * Step 1 : Select criteria to query posts, pages
 * Step 2 : Select layout which you want to display your queried entries
 * Step 3 : Paste shortcode **[pt_view id="UNIQUE_ID"]** to editor of a post, page or a Text widget where you want to show your desired content. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in theme of your WordPress site. (Please check FAQ to know how to get UNIQUE_ID of View)
 
-= And here is your power with this plugin: =
+= Content Views features: =
 
 **in Step 1, you can:**
 
-* query & display a single post, page
-* query & display multiple posts, pages
+* query single/multiple post(s), page(s)
 * query posts, pages written by, not written by any authors
 * query posts, pages associate with, don't associate with tags, categories
 * query posts, pages in any status (publish, draft, private...)
@@ -32,12 +31,12 @@ Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid
 
 **in Step 2, you can:**
 
-* Select a layout to show queried posts, pages: Grid, Collapsible List, Scrollable List. More awesome layouts are available in **[Content Views PRO](http://www.wordpressquery.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
-* Choose a layout format of each item (item is the output of a post, page at frontend): 1 column, 2 columns
+* Select a layout to show queried content: Grid, Collapsible List, Scrollable List. More awesome layouts are available in **[Content Views PRO](http://www.wordpressquery.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
+* Choose a layout format of each item (item is the output of a post, page at front-end): 1 column, 2 columns
 * Select fields to show (thumbnail, title, content, meta fields)
 * Select size of thumbnail
-* Show full content, or an excerpt with specific length
-* Select meta fields to show (date, author, term [categories, tags], comment count)
+* Show full content, or an excerpt with specific amount of words
+* Select meta fields to show (date, author, terms [categories, tags], comment count)
 * Enable/Disable pagination
 * Open an item in new tab, current tab
 
@@ -47,8 +46,8 @@ Also, you can import/export 'View' to use in other WordPress sites (Please check
 = More amazing features: =
 
 * Be able to query custom post types (Woocommerce products, FAQ...)
-* Advanced output & settings of Grid, Collapsible List, Scrollable List layout
-* Additional layouts: Pinterest, Timeline
+* Awesome output & settings of Grid, Collapsible List, Scrollable List layout
+* More awesome layouts: Pinterest, Timeline
 * Drag & drop to change display order of fields (thumbnail, title, content, meta fields)
 * Customize Font settings
 * More Pagination options
@@ -103,7 +102,7 @@ Firstly, you should go to "All Views" page (please check above question). Then c
 
 = How to get UNIQUE_ID of View? =
 
-You can get View ID in URL of editing page of View (please check above question). The url has following format: http://your_domain/wp-admin/admin.php?page=content-views-add&id=UNIQUE_ID
+You can get View ID in URL of editing page of View (please check above question), it has this format: http://your_domain/wp-admin/admin.php?page=content-views-add&id=UNIQUE_ID
 
 = How many Views I can create? =
 
@@ -122,6 +121,10 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.0.2 =
+* Add custom filters
+* Fix some bugs
 
 = 1.0.1 =
 * Fix some bugs

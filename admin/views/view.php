@@ -195,6 +195,8 @@ $options = array(
 							),
 						),
 					),
+
+					apply_filters( PT_CV_PREFIX_ . 'common_filter', array() ),
 				),
 			),
 		),

@@ -78,6 +78,8 @@ if ( is_admin() ) {
 	include_once( plugin_dir_path( __FILE__ ) . 'admin/includes/options.php' );
 }
 
+do_action( 'pt_cv_addon_init' );
+
 /**
  * Common settings
  */
