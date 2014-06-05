@@ -40,7 +40,13 @@ PT_CV_Functions::view_submit();
 
 <div class="wrap form-horizontal pt-wrap">
 
-<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+<h2><?php echo esc_html( $id ? __( 'Edit View', PT_CV_DOMAIN ) : get_admin_page_title() ); ?></h2>
+
+<?php
+if ( $id ) {
+	echo balanceTags( sprintf( '<div class="alert alert-success" style="color: #000">[pt_view id="%s"]</div>', $id ) );
+}
+?>
 
 <div class="preview-wrapper">
 	<?php
@@ -178,6 +184,22 @@ $options = array(
 								'desc' => __( 'List of ids (comma-separated values) of posts to exclude from view', PT_CV_DOMAIN ),
 							),
 						),
+					),
+
+					// Parent page
+					array(
+						'label'  => array(
+							'text' => __( 'Parent page', PT_CV_DOMAIN ),
+						),
+						'params' => array(
+							array(
+								'type' => 'number',
+								'name' => 'post_parent',
+								'std'  => '',
+								'desc' => __( 'Enter ID of parent page to query child pages', PT_CV_DOMAIN ),
+							),
+						),
+						'dependence'    => array( 'content-type', 'page' ),
 					),
 
 					// Limit

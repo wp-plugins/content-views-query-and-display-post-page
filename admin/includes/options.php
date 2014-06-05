@@ -192,7 +192,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 			// Add extra information of option type
 			switch ( $type ) {
 				case 'number':
-					$min    = ! empty( $param['min'] ) ? intval( $param['min'] ) : 1;
+					$min    = ! empty( $param['min'] ) ? intval( $param['min'] ) : 0;
 					$extend = 'min="' . $min . '"';
 					break;
 				case 'color':

@@ -510,11 +510,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				$html = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_not_found', $html, $post, $dimensions, $gargs );
 			}
 
-			// If title is not shown, add link to thumbnail
-			if ( ! in_array( 'title', $dargs['fields'] ) ) {
-				$oargs = isset( $dargs['other-settings'] ) ? $dargs['other-settings'] : array();
-				$html  = self::_field_href( $oargs, $post, $html );
-			}
+			// Add link to thumbnail
+			$oargs = isset( $dargs['other-settings'] ) ? $dargs['other-settings'] : array();
+			$html  = self::_field_href( $oargs, $post, $html );
 
 			return $html;
 		}

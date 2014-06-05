@@ -385,7 +385,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Get view settings
 			if ( $post_id ) {
 				$view_settings = get_post_meta( $post_id, PT_CV_META_SETTINGS, true );
-				return unserialize( base64_decode( $view_settings ) );
+				return is_array( $view_settings ) ? $view_settings : array();
 			}
 
 			return array();
@@ -435,7 +435,15 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$post_not_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $settings_ ) );
 				$args['post__not_in'] = array_map( 'intval', array_filter( $post_not_in ) );
 			}
-
+			
+			// Parent page
+			if ( $content_type == 'page' ) {
+				$post_parent = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_parent', $settings_ );
+				if ( ! empty( $post_parent ) ) {
+					$args['post_parent'] = (int) $post_parent;
+				}
+			}
+			
 			// Advance settings
 			PT_CV_Functions::view_get_advanced_settings( $settings_, $args, $content_type );
 
@@ -785,7 +793,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Get Limit value
 			$limit         = (int) PT_CV_Functions::setting_value( PT_CV_PREFIX . 'limit', $settings_ );
 			$args['limit'] = $args['posts_per_page'] = empty( $limit ) ? - 1 : $limit;
-			$posts_per_page = $limit;
 
 			// Get pagination enable/disable
 			$pagination = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'enable-pagination', $settings_ );
@@ -873,7 +880,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$cur_view_id = esc_sql( $_POST[PT_CV_PREFIX . 'view-id'] );
 			$view_id     = empty( $cur_view_id ) ? PT_CV_Functions::string_random() : $cur_view_id;
 			update_post_meta( $post_id, PT_CV_META_ID, $view_id );
-			update_post_meta( $post_id, PT_CV_META_SETTINGS, base64_encode( serialize( $_POST ) ) );
+			update_post_meta( $post_id, PT_CV_META_SETTINGS, (array) $_POST );
 
 			/**
 			 * redirect to edit page
