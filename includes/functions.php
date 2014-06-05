@@ -520,11 +520,15 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			// Append Pagination HTML if this is first page, or not Ajax calling
 			if ( $args['posts_per_page'] > 0 && $current_page === 1 ) {
+				// Total post founds
+				$found_posts = apply_filters( PT_CV_PREFIX_ . 'found_posts', $pt_query->found_posts, $settings_ );
+
 				// Total number of items
-				$total_items = ( $args['limit'] > 0 && $pt_query->found_posts > $args['limit'] ) ? $args['limit'] : $pt_query->found_posts;
+				$total_items = ( $args['limit'] > 0 && $found_posts > $args['limit'] ) ? $args['limit'] : $found_posts;
 
 				// Total number of pages
 				$max_num_pages = ceil( $total_items / $args['posts_per_page'] );
+
 				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $dargs, $id );
 			}
 
@@ -794,6 +798,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$limit = trim( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'limit', $settings_ ) );
 			$limit = ( empty( $limit ) || $limit === '-1' ) ? 10000000 : (int) $limit;
 			$args['limit'] = $args['posts_per_page'] = $limit;
+			$offset = 0;
 
 			// Get pagination enable/disable
 			$pagination = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'enable-pagination', $settings_ );
@@ -819,18 +824,16 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				// Get offset
 				if ( isset( $pargs['page'] ) ) {
 					$offset = $posts_per_page * ( (int) $pargs['page'] - 1 );
-
-					// Reaching out of limit
-					if ( $offset > $limit ) {
-						return '';
-					}
-
-					// Set 'offset' parameter
-					$args['offset'] = $offset;
 				}
 			}
 
-			$args = apply_filters( PT_CV_PREFIX_ . 'settings_args_offset', $args, $pagination, $pargs, $settings_, $limit );
+			$offset = apply_filters( PT_CV_PREFIX_ . 'settings_args_offset', $offset, $settings_ );
+
+			// Not reaching out of limit
+			if ( $offset < $limit ) {
+				// Set 'offset' parameter
+				$args['offset'] = $offset;
+			}
 		}
 
 		/**
