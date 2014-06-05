@@ -435,7 +435,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$post_not_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $settings_ ) );
 				$args['post__not_in'] = array_map( 'intval', array_filter( $post_not_in ) );
 			}
-			
+
 			// Parent page
 			if ( $content_type == 'page' ) {
 				$post_parent = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_parent', $settings_ );
@@ -443,7 +443,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					$args['post_parent'] = (int) $post_parent;
 				}
 			}
-			
+
 			// Advance settings
 			PT_CV_Functions::view_get_advanced_settings( $settings_, $args, $content_type );
 
@@ -791,8 +791,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		static function view_get_pagination_settings( $settings_, &$dargs, &$args, $pargs ) {
 
 			// Get Limit value
-			$limit         = (int) PT_CV_Functions::setting_value( PT_CV_PREFIX . 'limit', $settings_ );
-			$args['limit'] = $args['posts_per_page'] = empty( $limit ) ? - 1 : $limit;
+			$limit = trim( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'limit', $settings_ ) );
+			$limit = ( empty( $limit ) || $limit === '-1' ) ? 10000000 : (int) $limit;
+			$args['limit'] = $args['posts_per_page'] = $limit;
 
 			// Get pagination enable/disable
 			$pagination = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'enable-pagination', $settings_ );
@@ -808,7 +809,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				// If Items per page is set, get its value
 				$posts_per_page = isset( $dargs['pagination-settings']['items-per-page'] ) ? (int) $dargs['pagination-settings']['items-per-page'] : $limit;
 
-				if ( $limit != - 1 && $posts_per_page > $limit ) {
+				if ( $posts_per_page > $limit ) {
 					$posts_per_page = $limit;
 				}
 
@@ -830,7 +831,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			$args = apply_filters( PT_CV_PREFIX_ . 'settings_args_offset', $args, $pagination, $pargs, $settings_, $limit );
-
 		}
 
 		/**
