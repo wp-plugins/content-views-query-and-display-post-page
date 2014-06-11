@@ -433,6 +433,10 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$html = self::_field_meta( $post, $fargs['meta-fields'], $dargs );
 
 					break;
+
+				default :
+					$html = apply_filters( PT_CV_PREFIX_ . 'field_item_html', $html, $field_name, $post );
+					break;
 			}
 
 			return $html;
@@ -722,10 +726,17 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 		/**
 		 * Scripts for Preview & WP frontend
+		 * @param bool $is_admin Whether or not in WP Admin
 		 */
-		static function frontend_scripts() {
-			// Load bootstrap js
-			PT_CV_Asset::enqueue( 'bootstrap' );
+		static function frontend_scripts( $is_admin = false ) {
+
+			// Get settings option
+			$options = get_option( PT_CV_OPTION_NAME );
+
+			if ( $is_admin || ! isset( $options['unload_bootstrap'] ) ) {
+				// Load bootstrap js
+				PT_CV_Asset::enqueue( 'bootstrap' );
+			}
 
 			// Load bootstrap paginator
 			PT_CV_Asset::enqueue( 'bootstrap-paginator' );
@@ -751,9 +762,18 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 		/**
 		 * Styles for Preview & WP frontend
+		 *
+		 * @global bool $is_IE
+		 * @param bool $is_admin Whether or not in WP Admin
 		 */
-		static function frontend_styles() {
-			PT_CV_Asset::enqueue( 'bootstrap', 'style' );
+		static function frontend_styles( $is_admin = false ) {
+
+			// Get settings option
+			$options = get_option( PT_CV_OPTION_NAME );
+
+			if ( $is_admin || ! isset( $options['unload_bootstrap'] ) ) {
+				PT_CV_Asset::enqueue( 'bootstrap', 'style' );
+			}
 
 			PT_CV_Asset::enqueue(
 				'public', 'style', array(

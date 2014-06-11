@@ -88,6 +88,9 @@ class PT_Content_Views_Admin {
 
 		// Custom hooks for both preview & frontend
 		PT_CV_Hooks::init();
+
+		// Custom settings page
+		PT_CV_Plugin::init();
 	}
 
 	/**
@@ -191,7 +194,7 @@ class PT_Content_Views_Admin {
 			}
 
 			// For Preview
-			PT_CV_Html::frontend_styles();
+			PT_CV_Html::frontend_styles( true );
 
 			// Main scripts
 			PT_CV_Asset::enqueue( 'select2', 'style' );
@@ -246,7 +249,7 @@ class PT_Content_Views_Admin {
 			);
 
 			// For Preview
-			PT_CV_Html::frontend_scripts();
+			PT_CV_Html::frontend_scripts( true );
 
 			PT_CV_Asset::enqueue( 'select2' );
 		}

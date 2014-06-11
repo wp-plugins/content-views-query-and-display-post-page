@@ -13,7 +13,8 @@ $html = array();
 
 $ex_cap_cls = PT_CV_PREFIX . 'cap-w-img';;
 
-if ( ! empty( $fields_html['thumbnail'] ) ) {
+$img = strip_tags( isset( $fields_html['thumbnail'] ) ? $fields_html['thumbnail'] : '', '<img>' );
+if ( ! empty( $img ) ) {
 	// Thumbnail html
 	$html[] = $fields_html['thumbnail'];
 	unset( $fields_html['thumbnail'] );

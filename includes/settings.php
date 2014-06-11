@@ -205,7 +205,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 							'name'    => $prefix . 'open-in',
 							'options' => PT_CV_Values::open_in(),
 							'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::open_in() ),
-							'desc'    => __( 'How to open an item when click on Title (if "Show Title" is checked) or Thumbnail (if only check "Show Thumbnail")', PT_CV_DOMAIN ),
+							'desc'    => __( 'How to open an item when click on Title or Thumbnail', PT_CV_DOMAIN ),
 						),
 					),
 				),
@@ -458,6 +458,8 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 						),
 					),
 				),
+
+				apply_filters( PT_CV_PREFIX_ . 'field_display_option', array(), $prefix ),
 
 				// Show Content
 				array(

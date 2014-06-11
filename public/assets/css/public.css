@@ -135,7 +135,7 @@
 	text-align: left;
 	left:       0;
 	right:      15px;
-	bottom:     15px;
+	bottom:     14px;
 }
 
 .pt-cv-view .carousel-caption * {
@@ -148,6 +148,8 @@
 	text-shadow:  0px 1px 1px #000;
 	left:         15px !important;
 	padding-left: 10px;
+	padding-bottom: 0;
+	padding-top: 10px;
 }
 
 .pt-cv-cap-w-img * {

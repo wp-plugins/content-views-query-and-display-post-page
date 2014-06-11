@@ -323,7 +323,7 @@
 				if ( typeof this_val === 'undefined' ) {
 					return;
 				}
-				
+
 				if (is_change) {
 					// Uncheck all checkbox of taxonomies
 					$taxonomies.attr('checked', false);
@@ -595,6 +595,31 @@
 				fn_selector($(selector + ':checked').val());
 			});
 		},
+
+		_preview_btn_toggle : function(){
+
+			var $self = this;
+			var _prefix = $self.options._prefix;
+
+			var _fn = function(){
+				$self.options.onload = 0;
+
+				// Toggle text of this button
+				$('#' + _prefix + 'show-preview').html(PT_CV_ADMIN.btn.preview.update);
+
+				// Enable preview
+				$self.options.can_preview = 1;
+			};
+			// Bind on change input after page load
+			$('input, select, textarea', '.pt-wrap .tab-content').change(function () {
+				_fn();
+			});
+
+			$('body').bind(_prefix + 'preview-btn-toggle', function () {
+				_fn();
+			});
+		},
+
 		/**
 		 * Custom js for elements
 		 * @returns {undefined}
@@ -604,16 +629,7 @@
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
-			// Bind on change input after page load
-			$('input, select, textarea', '.pt-wrap .tab-content').change(function () {
-				$self.options.onload = 0;
-
-				// Toggle text of this button
-				$('#' + _prefix + 'show-preview').html(PT_CV_ADMIN.btn.preview.update);
-
-				// Enable preview
-				$self.options.can_preview = 1;
-			});
+			$self._preview_btn_toggle();
 
 			// Custom JS for Content Type
 			$self._content_type();

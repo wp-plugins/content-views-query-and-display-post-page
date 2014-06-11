@@ -291,7 +291,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		}
 
 		/**
-		 * Insert new post
+		 * Insert/Update post
 		 *
 		 * @param string $arr Array of post data
 		 */
@@ -316,6 +316,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Get View id in post table, from "id" meta key value
 		 *
 		 * @param string $meta_id ID of custom field
+		 * @return int Return Post ID of this view
 		 */
 		static function post_id_from_meta_id( $meta_id ) {
 
@@ -487,7 +488,13 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$content_items = array();
 
 			// The Query
+			$args = apply_filters( PT_CV_PREFIX_ . 'query_parameters', $args, $settings_ );
+
+			do_action( PT_CV_PREFIX_ . 'before_query', $settings_ );
+
 			$pt_query = new WP_Query( $args );
+
+			do_action( PT_CV_PREFIX_ . 'after_query', $settings_ );
 
 			// The Loop
 			if ( $pt_query->have_posts() ) {
@@ -873,8 +880,12 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Current post id ( 0 if new view )
 			$cur_post_id = esc_sql( $_POST[PT_CV_PREFIX . 'post-id'] );
 
-			// Insert/update post
-			$post_id = PT_CV_Functions::post_insert( array( 'ID' => $cur_post_id, 'title' => $title ) );
+			// Insert post
+			if ( ! $cur_post_id ) {
+				$post_id = PT_CV_Functions::post_insert( array( 'ID' => $cur_post_id, 'title' => $title ) );
+			} else {
+				$post_id = $cur_post_id;
+			}
 
 			/**
 			 * ADD/UPDATE CUSTOM FIELDS
@@ -885,6 +896,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			update_post_meta( $post_id, PT_CV_META_ID, $view_id );
 			update_post_meta( $post_id, PT_CV_META_SETTINGS, (array) $_POST );
 
+			// Update post title
+			if ( strpos( $title,'[ID:' ) === false ) {
+				PT_CV_Functions::post_insert( array( 'ID' => $post_id, 'title' => sprintf( '%s [ID: %s]', $title, $view_id ) ) );
+			}
+			
 			/**
 			 * redirect to edit page
 			 */

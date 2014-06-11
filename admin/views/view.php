@@ -82,9 +82,12 @@ if ( $id ) {
 // Add nonce field
 wp_nonce_field( PT_CV_PREFIX_ . 'view_submit', PT_CV_PREFIX_ . 'form_nonce' );
 
+// Get post ID of this View
+$post_id = PT_CV_Functions::post_id_from_meta_id( $id );
+$view_object = $post_id ? get_post( $post_id ) : null;
 ?>
 <!-- add hidden field -->
-<input type="hidden" name="<?php echo esc_attr( PT_CV_PREFIX . 'post-id' ); ?>" value="<?php echo esc_attr( PT_CV_Functions::post_id_from_meta_id( $id ) ); ?>" />
+<input type="hidden" name="<?php echo esc_attr( PT_CV_PREFIX . 'post-id' ); ?>" value="<?php echo esc_attr( $post_id ); ?>" />
 <input type="hidden" name="<?php echo esc_attr( PT_CV_PREFIX . 'view-id' ); ?>" value="<?php echo esc_attr( $id ); ?>" />
 
 <?php
@@ -98,7 +101,7 @@ $options = array(
 			array(
 				'type' => 'text',
 				'name' => 'view-title',
-				'std'  => '',
+				'std'  => isset( $view_object->post_title ) ? $view_object->post_title : '',
 				'desc' => __( 'Enter a name to identify your views easily', PT_CV_DOMAIN ),
 			),
 		),
@@ -141,6 +144,8 @@ $options = array(
 		),
 	),
 
+	apply_filters( PT_CV_PREFIX_ . 'custom_filters', array() ),
+	
 	// Common Filters
 	array(
 		'label'         => array(
@@ -218,7 +223,7 @@ $options = array(
 						),
 					),
 
-					apply_filters( PT_CV_PREFIX_ . 'common_filter', array() ),
+					apply_filters( PT_CV_PREFIX_ . 'after_limit_option', array() ),
 				),
 			),
 		),

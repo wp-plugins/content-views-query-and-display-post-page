@@ -140,7 +140,7 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 			// Control html
 			$show_navigation   = isset( $dargs['view-type-settings']['navigation'] ) ? $dargs['view-type-settings']['navigation'] : 'yes';
-			$scrollable_html[] = self::scrollable_control( ( $show_navigation == 'yes' ) ? 1 : 0, $wrapper_id );
+			$scrollable_html[] = self::scrollable_control( ( $show_navigation == 'yes' ) ? 1 : 0, $wrapper_id, $count_slides );
 
 			// Get wrapper class scrollable
 			$scrollable_class = apply_filters( PT_CV_PREFIX_ . 'scrollable_class', 'carousel slide' );
@@ -233,13 +233,16 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 				return '';
 			}
 
-			$li = array();
-			for ( $index = 0; $index < $count_slides; $index ++ ) {
-				$class = ( $index == 0 ) ? 'active' : '';
-				$li[]  = sprintf( '<li data-target="#%s" data-slide-to="%s" class="%s"></li>', esc_attr( $wrapper_id ), esc_attr( $index ), $class );
-			}
+			$output = '';
+			if ( $count_slides > 1 ) {
+				$li = array();
+				for ( $index = 0; $index < $count_slides; $index ++ ) {
+					$class = ( $index == 0 ) ? 'active' : '';
+					$li[]  = sprintf( '<li data-target="#%s" data-slide-to="%s" class="%s"></li>', esc_attr( $wrapper_id ), esc_attr( $index ), $class );
+				}
 
-			$output = '<ol class="carousel-indicators">' . implode( "\n", $li ) . '</ol>';
+				$output = '<ol class="carousel-indicators">' . implode( "\n", $li ) . '</ol>';
+			}
 
 			return $output;
 		}
@@ -249,21 +252,24 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 *
 		 * @param bool   $show       Whether or not to show this element
 		 * @param string $wrapper_id The ID of wrapper of scrollable list
+		 * @param int    $count_slides The amount of items
 		 */
-		static function scrollable_control( $show, $wrapper_id ) {
+		static function scrollable_control( $show, $wrapper_id, $count_slides ) {
 			if ( ! $show ) {
 				return '';
 			}
-
-			$output = sprintf(
-				'<a class="left carousel-control" href="#%1$s" data-slide="prev">
-					<span class="glyphicon glyphicon-chevron-left"></span>
-				</a>
-				<a class="right carousel-control" href="#%1$s" data-slide="next">
-					<span class="glyphicon glyphicon-chevron-right"></span>
-				</a>',
-				esc_attr( $wrapper_id )
-			);
+			$output = '';
+			if ( $count_slides > 1 ) {
+				$output = sprintf(
+					'<a class="left carousel-control" href="#%1$s" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</a>
+					<a class="right carousel-control" href="#%1$s" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</a>',
+					esc_attr( $wrapper_id )
+				);
+			}
 
 			return $output;
 		}
