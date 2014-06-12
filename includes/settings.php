@@ -158,7 +158,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 							'name'        => $prefix . 'items-per-page',
 							'std'         => '10',
 							'placeholder' => 'e.g. 10',
-							'desc'        => __( 'The number of items per page', PT_CV_DOMAIN ),
+							'desc'        => __( 'The number of items per page. If value of Limit option is not blank (empty), this value should be smaller than Limit value', PT_CV_DOMAIN ),
 						),
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),
