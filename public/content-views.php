@@ -60,6 +60,7 @@ class PT_Content_Views {
 		// Ajax action
 		$action = 'pagination_request';
 		add_action( 'wp_ajax_' . $action, array( 'PT_CV_Functions', 'ajax_callback_' . $action ) );
+		add_action( 'wp_ajax_nopriv_' . $action, array( 'PT_CV_Functions', 'ajax_callback_' . $action ) );
 
 		// Custom hooks for both preview & frontend
 		PT_CV_Hooks::init();

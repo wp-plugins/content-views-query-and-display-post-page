@@ -507,7 +507,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Check if has thumbnail ( has_post_thumbnail doesn't works )
 			$has_thumbnail = get_the_post_thumbnail( $post_id );
 			if ( ! empty( $has_thumbnail ) ) {
-				$thumbnail_size = (array) apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_dimension_output', $dimensions, $fargs );
+				$thumbnail_size = (array) apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_dimension_output', $dimensions, $fargs, $dargs );
 				$thumbnail_size = count( $thumbnail_size ) > 1 ? $thumbnail_size : $thumbnail_size[0];
 				$html           = get_the_post_thumbnail( $post_id, $thumbnail_size, $gargs );
 			} else {

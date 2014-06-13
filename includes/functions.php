@@ -900,7 +900,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			if ( strpos( $title,'[ID:' ) === false ) {
 				PT_CV_Functions::post_insert( array( 'ID' => $post_id, 'title' => sprintf( '%s [ID: %s]', $title, $view_id ) ) );
 			}
-			
+
 			/**
 			 * redirect to edit page
 			 */
