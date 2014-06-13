@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,9 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.1.5 =
+* Fix pagination bug (return 0)
+
 = 1.1.4 =
 * Fix pagination bug when don't load Bootstrap in frontend
 
@@ -182,6 +185,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.1.5 =
+Fix pagination bug (return 0)
 
 = 1.1.4 =
 Fix pagination bug when don't load Bootstrap in frontend
