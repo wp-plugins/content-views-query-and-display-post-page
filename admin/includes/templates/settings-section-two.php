@@ -117,5 +117,5 @@
 <hr>
 
 <p>I hope you enjoy with Content Views!</p>
-<p>Plugin developed by PT Guy (palaceofthemes@gmail.com)</p>
+<p>Plugin developed by PT Guy (support@contentviewspro.com)</p>
 <p>Copyright &COPY; 2014</p>

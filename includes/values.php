@@ -126,14 +126,12 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 
 			$args  = array_merge( array( 'hide_empty' => false ), $args );
 			$terms = get_terms( array( $taxonomy ), $args );
-			if ( ! isset( $terms_of_taxonomies[$taxonomy] ) ) {
-				$terms_of_taxonomies[$taxonomy] = array();
-			}
+			
 			$term_slug_name = array();
 			foreach ( $terms as $term ) {
 				$term_slug_name[$term->slug] = $term->name;
 			}
-			$terms_of_taxonomies[$taxonomy] = array_merge( $terms_of_taxonomies[$taxonomy], $term_slug_name );
+			$terms_of_taxonomies[$taxonomy] = $term_slug_name;
 		}
 
 		/**

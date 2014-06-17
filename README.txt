@@ -1,10 +1,10 @@
-=== Query posts and display posts without coding - Content Views ===
+=== Query posts and display posts in responsive grid layout without coding - Content Views ===
 Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,8 @@ Query and display <strong>posts</strong> in awesome layouts (<strong>grid, scrol
 
 Have you ever wanted to:
 
-* display recent posts in grid 3x3
+* display multiple posts in page
+* display posts in responsive grid layout
 * display posts in descending order of Title
 * replace boring Next, Prev button of WordPress theme by a beautiful pagination
 * display thumbnail in different size than 150x150 or 300x300
@@ -145,6 +146,9 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.1.6 =
+* Fix bug auto selected terms which its value is number in Taxonomy settings box
+
 = 1.1.5 =
 * Fix pagination bug (return 0)
 
@@ -185,6 +189,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.1.6 =
+Fix bug auto selected terms which its value is number in Taxonomy settings box
 
 = 1.1.5 =
 Fix pagination bug (return 0)
