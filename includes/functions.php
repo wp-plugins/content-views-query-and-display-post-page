@@ -199,7 +199,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		static function settings_keys( $prefix, $options ) {
 			$result = array();
 			foreach ( $options as $option ) {
-				if ( $option['params'] ) {
+				if ( isset( $option['params'] ) ) {
 					foreach ( $option['params'] as $params ) {
 						// If name of setting match with prefix string, got it name
 						if ( isset( $params['name'] ) && substr( $params['name'], 0, strlen( $prefix ) ) === $prefix ) {
@@ -216,12 +216,13 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Get value of some setting options by prefix
 		 *
 		 * @param string $prefix    The prefix in name of setting options
-		 * @param type   $settings_ The settings array
 		 */
-		static function settings_values_by_prefix( $prefix, $settings_ ) {
+		static function settings_values_by_prefix( $prefix ) {
+			global $pt_view_settings;
+
 			$result = array();
 
-			foreach ( $settings_ as $name => $value ) {
+			foreach ( $pt_view_settings as $name => $value ) {
 				// If name of setting match with prefix string, got it name
 				if ( substr( $name, 0, strlen( $prefix ) ) === $prefix ) {
 					$result[substr( $name, strlen( $prefix ) )] = $value;
@@ -239,11 +240,14 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function post_terms( $post ) {
+
 			// List of HTML link to terms
 			$links = array();
 
 			// Get list of taxonomies
 			$taxonomies = get_taxonomies( '', 'names' );
+
+			$taxonomies = apply_filters( PT_CV_PREFIX_ . 'taxonomies_list', $taxonomies );
 
 			// Get lists of terms of this post
 			$terms = wp_get_object_terms( $post->ID, $taxonomies );
@@ -407,13 +411,15 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			// Escaped value appropriate for use in a SQL query
-			$settings_ = array();
+			global $pt_view_settings;
+			$pt_view_settings = array();
 			foreach ( $settings as $key => $value ) {
-				$settings_[$key] = esc_sql( $value );
+				$pt_view_settings[$key] = esc_sql( $value );
 			}
 
 			// Get content type
-			$content_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'content-type', $settings_ );
+			global $pt_content_type;
+			$pt_content_type = $content_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'content-type', $pt_view_settings );
 
 			/**
 			 * Get Query parameters
@@ -426,54 +432,55 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			);
 
 			// Post in
-			if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $settings_ ) ) {
-				$post_in              = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $settings_ ) );
+			if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) ) {
+				$post_in              = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) );
 				$args['post__in'] = array_map( 'intval', array_filter( $post_in ) );
 			}
 
 			// Post not in
-			if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $settings_ ) ) {
-				$post_not_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $settings_ ) );
+			if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $pt_view_settings ) ) {
+				$post_not_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $pt_view_settings ) );
 				$args['post__not_in'] = array_map( 'intval', array_filter( $post_not_in ) );
 			}
 
 			// Parent page
 			if ( $content_type == 'page' ) {
-				$post_parent = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_parent', $settings_ );
+				$post_parent = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_parent', $pt_view_settings );
 				if ( ! empty( $post_parent ) ) {
 					$args['post_parent'] = (int) $post_parent;
 				}
 			}
 
 			// Advance settings
-			PT_CV_Functions::view_get_advanced_settings( $settings_, $args, $content_type );
+			PT_CV_Functions::view_get_advanced_settings( $args, $content_type );
 
 			/**
 			 * Get Display parameters
 			 */
+			global $dargs;
 			$dargs = array();
 
 			// Get view type
-			$view_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'view-type', $settings_ );
+			$view_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'view-type', $pt_view_settings );
 
 			$dargs['view-type'] = $view_type;
 
 			// Field settings of a item
-			PT_CV_Functions::view_get_display_settings( $settings_, $dargs );
+			PT_CV_Functions::view_get_display_settings( $dargs );
 
 			// Pagination settings
-			PT_CV_Functions::view_get_pagination_settings( $settings_, $dargs, $args, $pargs );
+			PT_CV_Functions::view_get_pagination_settings( $dargs, $args, $pargs );
 
 			// Other settings
-			PT_CV_Functions::view_get_other_settings( $settings_, $dargs );
+			PT_CV_Functions::view_get_other_settings( $dargs );
 
 			// View type settings
-			$dargs['view-type-settings'] = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . $view_type . '-', $settings_ );
+			$dargs['view-type-settings'] = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . $view_type . '-' );
 
-			$dargs = apply_filters( PT_CV_PREFIX_ . 'all_display_settings', $dargs, $settings_ );
+			$dargs = apply_filters( PT_CV_PREFIX_ . 'all_display_settings', $dargs );
 
 			// Validate settings before processing, if some required parameters are missing, show error and exit
-			$error = apply_filters( PT_CV_PREFIX_ . 'validate_settings', array(), $dargs, $args );
+			$error = apply_filters( PT_CV_PREFIX_ . 'validate_settings', array(), $args );
 
 			// Return error message
 			if ( $error ) {
@@ -488,13 +495,13 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$content_items = array();
 
 			// The Query
-			$args = apply_filters( PT_CV_PREFIX_ . 'query_parameters', $args, $settings_ );
+			$args = apply_filters( PT_CV_PREFIX_ . 'query_parameters', $args );
 
-			do_action( PT_CV_PREFIX_ . 'before_query', $settings_ );
+			do_action( PT_CV_PREFIX_ . 'before_query' );
 
 			$pt_query = new WP_Query( $args );
 
-			do_action( PT_CV_PREFIX_ . 'after_query', $settings_ );
+			do_action( PT_CV_PREFIX_ . 'after_query' );
 
 			// The Loop
 			if ( $pt_query->have_posts() ) {
@@ -503,7 +510,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					global $post;
 
 					// Output HTML for this item
-					$content_items[] = PT_CV_Html::view_type_output( $view_type, $dargs, $post );
+					$content_items[] = PT_CV_Html::view_type_output( $view_type, $post );
 				}
 			} else {
 				// Get no post found class
@@ -523,12 +530,12 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			 * Output Pagination
 			 */
 			$current_page = ( isset( $pargs['page'] ) && $pargs['page'] > 1 ) ? $pargs['page'] : 1;
-			$html         = PT_CV_Html::content_items_wrap( $content_items, $dargs, $current_page, $args['posts_per_page'] );
+			$html         = PT_CV_Html::content_items_wrap( $content_items, $current_page, $args['posts_per_page'] );
 
 			// Append Pagination HTML if this is first page, or not Ajax calling
 			if ( $args['posts_per_page'] > 0 && $current_page === 1 ) {
 				// Total post founds
-				$found_posts = apply_filters( PT_CV_PREFIX_ . 'found_posts', $pt_query->found_posts, $settings_ );
+				$found_posts = apply_filters( PT_CV_PREFIX_ . 'found_posts', $pt_query->found_posts );
 
 				// Total number of items
 				$total_items = ( $args['limit'] > 0 && $found_posts > $args['limit'] ) ? $args['limit'] : $found_posts;
@@ -536,7 +543,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				// Total number of pages
 				$max_num_pages = ceil( $total_items / $args['posts_per_page'] );
 
-				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $dargs, $id );
+				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $id );
 			}
 
 			return $html;
@@ -545,26 +552,26 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get Advance settings
 		 *
-		 * @param array  $settings_    The settings array
 		 * @param array  $args         The parameters array
 		 * @param string $content_type The content type
 		 */
-		static function view_get_advanced_settings( $settings_, &$args, $content_type ) {
+		static function view_get_advanced_settings( &$args, $content_type ) {
+			global $pt_view_settings;
 
-			$advanced_settings = (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . 'advanced-settings', $settings_ );
+			$advanced_settings = (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . 'advanced-settings', $pt_view_settings );
 			if ( $advanced_settings ) {
 				foreach ( $advanced_settings as $setting ) {
 					switch ( $setting ) {
 
 						// Author
 						case 'author':
-							$author_in = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'author__in', $settings_ ) );
+							$author_in = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'author__in', $pt_view_settings ) );
 
 							// Check if using Wordpress version 3.7 or higher
 							$version_gt_37 = PT_CV_Functions::wp_version_compare( '3.7' );
 
 							if ( $version_gt_37 ) {
-								$author_not_in = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'author__not_in', $settings_ ) );
+								$author_not_in = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'author__not_in', $pt_view_settings ) );
 
 								// Author in
 								if ( ! empty( $author_in[0] ) ) {
@@ -600,17 +607,17 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 						case 'status':
 							$args = array_merge(
 								$args, array(
-									'post_status' => PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_status', $settings_, 'publish' ) ),
+									'post_status' => PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_status', $pt_view_settings, 'publish' ) ),
 								)
 							);
 							break;
 
 						// Search
 						case 'search':
-							if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $settings_ ) ) {
+							if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $pt_view_settings ) ) {
 								$args = array_merge(
 									$args, array(
-										's' => PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $settings_ ),
+										's' => PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $pt_view_settings ),
 									)
 								);
 							}
@@ -619,7 +626,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 						// Taxonomy
 						case 'taxonomy':
 							// No taxonomy found
-							if ( ! PT_CV_Functions::setting_value( PT_CV_PREFIX . 'taxonomy', $settings_ ) ) {
+							if ( ! PT_CV_Functions::setting_value( PT_CV_PREFIX . 'taxonomy', $pt_view_settings ) ) {
 								break;
 							}
 
@@ -627,24 +634,24 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 							$taxonomy_setting = array();
 
 							// Selected taxonomies
-							$taxonomies = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'taxonomy', $settings_ );
+							$taxonomies = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'taxonomy', $pt_view_settings );
 
 							// Get Terms & criterias (In, Not in)
 							foreach ( $taxonomies as $taxonomy ) {
 
 								// If found setting for taxonomy
-								if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__in', $settings_ ) ) {
+								if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__in', $pt_view_settings ) ) {
 									$taxonomy_setting[] = array(
 										'taxonomy' => $taxonomy,
 										'field'    => 'slug',
-										'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__in', $settings_ ),
+										'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__in', $pt_view_settings ),
 									);
 								}
-								if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__not_in', $settings_ ) ) {
+								if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__not_in', $pt_view_settings ) ) {
 									$taxonomy_setting[] = array(
 										'taxonomy' => $taxonomy,
 										'field'    => 'slug',
-										'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__not_in', $settings_ ),
+										'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__not_in', $pt_view_settings ),
 										'operator' => 'NOT IN',
 									);
 								}
@@ -652,7 +659,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 							// Get Taxonomy relation if there are more than 1 selected taxonomies | set In & Not in of a taxonomy
 							if ( count( $taxonomies ) > 1 || count( $taxonomy_setting ) > 1 ) {
-								$taxonomy_setting['relation'] = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'taxonomy-relation', $settings_, 'AND' );
+								$taxonomy_setting['relation'] = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'taxonomy-relation', $pt_view_settings, 'AND' );
 							}
 
 							// Filter taxonomy with Custom post types
@@ -667,29 +674,32 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 							$order_settings = array();
 
 							// Advanced order by
-							if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $content_type . '-orderby', $settings_ ) ) {
+							if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $content_type . '-orderby', $pt_view_settings ) ) {
 
 								// Get meta key to order by
-								$meta_key = PT_CV_Functions::setting_value( PT_CV_PREFIX . $content_type . '-orderby', $settings_ );
+								$meta_key = PT_CV_Functions::setting_value( PT_CV_PREFIX . $content_type . '-orderby', $pt_view_settings );
 
 								// Use 'meta_value_num' for numeric values
-								$meta_numeric_values = apply_filters( PT_CV_PREFIX_ . 'meta_numeric_values', array() );
-								$meta_orderby        = in_array( $meta_key, $meta_numeric_values ) ? 'meta_value_num' : 'meta_value';
+								global $pt_content_type;
+								$all_meta_numeric_values = apply_filters( PT_CV_PREFIX_ . 'meta_numeric_values', array() );
+								// Get numeric values of selected content type
+								$meta_numeric_values = isset( $all_meta_numeric_values[$pt_content_type] ) ? $all_meta_numeric_values[$pt_content_type] : array();
+								$meta_orderby        = array_key_exists( $meta_key, (array) $meta_numeric_values ) ? 'meta_value_num' : 'meta_value';
 								$order_settings      = array(
-									'meta_key' => $meta_key,
+									'meta_key' => isset( $meta_numeric_values[$meta_key] ) ? $meta_numeric_values[$meta_key] : $meta_key,
 									'orderby'  => $meta_orderby,
-									'order'    => PT_CV_Functions::setting_value( PT_CV_PREFIX . 'advanced-order', $settings_ ),
+									'order'    => PT_CV_Functions::setting_value( PT_CV_PREFIX . 'advanced-order', $pt_view_settings ),
 								);
 
 							} else {
 								// Common order by
 
-								$orderby          = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'orderby', $settings_ );
+								$orderby          = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'orderby', $pt_view_settings );
 								$order_by_options = array_keys( PT_CV_Values::post_regular_orderby() );
 								if ( in_array( $orderby, $order_by_options ) ) {
 									$order_settings = array(
 										'orderby' => $orderby,
-										'order'   => PT_CV_Functions::setting_value( PT_CV_PREFIX . 'order', $settings_ )
+										'order'   => PT_CV_Functions::setting_value( PT_CV_PREFIX . 'order', $pt_view_settings )
 									);
 								}
 							}
@@ -707,32 +717,32 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get Fields settings
 		 *
-		 * @param array $settings_ The settings array
 		 * @param array $dargs     The settings array of Fields
 		 */
-		static function view_get_display_settings( $settings_, &$dargs ) {
+		static function view_get_display_settings( &$dargs ) {
+			global $pt_view_settings;
 
 			$view_type = $dargs['view-type'];
 
 			/**
 			 * Layout format
 			 */
-			$dargs['layout-format'] = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'layout-format', $settings_ );
+			$dargs['layout-format'] = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'layout-format', $pt_view_settings );
 
 			/**
 			 * Columns count & Rows count
 			 */
-			$dargs['number-columns'] = PT_CV_Functions::setting_value( PT_CV_PREFIX . $view_type . '-' . 'number-columns', $settings_, 1 );
-			$dargs['number-rows']    = PT_CV_Functions::setting_value( PT_CV_PREFIX . $view_type . '-' . 'number-rows', $settings_, 1 );
+			$dargs['number-columns'] = PT_CV_Functions::setting_value( PT_CV_PREFIX . $view_type . '-' . 'number-columns', $pt_view_settings, 1 );
+			$dargs['number-rows']    = PT_CV_Functions::setting_value( PT_CV_PREFIX . $view_type . '-' . 'number-rows', $pt_view_settings, 1 );
 
 			/**
 			 * Fields settings
 			 */
-			$cfields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'show-field-', $settings_ );
+			$cfields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'show-field-' );
 			$cfields = (array) array_keys( (array) $cfields_settings );
 			foreach ( $cfields as $field ) {
 				// If show this field
-				if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'show-field-' . $field, $settings_ ) ) {
+				if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'show-field-' . $field, $pt_view_settings ) ) {
 					// Add this field to display fields list
 					$dargs['fields'][] = $field;
 
@@ -746,9 +756,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 							$fields = array( 'position', 'size', 'style' );
 							$prefix = PT_CV_PREFIX . 'field-thumbnail-';
-							PT_CV_Functions::settings_values( $fields, $field_setting, $settings_, $prefix );
+							PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
 
-							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_setting_values', $field_setting, $settings_, $prefix );
+							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_setting_values', $field_setting, $prefix );
 
 							break;
 
@@ -758,12 +768,12 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 							$field_setting = array();
 
 							$prefix = PT_CV_PREFIX . 'meta-fields-';
-							$meta_fields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'meta-fields-', $settings_ );
+							$meta_fields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'meta-fields-' );
 							$fields = (array) array_keys( (array) $meta_fields_settings );
 
-							PT_CV_Functions::settings_values( $fields, $field_setting, $settings_, $prefix );
+							PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
 
-							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_meta_fields_setting_values', $field_setting, $settings_, $prefix );
+							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_meta_fields_setting_values', $field_setting, $prefix );
 
 							break;
 
@@ -774,13 +784,13 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 							$prefix = PT_CV_PREFIX . 'field-content-';
 							$fields = PT_CV_Functions::settings_keys( 'field-content-', PT_CV_Settings::field_settings() );
-							PT_CV_Functions::settings_values( $fields, $field_setting, $settings_, $prefix );
+							PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
 
 							if ( $field_setting['show'] == 'excerpt' ) {
-								$field_setting = array_merge( $field_setting, PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'field-excerpt-', $settings_ ) );
+								$field_setting = array_merge( $field_setting, PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'field-excerpt-' ) );
 							}
 
-							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_content_setting_values', $field_setting, $settings_, $prefix );
+							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_content_setting_values', $field_setting, $prefix );
 
 							break;
 
@@ -794,27 +804,27 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get Pagination settings
 		 *
-		 * @param array $settings_ The settings array
 		 * @param array $dargs     The settings array of Fields
 		 * @param array $args      The parameters array
 		 * @param array $pargs     The pagination settings array
 		 */
-		static function view_get_pagination_settings( $settings_, &$dargs, &$args, $pargs ) {
+		static function view_get_pagination_settings( &$dargs, &$args, $pargs ) {
+			global $pt_view_settings;
 
 			// Get Limit value
-			$limit = trim( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'limit', $settings_ ) );
+			$limit = trim( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'limit', $pt_view_settings ) );
 			$limit = ( empty( $limit ) || $limit === '-1' ) ? 10000000 : (int) $limit;
 			$args['limit'] = $args['posts_per_page'] = $limit;
 			$offset = 0;
 
 			// Get pagination enable/disable
-			$pagination = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'enable-pagination', $settings_ );
+			$pagination = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'enable-pagination', $pt_view_settings );
 			if ( $pagination ) {
 				$field_setting = array();
 
 				$prefix = PT_CV_PREFIX . 'pagination-';
 				$fields = PT_CV_Functions::settings_keys( 'pagination-', PT_CV_Settings::settings_pagination() );
-				PT_CV_Functions::settings_values( $fields, $field_setting, $settings_, $prefix );
+				PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
 
 				$dargs['pagination-settings'] = apply_filters( PT_CV_PREFIX_ . 'pagination_settings', $field_setting );
 
@@ -834,7 +844,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				}
 			}
 
-			$offset = apply_filters( PT_CV_PREFIX_ . 'settings_args_offset', $offset, $settings_ );
+			$offset = apply_filters( PT_CV_PREFIX_ . 'settings_args_offset', $offset );
 
 			// Not reaching out of limit
 			if ( $offset < $limit ) {
@@ -846,17 +856,18 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get Other settings
 		 *
-		 * @param array $settings_ The settings array
 		 * @param array $dargs     The settings array of Fields
 		 */
-		static function view_get_other_settings( $settings_, &$dargs ) {
+		static function view_get_other_settings( &$dargs ) {
+			global $pt_view_settings;
+
 			$field_setting = array();
 
 			$prefix = PT_CV_PREFIX . 'other-';
 			$fields = PT_CV_Functions::settings_keys( 'other-', PT_CV_Settings::settings_other() );
-			PT_CV_Functions::settings_values( $fields, $field_setting, $settings_, $prefix );
+			PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
 
-			$dargs['other-settings'] = apply_filters( PT_CV_PREFIX_ . 'other_settings', $field_setting, $settings_ );
+			$dargs['other-settings'] = apply_filters( PT_CV_PREFIX_ . 'other_settings', $field_setting );
 		}
 
 		/**

@@ -21,7 +21,7 @@ if ( ! class_exists( 'PT_CV_Hooks' ) ) {
 		 */
 		static function init() {
 			// Filter Output
-			add_filter( PT_CV_PREFIX_ . 'validate_settings', array( __CLASS__, 'filter_validate_settings' ), 10, 3 );
+			add_filter( PT_CV_PREFIX_ . 'validate_settings', array( __CLASS__, 'filter_validate_settings' ), 10, 2 );
 
 			// Do action
 		}
@@ -30,10 +30,10 @@ if ( ! class_exists( 'PT_CV_Hooks' ) ) {
 		 * Validate settings filter
 		 *
 		 * @param string $error The error message
-		 * @param array  $dargs The Display parameters array
 		 * @param array  $args  The Query parameters array
 		 */
-		public static function filter_validate_settings( $errors, $dargs, $args ) {
+		public static function filter_validate_settings( $errors, $args ) {
+			global $dargs;
 
 			//			echo "<pre>";
 			//			var_dump( 'query args', $args );

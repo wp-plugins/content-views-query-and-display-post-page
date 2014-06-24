@@ -21,12 +21,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * Wrap content of Grid type
 		 *
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
-		 * @param array $dargs         The array of Display settings
 		 * @param array $content       The output array
 		 *
 		 * @return array Array of rows, each row contains columns
 		 */
-		static function grid_wrapper( $content_items, $dargs, &$content ) {
+		static function grid_wrapper( $content_items, &$content ) {
+			global $dargs;
 
 			// -- Get column span
 			$columns = ( (int) $dargs['number-columns'] < count( $content_items ) ) ? (int) $dargs['number-columns'] : count( $content_items );
@@ -62,7 +62,7 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 					$_span_width = ( $idx == count( $items_per_row ) - 1 ) ? $span_width_last : $span_width;
 
 					// Wrap content of item
-					$row_html[] = PT_CV_Html::content_item_wrap( $content_item, $span_class . $_span_width, $dargs );
+					$row_html[] = PT_CV_Html::content_item_wrap( $content_item, $span_class . $_span_width );
 				}
 
 				$content[] = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), implode( "\n", $row_html ) );
@@ -73,12 +73,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * Wrap content of Collapsible List type
 		 *
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
-		 * @param array $dargs         The array of Display settings
 		 * @param array $content       The output array
 		 *
 		 * @return string Collapsible list, wrapped in a "panel-group" div
 		 */
-		static function collapsible_wrapper( $content_items, $dargs, &$content ) {
+		static function collapsible_wrapper( $content_items, &$content ) {
+			global $dargs;
 
 			// Generate random id for the wrapper of Collapsible list
 			$random_id = PT_CV_Functions::string_random();
@@ -108,12 +108,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * Wrap content of Scrollable list
 		 *
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
-		 * @param array $dargs         The array of Display settings
 		 * @param array $content       The output array
 		 *
 		 * @return array Array of rows, each row contains columns
 		 */
-		static function scrollable_wrapper( $content_items, $dargs, &$content ) {
+		static function scrollable_wrapper( $content_items, &$content ) {
+			global $dargs;
 
 			// ID for the wrapper of scrollable list
 			$wrapper_id = PT_CV_Functions::string_random();
@@ -121,12 +121,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			// Store all output of Scrollale list (indicators, content, controls)
 			$scrollable_html = array();
 
-			$scrollable_content_data = self::scrollable_content( $content_items, $dargs );
+			$scrollable_content_data = self::scrollable_content( $content_items );
 			$count_slides            = $scrollable_content_data['count_slides'];
 			$scrollable_content      = $scrollable_content_data['scrollable_content'];
 
 			// Js code
-			$interval = apply_filters( PT_CV_PREFIX_ . 'scrollable_interval', 'false', $dargs );
+			$interval = apply_filters( PT_CV_PREFIX_ . 'scrollable_interval', 'false' );
 			$js       = "$('#$wrapper_id').carousel({ interval : $interval })";
 
 			$scrollable_html[] = PT_CV_Html::inline_script( $js );
@@ -151,11 +151,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * HTML output of item in Scrollable List
 		 *
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
-		 * @param array $dargs         The array of Display settings
 		 *
 		 * @return array
 		 */
-		static function scrollable_content( $content_items, $dargs ) {
+		static function scrollable_content( $content_items ) {
+			global $dargs;
+
 			// Store content of a Scrollable list
 			$scrollable_content = array();
 

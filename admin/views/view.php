@@ -145,7 +145,7 @@ $options = array(
 	),
 
 	apply_filters( PT_CV_PREFIX_ . 'custom_filters', array() ),
-	
+
 	// Common Filters
 	array(
 		'label'         => array(
@@ -334,7 +334,7 @@ $options = array(
 									'options' => PT_CV_Values::taxonomy_list(),
 									'std'     => '',
 									'class'   => 'taxonomy-item',
-									'desc'    => __( 'Select checkbox of taxonomies to filter their terms', PT_CV_DOMAIN ),
+									'desc'    => __( 'Select checkbox of taxonomies to filter posts by their terms', PT_CV_DOMAIN ),
 								),
 							),
 						),

@@ -163,11 +163,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Get Output HTML of a View type
 		 *
 		 * @param string $view_type The view type (grid, collapse...)
-		 * @param array  $dargs     The array of Display settings
 		 * @param object $post      The post object
 		 * @param string $style     The style of view type (main, style2...)
 		 */
-		static function view_type_output( $view_type, $dargs, $post, $style = 'main' ) {
+		static function view_type_output( $view_type, $post, $style = 'main' ) {
+			global $dargs;
 			$content = NULL;
 
 			if ( empty( $view_type ) ) {
@@ -194,7 +194,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$fargs['layout-format'] = $dargs['layout-format'];
 
 					// Get HTML output of field
-					$fields_html[$field_name] = self::field_item_html( $field_name, $post, $fargs, $dargs );
+					$fields_html[$field_name] = self::field_item_html( $field_name, $post, $fargs );
 				}
 
 				// Get HTML content of view type, with specific style
@@ -216,15 +216,16 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @param array  $html_item The HTML output of a item
 		 * @param string $class     The extra wrapper class of a item, such as col span
-		 * @param array  $dargs     The array of Display settings
 		 *
 		 * @return string Full HTML output of a item
 		 */
-		static function content_item_wrap( $html_item, $class = '', $dargs = array() ) {
+		static function content_item_wrap( $html_item, $class = '' ) {
+			global $dargs;
+
 			if ( empty( $html_item ) ) {
 				return '';
 			}
-			if ( $dargs ) {
+			if ( is_array( $dargs ) ) {
 				// If only show Title
 				if ( isset( $dargs['fields'] ) && count( (array) $dargs['fields'] ) == 1 && $dargs['fields'][0] === 'title' ) {
 					$class .= ' ' . PT_CV_PREFIX . 'only-title';
@@ -242,13 +243,14 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Wrap content of all items
 		 *
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
-		 * @param array $dargs         The array of Display settings
 		 * @param int $current_page  The current page
 		 * @param int $post_per_page  The number of posts per page
 		 *
 		 * @return string Full HTML output for Content View
 		 */
-		static function content_items_wrap( $content_items, $dargs, $current_page, $post_per_page ) {
+		static function content_items_wrap( $content_items, $current_page, $post_per_page ) {
+			global $dargs;
+
 			if ( empty( $content_items ) ) {
 				return '';
 			}
@@ -263,21 +265,21 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				// Grid
 				case 'grid':
 
-					PT_CV_Html_ViewType::grid_wrapper( $content_items, $dargs, $content );
+					PT_CV_Html_ViewType::grid_wrapper( $content_items, $content );
 
 					break;
 
 				// Collapsible List
 				case 'collapsible':
 
-					PT_CV_Html_ViewType::collapsible_wrapper( $content_items, $dargs, $content );
+					PT_CV_Html_ViewType::collapsible_wrapper( $content_items, $content );
 
 					break;
 
 				// Scrollable List
 				case 'scrollable':
 
-					PT_CV_Html_ViewType::scrollable_wrapper( $content_items, $dargs, $content );
+					PT_CV_Html_ViewType::scrollable_wrapper( $content_items, $content );
 
 					break;
 
@@ -287,7 +289,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						$content[] = PT_CV_Html::content_item_wrap( $content_item );
 					}
 
-					$content = apply_filters( PT_CV_PREFIX_ . 'content_items_wrap', $content, $content_items, $dargs, $current_page, $post_per_page );
+					$content = apply_filters( PT_CV_PREFIX_ . 'content_items_wrap', $content, $content_items, $current_page, $post_per_page );
 
 					break;
 			}
@@ -296,11 +298,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			$content_list = balanceTags( implode( "\n", $content ) );
 
 			// Custom attribute of a page
-			$page_attr_ = apply_filters( PT_CV_PREFIX_ . 'page_attr', '', $view_type, $dargs, $content_items );
+			$page_attr_ = apply_filters( PT_CV_PREFIX_ . 'page_attr', '', $view_type, $content_items );
 			$page_attr  = strip_tags( $page_attr_ );
 
 			// Wrap items in 'page' wrapper
-			$wrap_in_page = apply_filters( PT_CV_PREFIX_ . 'wrap_in_page', true, $dargs );
+			$wrap_in_page = apply_filters( PT_CV_PREFIX_ . 'wrap_in_page', true );
 			if ( $wrap_in_page ) {
 				// Wrap in page wrapper
 				$html = sprintf( '<div id="%s" class="%s" %s>%s</div>', esc_attr( PT_CV_PREFIX . 'page' . '-' . $current_page ), esc_attr( PT_CV_PREFIX . 'page' ), $page_attr, $content_list );
@@ -320,7 +322,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 				$output = sprintf( '<div class="%s" id="%s" %s>%s</div>', esc_attr( implode( ' ', array_filter( $view_class ) ) ), esc_attr( $view_id ), $page_attr, $html );
 
-				do_action( PT_CV_PREFIX_ . 'store_view_data', $view_id, $dargs );
+				do_action( PT_CV_PREFIX_ . 'store_view_data', $view_id );
 			} else {
 				$output = $html;
 			}
@@ -334,11 +336,12 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * @param string $field_name The name of field
 		 * @param object $post       The post object
 		 * @param array  $fargs      The array of Field settings
-		 * @param array  $dargs      The settings array of Fields
 		 *
 		 * @return string
 		 */
-		static function field_item_html( $field_name, $post, $fargs, $dargs ) {
+		static function field_item_html( $field_name, $post, $fargs ) {
+			global $dargs;
+
 			if ( empty( $field_name ) ) {
 				return '';
 			}
@@ -357,7 +360,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						break;
 					}
 
-					$html = self::_field_thumbnail( $post, $fargs, $dargs );
+					$html = self::_field_thumbnail( $post, $fargs );
 
 					break;
 
@@ -405,7 +408,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						case 'excerpt':
 							$length   = (int) $fargs['content']['length'];
 							$readmore = '<br />' . PT_CV_Html::link_button( get_permalink(), 'success', __( 'Read More' ), PT_CV_PREFIX . 'readmore', 'btn-sm' );
-							$content  = wp_trim_words( get_the_content(), $length, ' ...' . apply_filters( PT_CV_PREFIX_ . 'field_content_readmore', $readmore, $fargs['content'], get_permalink() ) );
+							$content  = wp_trim_words( strip_shortcodes( get_the_content() ), $length, ' ...' . apply_filters( PT_CV_PREFIX_ . 'field_content_readmore', $readmore, $fargs['content'], get_permalink() ) );
 							break;
 
 						case 'full':
@@ -430,7 +433,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						break;
 					}
 
-					$html = self::_field_meta( $post, $fargs['meta-fields'], $dargs );
+					$html = self::_field_meta( $post, $fargs['meta-fields'] );
 
 					break;
 
@@ -473,11 +476,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @param object $post  The post object
 		 * @param array  $fargs The settings of this field
-		 * @param array  $dargs The settings array
 		 *
 		 * @return string
 		 */
-		static function _field_thumbnail( $post, $fargs, $dargs ) {
+		static function _field_thumbnail( $post, $fargs ) {
+			global $dargs;
 
 			// Get layout format
 			$layout_format = $fargs['layout-format'];
@@ -507,7 +510,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Check if has thumbnail ( has_post_thumbnail doesn't works )
 			$has_thumbnail = get_the_post_thumbnail( $post_id );
 			if ( ! empty( $has_thumbnail ) ) {
-				$thumbnail_size = (array) apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_dimension_output', $dimensions, $fargs, $dargs );
+				$thumbnail_size = (array) apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_dimension_output', $dimensions, $fargs );
 				$thumbnail_size = count( $thumbnail_size ) > 1 ? $thumbnail_size : $thumbnail_size[0];
 				$html           = get_the_post_thumbnail( $post_id, $thumbnail_size, $gargs );
 			} else {
@@ -526,11 +529,10 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @param object $post  The post object
 		 * @param array  $fargs The settings of this field
-		 * @param array  $dargs The settings array of Fields
 		 *
 		 * @return string
 		 */
-		static function _field_meta( $post, $fargs, $dargs ) {
+		static function _field_meta( $post, $fargs ) {
 
 			$html = array();
 
@@ -580,7 +582,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						$author_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_author_class', 'author' );
 
 						$author_html    = sprintf( '<span class="%s">%s <a href="%s" rel="author">%s</a></span>', esc_attr( $author_class ), __( 'by', PT_CV_DOMAIN ), esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ), get_the_author() );
-						$html['author'] = apply_filters( PT_CV_PREFIX_ . 'field_meta_author_html', $author_html, $post, $dargs );
+						$html['author'] = apply_filters( PT_CV_PREFIX_ . 'field_meta_author_html', $author_html, $post );
 						break;
 
 					default:
@@ -589,7 +591,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			}
 
 			// Merge fields, or let them as seperate items in array
-			$merge_fields = apply_filters( PT_CV_PREFIX_ . 'field_meta_merge_fields', true, $dargs );
+			$merge_fields = apply_filters( PT_CV_PREFIX_ . 'field_meta_merge_fields', true );
 
 			if ( $merge_fields ) {
 				$result = PT_CV_Html::_field_meta_wrap( $html );
@@ -637,28 +639,29 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Output pagination
 		 *
 		 * @param type   $max_num_pages The total of pages
-		 * @param array  $dargs         The settings array of Fields
 		 * @param string $view_id       The current view id
 		 *
 		 * @return type
 		 */
-		static function pagination_output( $max_num_pages, $dargs, $view_id ) {
+		static function pagination_output( $max_num_pages, $view_id ) {
+			global $dargs;
 
 			if ( ! $max_num_pages || (int) $max_num_pages === 1 ) {
 				return '';
 			}
 
-			$output = '';
+			$pagination_btn = '';
 
 			$style = isset( $dargs['pagination-settings']['style'] ) ? $dargs['pagination-settings']['style'] : 'regular';
 			if ( $style == 'regular' ) {
-				$output = sprintf( '<ul class="%s" data-totalpages="%s" data-id="%s"></ul>', PT_CV_PREFIX . 'pagination', esc_attr( $max_num_pages ), esc_attr( $view_id ) );
+				$pagination_btn = sprintf( '<ul class="%s" data-totalpages="%s" data-id="%s"></ul>', PT_CV_PREFIX . 'pagination', esc_attr( $max_num_pages ), esc_attr( $view_id ) );
 			} else {
-				$output = apply_filters( PT_CV_PREFIX_ . 'btn_more_html', $output, $max_num_pages, $view_id );
+				$pagination_btn = apply_filters( PT_CV_PREFIX_ . 'btn_more_html', $pagination_btn, $max_num_pages, $view_id );
 			}
-
 			// Add loading icon
-			$output .= self::html_loading_img( 12, PT_CV_PREFIX . 'spinner' );
+			$pagination_btn .= self::html_loading_img( 12, PT_CV_PREFIX . 'spinner' );
+
+			$output = apply_filters( PT_CV_PREFIX_ . 'pagination_output', $pagination_btn );
 
 			return $output;
 		}

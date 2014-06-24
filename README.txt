@@ -4,17 +4,18 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.1.6
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Query and display <strong>posts</strong> in awesome layouts (<strong>grid, scrollable list, collapsible list</strong>) easier than ever, without coding!
+Display custom posts any where (home page, sidebar, footer widget) in responsive layouts (grid, list) easier than ever, without coding!
 
 == Description ==
 
 Have you ever wanted to:
 
-* display multiple posts in page
+* display some specific posts in home page of your WordPress site
+* display multiple posts in a page
 * display posts in responsive grid layout
 * display posts in descending order of Title
 * replace boring Next, Prev button of WordPress theme by a beautiful pagination
@@ -27,9 +28,9 @@ How do you do?
 
 It is not easy as ABC, isn't it?
 
-But now, with Content Views plugin, you can do above things in seconds, without any line of code.
+But now, with Content Views plugin, you can do above things in minutes, without any line of code.
 
-[Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Visit Content Views website") provides a visual form to query posts and display posts in **responsive** layouts (grid, scrollable list, collapsible list) quickly & easily, in very 3 simple steps:
+[Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Visit Content Views website") provides an intuitive form to query posts and display posts in **responsive** layouts (grid, scrollable list, collapsible list) quickly & easily, in very 3 simple steps:
 
 * Step 1 : Select criteria (author, category, tag...) to query your wanted posts
 * Step 2 : Select a nice layout to display posts
@@ -63,11 +64,12 @@ Also, you can import/export 'View' to use in other WordPress sites (Please check
 
 = More amazing features: =
 
-* Be able to query and display custom post types (Woocommerce products, FAQ...)
-* More beautiful output & powerful settings of Grid, Collapsible List, Scrollable List
+* Woocommerce support
 * Display posts in more Awesome layouts: Pinterest, Timeline
+* More beautiful output & powerful settings of Grid, Collapsible List, Scrollable List
 * Drag & drop to change display order of fields (thumbnail, title, content, meta fields)
-* Customize Font settings for Title, Content
+* Customize Font settings for Title, Content, Meta fields
+* Custom style for Thumbnail
 * Customize style & text of "Read more" button
 * Additional pagination option
 * And much more...
@@ -90,13 +92,13 @@ Just give a try (30 day money back guarantee), then you will know how it is awes
 
 1. Navigate to the 'Add New' in the plugins dashboard
 2. Navigate to the 'Upload' area
-3. Select `pt-content-views.zip` from your computer
+3. Select `content-views-query-and-display-post-page.zip` from your computer
 4. Click 'Install Now'
 5. Activate the plugin in the Plugin dashboard
 
 = Using FTP =
 
-1. Download `pt-content-views.zip`
+1. Download `content-views-query-and-display-post-page.zip`
 2. Extract the `pt-content-views` directory to your computer
 3. Upload the `pt-content-views` directory to the `/wp-content/plugins/` directory
 4. Activate the plugin in the Plugin dashboard
@@ -146,6 +148,13 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.2.0 =
+* Remove shortcodes in excerpt
+* Fix Scroll bug when click Show/Hide preview
+* Update Pagination setting
+* Optimize filters system
+* Compatibility update
+
 = 1.1.6 =
 * Fix bug auto selected terms which its value is number in Taxonomy settings box
 
@@ -189,6 +198,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Remove shortcodes in excerpt. Fix Scroll bug when click Show/Hide preview. Update Pagination setting. Optimize filters system. Compatibility update
 
 = 1.1.6 =
 Fix bug auto selected terms which its value is number in Taxonomy settings box

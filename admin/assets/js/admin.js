@@ -405,18 +405,6 @@
 				}
 
 				/**
-				 * Send request
-				 */
-				if ($self.options.can_preview) {
-
-					// Get settings data
-					var data = $('#' + _prefix + 'form-view').serialize();
-
-					// Call handle function
-					$self._preview_request($preview, data, _nonce, $this_btn);
-				}
-
-				/**
 				 * Animation
 				 */
 				// Scroll to preview box if want to show it
@@ -428,6 +416,16 @@
 					$('html, body').animate({
 						scrollTop: $preview.offset().top - 100
 					}, $self.options.scroll_time);
+
+					/// Send request
+					$preview.css('opacity', '0.2');
+					// Show loading icon
+					$preview.next().removeClass('hidden');
+
+					// Get settings data
+					var data = $('#' + _prefix + 'form-view').serialize();
+					// Call handle function
+					$self._preview_request($preview, data, _nonce, $this_btn);
 				} else {
 					// Scroll to previous position
 					$('html, body').animate({
@@ -438,7 +436,9 @@
 					$this_btn.html(PT_CV_ADMIN.btn.preview.show);
 
 					// Enable preview
-					$self.options.can_preview = 1;
+					setTimeout(function(){
+						$self.options.can_preview = 1;
+					}, $self.options.scroll_time);
 				}
 			});
 		},
@@ -469,11 +469,12 @@
 				data      : data,
 				beforeSend: function () {
 					// Show loading icon
-					preview_box.next().toggleClass('hidden');
+					// preview_box.next().toggleClass('hidden');
 				},
 			}).done(function (response) {
+					preview_box.css('opacity', '1');
 					// Hide loading icon
-					preview_box.next().toggleClass('hidden');
+					preview_box.next().addClass('hidden');
 
 					// Update content of Preview box
 					preview_box.html(response);

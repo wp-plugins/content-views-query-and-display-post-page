@@ -36,21 +36,41 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 
 			foreach ( $terms_of_taxonomies as $taxonomy_slug => $terms ) {
 
-				$result[$taxonomy_slug] = array(
+				$result[$taxonomy_slug] = array(					
+					
 					// In
 					array(
 						'label'  => array(
 							'text' => __( 'In ', PT_CV_DOMAIN ),
 							//'text' => __( 'In ', PT_CV_DOMAIN ) . $taxonomies[$taxonomy_slug],
 						),
-						'params' => array(
+						'params'        => array(
 							array(
-								'type'     => 'select',
-								'name'     => $taxonomy_slug . '__in[]',
-								'options'  => $terms,
-								'std'      => '',
-								'class'    => 'select2',
-								'multiple' => '1',
+								'type'   => 'group',
+								'params' => apply_filters( PT_CV_PREFIX_ . 'term_quick_filter_in',
+									array(
+										array(
+											'label'         => array(
+												'text' => __( '', PT_CV_DOMAIN ),
+											),
+											'extra_setting' => array(
+												'params' => array(
+													'width' => 12,
+												),
+											),
+											'params'        => array(
+												array(
+													'type'     => 'select',
+													'name'     => $taxonomy_slug . '__in[]',
+													'options'  => $terms,
+													'std'      => '',
+													'class'    => 'select2',
+													'multiple' => '1',
+												),
+											),
+										),
+									)
+								),
 							),
 						),
 					),
@@ -156,8 +176,8 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 						array(
 							'type'        => 'number',
 							'name'        => $prefix . 'items-per-page',
-							'std'         => '10',
-							'placeholder' => 'e.g. 10',
+							'std'         => '5',
+							'placeholder' => 'e.g. 5',
 							'desc'        => __( 'The number of items per page. If value of Limit option is not blank (empty), this value should be smaller than Limit value', PT_CV_DOMAIN ),
 						),
 					),
@@ -181,7 +201,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				),
 			);
 
-			$result = apply_filters( PT_CV_PREFIX_ . 'settings_pagination', $result );
+			$result = apply_filters( PT_CV_PREFIX_ . 'settings_pagination', $result, $prefix );
 
 			return $result;
 		}
@@ -282,6 +302,9 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'dependence'    => array( $prefix2 . 'meta-fields', 'yes' ),
 				),
+
+				// Taxonomies settings
+				apply_filters( PT_CV_PREFIX_ . 'settings_taxonomies_display', array() ),
 
 				// Content settings
 				array(
@@ -604,7 +627,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 						array(
 							'type'    => 'checkbox',
 							'name'    => $prefix . 'taxonomy',
-							'options' => PT_CV_Values::yes_no( 'yes', __( 'Show Terms (categories, post tags...)', PT_CV_DOMAIN ) ),
+							'options' => PT_CV_Values::yes_no( 'yes', __( 'Show Taxonomies (categories, tags...)', PT_CV_DOMAIN ) ),
 							'std'     => 'yes',
 						),
 					),

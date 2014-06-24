@@ -71,7 +71,12 @@
 
 			var view_id = this_.attr('data-id');
 			var spinner = this_.next('.' + _prefix + 'spinner');
-			var pages_holder = this_.prev('.' + _prefix + 'view');
+			
+			var pagination_wrapper = this_;
+			if (this_.parent('.' + _prefix + 'pagination-wrapper').length) {
+				pagination_wrapper = this_.parent('.' + _prefix + 'pagination-wrapper');
+			}			
+			var pages_holder = pagination_wrapper.prev('.' + _prefix + 'view');
 
 			// For Timeline
 			if ( pages_holder.hasClass(_prefix + 'timeline') ) {
