@@ -282,7 +282,7 @@ class PT_Content_Views_Admin {
 		$this->plugin_screen_hook_suffix = add_menu_page(
 			__( 'Content View Settings', $this->plugin_slug ),
 			__( 'Content View Settings', $this->plugin_slug ),
-			'manage_options',
+			'edit_posts',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' ),
 			'',

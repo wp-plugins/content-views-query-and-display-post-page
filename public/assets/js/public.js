@@ -28,7 +28,7 @@
 					bootstrapMajorVersion: 3,
 					totalPages           : total_pages,
 					shouldShowPage       : function (type, page, current) {
-						if (total_pages < 10) {
+						if (total_pages && total_pages < 10) {
 							switch (type) {
 								case "first":
 								case "last":
@@ -36,6 +36,8 @@
 								default:
 									return true;
 							}
+						} else {
+							return true;
 						}
 					},
 					// When changing page
@@ -71,11 +73,11 @@
 
 			var view_id = this_.attr('data-id');
 			var spinner = this_.next('.' + _prefix + 'spinner');
-			
+
 			var pagination_wrapper = this_;
 			if (this_.parent('.' + _prefix + 'pagination-wrapper').length) {
 				pagination_wrapper = this_.parent('.' + _prefix + 'pagination-wrapper');
-			}			
+			}
 			var pages_holder = pagination_wrapper.prev('.' + _prefix + 'view');
 
 			// For Timeline

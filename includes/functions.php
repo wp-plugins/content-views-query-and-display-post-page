@@ -65,7 +65,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 */
 		static function menu_add_sub( $parent_slug, $page_title, $menu_title, $sub_page, $class ) {
 			return add_submenu_page(
-				$parent_slug, $page_title, $menu_title, 'manage_options', $parent_slug . '-' . $sub_page, array( $class, 'display_sub_page_' . $sub_page )
+				$parent_slug, $page_title, $menu_title, 'edit_posts', $parent_slug . '-' . $sub_page, array( $class, 'display_sub_page_' . $sub_page )
 			);
 		}
 

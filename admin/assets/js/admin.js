@@ -390,6 +390,7 @@
 			var offset_top;
 
 			$('#' + _prefix + 'show-preview').click(function (e) {
+				e.stopPropagation();
 				e.preventDefault();
 
 				var $this_btn = $(this);

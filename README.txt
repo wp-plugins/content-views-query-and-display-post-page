@@ -4,19 +4,18 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display custom posts any where (home page, sidebar, footer widget) in responsive layouts (grid, list) easier than ever, without coding!
+Display posts any where (home page, sidebar, footer widget) in responsive grid layouts easier than ever, without coding!
 
 == Description ==
 
 Have you ever wanted to:
 
-* display some specific posts in home page of your WordPress site
-* display multiple posts in a page
-* display posts in responsive grid layout
+* display specific posts in home page, in a page, in footer widget, in sidebar of your WordPress site
+* display latest posts in responsive grid layout
 * display posts in descending order of Title
 * replace boring Next, Prev button of WordPress theme by a beautiful pagination
 * display thumbnail in different size than 150x150 or 300x300
@@ -33,8 +32,8 @@ But now, with Content Views plugin, you can do above things in minutes, without 
 [Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Visit Content Views website") provides an intuitive form to query posts and display posts in **responsive** layouts (grid, scrollable list, collapsible list) quickly & easily, in very 3 simple steps:
 
 * Step 1 : Select criteria (author, category, tag...) to query your wanted posts
-* Step 2 : Select a nice layout to display posts
-* Step 3 : Paste shortcode **[pt_view id="UNIQUE_ID"]** to editor of a post, page or a Text widget where you want to display your posts. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in current theme of your WordPress site. (Please check FAQ to know how to get UNIQUE_ID of View)
+* Step 2 : Select a responsive layout to display posts
+* Step 3 : Paste shortcode **[pt_view id="UNIQUE_ID"]** to editor of a page, to a Text widget where you want to display your posts. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in current theme of your WordPress site. (Please check FAQ to know how to get UNIQUE_ID of View)
 
 = A features list of Content Views plugin: =
 
@@ -50,14 +49,14 @@ But now, with Content Views plugin, you can do above things in minutes, without 
 
 **in Step 2, you can:**
 
-* Select a layout to display posts: Grid, Collapsible List, Scrollable List. More awesome layouts are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
-* Choose a layout format of each item (item is the output of a post, page at front-end): 1 column, 2 columns
-* Select fields to display (thumbnail, title, content, meta fields)
-* Select size of thumbnail to display
+* Select a responsive layout to display posts: Grid, List(Collapsible/Scrollable). More awesome layouts are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
+* Display fields (thumbnail, title, content, meta fields) in vertical direction. Or display thumbnail in left/right side of other fields
+* Select what fields (thumbnail, title, content, meta fields) to display
+* Select thumbnail size
 * Display full content, or display only excerpt with specific amount of words
-* Select meta fields to display (date, author, terms [categories, tags], comment count)
+* Select what meta fields (date, author, terms [categories, tags], comment count) to display
 * Enable/Disable pagination
-* Open an item in new tab, current tab
+* Open in new tab, current tab (when click on title, thumbnail of post)
 
 Also, you can import/export 'View' to use in other WordPress sites (Please check **FAQ** tab to know what is 'View')
 
@@ -66,12 +65,12 @@ Also, you can import/export 'View' to use in other WordPress sites (Please check
 
 * Woocommerce support
 * Display posts in more Awesome layouts: Pinterest, Timeline
-* More beautiful output & powerful settings of Grid, Collapsible List, Scrollable List
+* More beautiful output & powerful settings of Grid, List
 * Drag & drop to change display order of fields (thumbnail, title, content, meta fields)
 * Customize Font settings for Title, Content, Meta fields
-* Custom style for Thumbnail
+* Custom style for Thumbnail: round, circle, border
 * Customize style & text of "Read more" button
-* Additional pagination option
+* "Load more" button for pagination
 * And much more...
 
 are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro")** plugin.
@@ -148,6 +147,11 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.2.1 =
+* Fix pagination bug if number of pages > 10
+* Fix bug of Preview button: click event fires twice
+* Enable other user roles (Editor, Author, Contributor) to see Content Views menu and manage Views
+
 = 1.2.0 =
 * Remove shortcodes in excerpt
 * Fix Scroll bug when click Show/Hide preview
@@ -198,6 +202,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Fix pagination bug if number of pages > 10. Fix bug of Preview button: click event fires twice. Enable other user roles (Editor, Author, Contributor) to see Content Views menu and manage Views
 
 = 1.2.0 =
 Remove shortcodes in excerpt. Fix Scroll bug when click Show/Hide preview. Update Pagination setting. Optimize filters system. Compatibility update
