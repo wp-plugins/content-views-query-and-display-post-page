@@ -245,10 +245,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
 		 * @param int $current_page  The current page
 		 * @param int $post_per_page  The number of posts per page
+		 * @param int $id  ID of View
 		 *
 		 * @return string Full HTML output for Content View
 		 */
-		static function content_items_wrap( $content_items, $current_page, $post_per_page ) {
+		static function content_items_wrap( $content_items, $current_page, $post_per_page, $id ) {
 			global $dargs;
 
 			if ( empty( $content_items ) ) {
@@ -318,7 +319,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				$view_class = apply_filters( PT_CV_PREFIX_ . 'view_class', array( PT_CV_PREFIX . 'view', PT_CV_PREFIX . $view_type ) );
 
 				// ID for the wrapper
-				$view_id = PT_CV_PREFIX . 'view-' . PT_CV_Functions::string_random();
+				$view_id = PT_CV_PREFIX . 'view-' . $id;
 
 				$output = sprintf( '<div class="%s" id="%s" %s>%s</div>', esc_attr( implode( ' ', array_filter( $view_class ) ) ), esc_attr( $view_id ), $page_attr, $html );
 

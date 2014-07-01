@@ -4,18 +4,18 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display posts any where (home page, sidebar, footer widget) in responsive grid layouts easier than ever, without coding!
+Query and display posts in responsive grid, list layouts easier than ever, without coding!
 
 == Description ==
 
 Have you ever wanted to:
 
-* display specific posts in home page, in a page, in footer widget, in sidebar of your WordPress site
-* display latest posts in responsive grid layout
+* display multiple posts in responsive grid layout at home page
+* display multiple posts in responsive grid layout at a specific page
 * display posts in descending order of Title
 * replace boring Next, Prev button of WordPress theme by a beautiful pagination
 * display thumbnail in different size than 150x150 or 300x300
@@ -63,7 +63,8 @@ Also, you can import/export 'View' to use in other WordPress sites (Please check
 
 = More amazing features: =
 
-* Woocommerce support
+* WooCommerce support
+* Portfolio support
 * Display posts in more Awesome layouts: Pinterest, Timeline
 * More beautiful output & powerful settings of Grid, List
 * Drag & drop to change display order of fields (thumbnail, title, content, meta fields)
@@ -147,6 +148,10 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.2.2 =
+* Performance optimization for pagination request
+* Add translation file (.po)
+
 = 1.2.1 =
 * Fix pagination bug if number of pages > 10
 * Fix bug of Preview button: click event fires twice
@@ -202,6 +207,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+Performance optimization for pagination request. Add translation file (.po)
 
 = 1.2.1 =
 Fix pagination bug if number of pages > 10. Fix bug of Preview button: click event fires twice. Enable other user roles (Editor, Author, Contributor) to see Content Views menu and manage Views

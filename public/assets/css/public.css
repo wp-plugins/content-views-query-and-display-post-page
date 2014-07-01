@@ -95,6 +95,9 @@
 	float: left;
 	margin: 0 auto !important;
 }
+.pagination>li>a {
+	cursor: pointer;
+}
 .pt-cv-spinner {
 	display:            inline-block;
 	opacity:            0;
