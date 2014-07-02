@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -148,6 +148,9 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.2.3 =
+* Fix warning: Cannot send session cache limiter - headers already sent
+
 = 1.2.2 =
 * Performance optimization for pagination request
 * Add translation file (.po)
@@ -207,6 +210,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.2.3 =
+Fix warning: Cannot send session cache limiter - headers already sent
 
 = 1.2.2 =
 Performance optimization for pagination request. Add translation file (.po)

@@ -153,6 +153,16 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		}
 
 		/**
+		 * Start SESSION
+		 */
+		static function session_start() {
+			if( ! session_id() )
+			{
+				session_start();
+			}
+		}
+
+		/**
 		 * Get thumbnail dimensions
 		 *
 		 * @param array $fargs The settings of thumbnail
@@ -408,10 +418,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		static function view_process_settings( $id, $settings, $pargs = array() ) {
 			if ( ! $settings ) {
 				return __( 'Empty settings', PT_CV_DOMAIN );
-			}
-
-			if ( ! isset( $_SESSION ) ) {
-				session_start();
 			}
 
 			$post_fix = empty( $id ) ? '' : '_frontend';
