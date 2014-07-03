@@ -408,7 +408,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					switch ( $fargs['content']['show'] ) {
 						case 'excerpt':
 							$length   = (int) $fargs['content']['length'];
-							$readmore = '<br />' . PT_CV_Html::link_button( get_permalink(), 'success', __( 'Read More' ), PT_CV_PREFIX . 'readmore', 'btn-sm' );
+							$readmore = '<br />' . PT_CV_Html::link_button( get_permalink(), 'success', __( 'Read More', PT_CV_DOMAIN ), PT_CV_PREFIX . 'readmore', 'btn-sm' );
 							$content  = wp_trim_words( strip_shortcodes( get_the_content() ), $length, ' ...' . apply_filters( PT_CV_PREFIX_ . 'field_content_readmore', $readmore, $fargs['content'], get_permalink() ) );
 							break;
 
@@ -702,24 +702,29 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						fclose( $fp );
 					}
 
-					$assets_files[$type] = PT_CV_PUBLIC_ASSETS_URI . $asset_file;
+					$assets_files[$type][] = PT_CV_PUBLIC_ASSETS_URI . $asset_file;
 				}
 			}
 
+			$assets_files = apply_filters( PT_CV_PREFIX_ . 'assets_files', $assets_files );
+
 			if ( is_admin() ) {
 				// Include assets file in Preview
-				foreach ( $assets_files as $type => $src ) {
-					PT_CV_Asset::include_inline( 'preview', $src, $type );
+				foreach ( $assets_files as $type => $srcs ) {
+					foreach ( $srcs as $src ) {
+						PT_CV_Asset::include_inline( 'preview', $src, $type );
+					}
 				}
 			} else {
 				// Enqueue merged asset contents
-				foreach ( $assets_files as $type => $src ) {
+				foreach ( $assets_files as $type => $srcs ) {
+					foreach ( $srcs as $src ) {
+						$type     = ( $type == 'js' ) ? 'script' : 'style';
+						$function = "wp_enqueue_{$type}";
 
-					$type     = ( $type == 'js' ) ? 'script' : 'style';
-					$function = "wp_enqueue_{$type}";
-
-					if ( function_exists( $function ) ) {
-						$function( PT_CV_PREFIX . $type, $src );
+						if ( function_exists( $function ) ) {
+							$function( PT_CV_PREFIX . $type, $src );
+						}
 					}
 				}
 			}

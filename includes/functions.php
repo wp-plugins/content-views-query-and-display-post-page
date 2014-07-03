@@ -416,7 +416,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string HTML output of Content View
 		 */
 		static function view_process_settings( $id, $settings, $pargs = array() ) {
-			if ( ! $settings ) {
+			if ( empty( $settings ) ) {
 				return __( 'Empty settings', PT_CV_DOMAIN );
 			}
 
@@ -590,7 +590,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				// Total number of pages
 				$max_num_pages = ceil( $total_items / $args['posts_per_page'] );
 
-				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $unique_id );
+				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, is_admin() ? '' : $unique_id );
 			}
 
 			return $html;
@@ -1030,7 +1030,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			parse_str( $_POST['data'], $settings );
 
 			// Store settings
-			session_start();
 			$_SESSION[PT_CV_PREFIX . 'settings'] = $settings;
 
 			// Show View output
@@ -1055,7 +1054,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$post_fix = empty( $id ) ? '' : '_frontend';
 
 			// Get saved $settings
-			session_start();
 			if ( isset( $_SESSION[PT_CV_PREFIX . 'settings' . $post_fix] ) ) {
 				$settings = $_SESSION[PT_CV_PREFIX . 'settings' . $post_fix];
 			} else {

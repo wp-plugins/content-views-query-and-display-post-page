@@ -30,7 +30,6 @@ if ( ! empty ( $_GET['id'] ) ) {
 }
 
 // Store settings
-session_start();
 $_SESSION[PT_CV_PREFIX . 'settings'] = $settings;
 
 // Submit handle
@@ -556,6 +555,8 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 		),
 
 	);
+	
+	$options = apply_filters( PT_CV_PREFIX_ . 'display_settings', $options );
 	echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 	?>
 </div>
