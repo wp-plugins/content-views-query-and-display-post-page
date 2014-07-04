@@ -231,7 +231,7 @@ class PT_Content_Views {
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( PT_CV_FILE_PRO ) ) . '/languages/' );
+		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( PT_CV_FILE ) ) . '/languages/' );
 	}
 
 	/**

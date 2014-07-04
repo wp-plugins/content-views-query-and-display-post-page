@@ -535,10 +535,9 @@
 			 * Toggle 'Thumbnail settings' when change 'View type'
 			 */
 
-			var fn_view_type = function (this_val, layout_format) {
+			var fn_layout_format = function (this_val, layout_format) {
 				var expect_val = [ 'scrollable', 'pinterest', 'timeline' ];
 
-				// 'View type' = Pinterest | Timeline
 				if ($.inArray(this_val, expect_val) >= 0) {
 					// Trigger select 1-col
 					$(layout_format + '[value="1-col"]').trigger('click');
@@ -553,51 +552,17 @@
 			var view_type = '[name="' + _prefix + 'view-type' + '"]';
 
 			// Run on page load
-			fn_view_type($(view_type + ':checked').val(), layout_format);
+			fn_layout_format($(view_type + ':checked').val(), layout_format);
 
 			// Run on change
 			$(view_type).change(function () {
-				fn_view_type($(view_type + ':checked').val(), layout_format);
+				fn_layout_format($(view_type + ':checked').val(), layout_format);
 			});
 		},
 		/**
-		 * Disable pagination in some cases
-		 *
-		 * @param string _prefix
+		 * Toggle text of Preview button
 		 * @returns {undefined}
 		 */
-		_pagination_disable         : function () {
-			var _prefix = this.options._prefix;
-
-			var fn_selector = function (this_val) {
-				var layout_format_el = '[name="' + _prefix + 'layout-format' + '"]';
-
-				var expect_val = ['grid', 'collapsible'];
-				if ($.inArray(this_val, expect_val) < 0) {
-					// Disable "2 columns" option
-					$(layout_format_el + '[value="2-col"]').attr('disabled', true);
-					$(layout_format_el + '[value="2-col"]').attr('checked', false);
-
-					// Auto select "1 column" option
-					$(layout_format_el + '[value="1-col"]').attr('checked', true);
-				} else {
-					// Enable "2 columns" option
-					$(layout_format_el + '[value="2-col"]').removeAttr('disabled');
-					$(layout_format_el + '[value="2-col"]').removeAttr('checked');
-				}
-			};
-
-			var selector = '[name="' + _prefix + 'view-type' + '"]';
-
-			// Run on page load
-			fn_selector($(selector + ':checked').val());
-
-			// Run on change
-			$(selector).change(function () {
-				fn_selector($(selector + ':checked').val());
-			});
-		},
-
 		_preview_btn_toggle : function(){
 
 			var $self = this;
@@ -660,42 +625,10 @@
 			$('.' + _prefix + 'bg-none').parent().css({'background-color': '#fff', 'padding-bottom': '10px'});
 			$('.' + _prefix + 'bg-none').parent().addClass('unsortable');
 
-			// Disable pagination
-			$self._pagination_disable();
-
 			// Prevent click on Links but title
 			$('#pt-cv-preview-box').on('click', 'a', function (e) {
 				e.preventDefault();
-
-//				alert(PT_CV_ADMIN.text.prevent_click);
 			});
 		},
-
-		/**
-		 * Do handy toggle for Excerpt settings
-		 *
-		 * @returns {undefined}
-		 */
-		handy_toggle_excerpt_settings: function () {
-			var _prefix = this.options._prefix;
-
-			var _this_toggle = function (show_content) {
-				if (!show_content) {
-					$('#' + _prefix + 'group-excerpt-settings').addClass('hidden');
-				} else {
-					$('#' + _prefix + 'group-excerpt-settings').removeClass('hidden');
-				}
-			};
-
-			var selector = '[name="' + _prefix + 'show-field-content' + '"]';
-
-			// Run on page load
-			_this_toggle($(selector).is(':checked'));
-
-			// Run on change
-			$(selector).change(function () {
-				_this_toggle($(selector).is(':checked'));
-			});
-		}
 	};
 }(jQuery) );

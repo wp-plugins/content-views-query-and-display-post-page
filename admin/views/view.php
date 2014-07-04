@@ -121,6 +121,7 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 	<li>
 		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>display-settings" data-toggle="tab"><?php _e( 'Display Settings', PT_CV_DOMAIN ); ?></a>
 	</li>
+	<?php do_action( PT_CV_PREFIX_ . 'setting_tabs_header', $settings ); ?>
 </ul>
 
 <!-- Tab panes -->
@@ -555,12 +556,16 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 		),
 
 	);
-	
+
 	$options = apply_filters( PT_CV_PREFIX_ . 'display_settings', $options );
 	echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 	?>
 </div>
 <!-- end Display Settings -->
+
+<?php
+do_action( PT_CV_PREFIX_ . 'setting_tabs_content', $settings );
+?>
 
 </div>
 
