@@ -26,8 +26,10 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Compare current Wordpress version with a version
 		 *
 		 * @global string $wp_version
-		 * @param string $version_to_compare
-		 * @param string $operator
+		 *
+		 * @param string  $version_to_compare
+		 * @param string  $operator
+		 *
 		 * @return boolean
 		 */
 		static function wp_version_compare( $version_to_compare, $operator = '>=' ) {
@@ -36,6 +38,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			global $wp_version;
+
 			// Check if using Wordpress version 3.7 or higher
 			return version_compare( $wp_version, $version_to_compare, $operator );
 		}
@@ -156,8 +159,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Start SESSION
 		 */
 		static function session_start() {
-			if( ! session_id() )
-			{
+			if ( ! session_id() ) {
 				session_start();
 			}
 		}
@@ -178,9 +180,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get value of a setting from global settings array
 		 *
-		 * @param string      $field        The full name of setting to get value
-		 * @param array       $array_to_get Array to get values of wanted setting
-		 * @param mixed|null  $assign       The value to assign if setting is not found
+		 * @param string     $field        The full name of setting to get value
+		 * @param array      $array_to_get Array to get values of wanted setting
+		 * @param mixed|null $assign       The value to assign if setting is not found
 		 */
 		static function setting_value( $field, $array_to_get, $assign = NULL ) {
 			return isset( $array_to_get[$field] ) ? $array_to_get[$field] : $assign;
@@ -225,7 +227,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get value of some setting options by prefix
 		 *
-		 * @param string $prefix    The prefix in name of setting options
+		 * @param string $prefix The prefix in name of setting options
 		 */
 		static function settings_values_by_prefix( $prefix ) {
 			global $pt_view_settings;
@@ -250,6 +252,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function post_terms( $post ) {
+			global $pt_post_terms;
+
 
 			// List of HTML link to terms
 			$links = array();
@@ -259,8 +263,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			$taxonomies = apply_filters( PT_CV_PREFIX_ . 'taxonomies_list', $taxonomies );
 
+			// Get post ID
+			$post_id = is_object( $post ) ? $post->ID : $post;
+
 			// Get lists of terms of this post
-			$terms = wp_get_object_terms( $post->ID, $taxonomies );
+			$terms = wp_get_object_terms( $post_id, $taxonomies );
 
 			foreach ( $terms as $term ) {
 				$links[] = sprintf(
@@ -269,6 +276,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					__( 'View all posts in', PT_CV_DOMAIN ),
 					$term->name
 				);
+
+				if ( ! isset( $pt_post_terms[$post_id] ) ) {
+					$pt_post_terms[$post_id] = array();
+				}
+				$pt_post_terms[$post_id][$term->slug] = $term->name;
 			}
 
 			return implode( ', ', $links );
@@ -330,6 +342,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Get View id in post table, from "id" meta key value
 		 *
 		 * @param string $meta_id ID of custom field
+		 *
 		 * @return int Return Post ID of this view
 		 */
 		static function post_id_from_meta_id( $meta_id ) {
@@ -400,6 +413,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Get view settings
 			if ( $post_id ) {
 				$view_settings = get_post_meta( $post_id, PT_CV_META_SETTINGS, true );
+
 				return is_array( $view_settings ) ? $view_settings : array();
 			}
 
@@ -440,29 +454,31 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$view_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'view-type', $pt_view_settings );
 
 			// Store Display settings
-			global $dargs;
+			global $dargs, $pt_query_args;
 
 			if ( $pargs && isset( $pargs['session_id'] ) ) {
-				$unique_id = $pargs['session_id'];
+				$session_id = $pargs['session_id'];
 			}
 
-			if ( empty( $unique_id ) ) {
-				$unique_id = PT_CV_Functions::string_random();
+			if ( empty( $session_id ) ) {
+				$session_id = PT_CV_Functions::string_random();
 			}
 
-			if ( $unique_id ) {
+			if ( $session_id ) {
+
+				global $pt_view_sid;
+				$pt_view_sid = $session_id;
 
 				$session_data = array_merge(
 					array( '$args' => '', '$dargs' => '' ),
-					isset( $_SESSION[PT_CV_PREFIX . 'view_' . $unique_id] ) ? (array) $_SESSION[PT_CV_PREFIX . 'view_' . $unique_id] : array()
+					isset( $_SESSION[PT_CV_PREFIX . 'view_' . $session_id] ) ? (array) $_SESSION[PT_CV_PREFIX . 'view_' . $session_id] : array()
 				);
 
-				$args = $session_data['$args'];
+				$args  = $session_data['$args'];
 				$dargs = $session_data['$dargs'];
 			}
 
-			if ( empty( $args ) || empty( $dargs ) )
-			{
+			if ( empty( $args ) || empty( $dargs ) ) {
 				/**
 				 * Get Query parameters
 				 * Set default values
@@ -475,7 +491,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 				// Post in
 				if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) ) {
-					$post_in              = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) );
+					$post_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) );
 					$args['post__in'] = array_map( 'intval', array_filter( $post_in ) );
 				}
 
@@ -514,12 +530,12 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 				// Filter
 				$dargs = apply_filters( PT_CV_PREFIX_ . 'all_display_settings', $dargs );
-				$args = apply_filters( PT_CV_PREFIX_ . 'query_parameters', $args );
+				$args  = apply_filters( PT_CV_PREFIX_ . 'query_parameters', $args );
 
 				// Save settings
-				if ( ! empty( $unique_id ) ) {
-					$_SESSION[PT_CV_PREFIX . 'view_' . $unique_id] = array(
-						'$args' => $args,
+				if ( ! empty( $session_id ) ) {
+					$_SESSION[PT_CV_PREFIX . 'view_' . $session_id] = array(
+						'$args'  => $args,
 						'$dargs' => $dargs,
 					);
 				}
@@ -535,6 +551,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			if ( $error ) {
 				return ( implode( '</p><p>', $error ) );
 			}
+
+			// Update global query parameters variable
+			$pt_query_args = $args;
+
+			do_action( PT_CV_PREFIX_ . 'add_global_variables' );
 
 			/**
 			 * Output Items
@@ -557,7 +578,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					global $post;
 
 					// Output HTML for this item
-					$content_items[] = PT_CV_Html::view_type_output( $view_type, $post );
+					$content_items[$post->ID] = PT_CV_Html::view_type_output( $view_type, $post );
 				}
 			} else {
 				// Get no post found class
@@ -572,6 +593,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			// Restore original Post Data
 			wp_reset_postdata();
+
+			// Filter array of items
+			$content_items = apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items );;
 
 			/**
 			 * Output Pagination
@@ -590,7 +614,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				// Total number of pages
 				$max_num_pages = ceil( $total_items / $args['posts_per_page'] );
 
-				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, is_admin() ? '' : $unique_id );
+				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $session_id );
 			}
 
 			return $html;
@@ -764,7 +788,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get Fields settings
 		 *
-		 * @param array $dargs     The settings array of Fields
+		 * @param array $dargs The settings array of Fields
 		 */
 		static function view_get_display_settings( &$dargs ) {
 			global $pt_view_settings;
@@ -786,7 +810,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			 * Fields settings
 			 */
 			$cfields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'show-field-' );
-			$cfields = (array) array_keys( (array) $cfields_settings );
+			$cfields          = (array) array_keys( (array) $cfields_settings );
 			foreach ( $cfields as $field ) {
 				// If show this field
 				if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'show-field-' . $field, $pt_view_settings ) ) {
@@ -814,9 +838,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 							$field_setting = array();
 
-							$prefix = PT_CV_PREFIX . 'meta-fields-';
+							$prefix               = PT_CV_PREFIX . 'meta-fields-';
 							$meta_fields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'meta-fields-' );
-							$fields = (array) array_keys( (array) $meta_fields_settings );
+							$fields               = (array) array_keys( (array) $meta_fields_settings );
 
 							PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
 
@@ -851,18 +875,18 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get Pagination settings
 		 *
-		 * @param array $dargs     The settings array of Fields
-		 * @param array $args      The parameters array
-		 * @param array $pargs     The pagination settings array
+		 * @param array $dargs The settings array of Fields
+		 * @param array $args  The parameters array
+		 * @param array $pargs The pagination settings array
 		 */
 		static function view_get_pagination_settings( &$dargs, &$args, $pargs ) {
 			global $pt_view_settings;
 
 			// Get Limit value
-			$limit = trim( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'limit', $pt_view_settings ) );
-			$limit = ( empty( $limit ) || $limit === '-1' ) ? 10000000 : (int) $limit;
+			$limit         = trim( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'limit', $pt_view_settings ) );
+			$limit         = ( empty( $limit ) || $limit === '-1' ) ? 10000000 : (int) $limit;
 			$args['limit'] = $args['posts_per_page'] = $limit;
-			$offset = 0;
+			$offset        = 0;
 
 			// Get pagination enable/disable
 			$pagination = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'enable-pagination', $pt_view_settings );
@@ -893,17 +917,14 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			$offset = apply_filters( PT_CV_PREFIX_ . 'settings_args_offset', $offset );
 
-			// Not reaching out of limit
-			if ( $offset < $limit ) {
-				// Set 'offset' parameter
-				$args['offset'] = $offset;
-			}
+			// Set 'offset' parameter
+			$args['offset'] = $offset;
 		}
 
 		/**
 		 * Get Other settings
 		 *
-		 * @param array $dargs     The settings array of Fields
+		 * @param array $dargs The settings array of Fields
 		 */
 		static function view_get_other_settings( &$dargs ) {
 			global $pt_view_settings;
@@ -955,7 +976,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			update_post_meta( $post_id, PT_CV_META_SETTINGS, (array) $_POST );
 
 			// Update post title
-			if ( strpos( $title,'[ID:' ) === false ) {
+			if ( strpos( $title, '[ID:' ) === false ) {
 				PT_CV_Functions::post_insert( array( 'ID' => $post_id, 'title' => sprintf( '%s [ID: %s]', $title, $view_id ) ) );
 			}
 
@@ -1009,7 +1030,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$edit_link = admin_url( 'admin.php?page=' . PT_CV_DOMAIN . '-add' );
 			if ( ! empty( $view_id ) ) {
 				$query_args = array( 'id' => $view_id );
-				$edit_link = add_query_arg( $query_args, $edit_link );
+				$edit_link  = add_query_arg( $query_args, $edit_link );
 			}
 
 			return $edit_link;
@@ -1049,9 +1070,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			check_ajax_referer( PT_CV_PREFIX_ . 'ajax_nonce', 'ajax_nonce' );
 
 			// Session id
-			$id = esc_sql( $_POST['id'] );
+			$sid = esc_sql( empty( $_POST['sid'] ) ? '' : $_POST['sid'] );
 
-			$post_fix = empty( $id ) ? '' : '_frontend';
+			$post_fix = is_admin() ? '' : '_frontend';
 
 			// Get saved $settings
 			if ( isset( $_SESSION[PT_CV_PREFIX . 'settings' . $post_fix] ) ) {
@@ -1061,10 +1082,10 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			// Pagination settings
-			$pargs = array( 'session_id' => $id , 'page' => (int) esc_sql( $_POST['page'] ) );
+			$pargs = array( 'session_id' => $sid, 'page' => (int) esc_sql( $_POST['page'] ) );
 
 			// Show View output
-			echo balanceTags( PT_CV_Functions::view_process_settings( null, $settings, $pargs ) );
+			echo balanceTags( PT_CV_Functions::view_process_settings( $post_fix, $settings, $pargs ) );
 
 			// Must exit
 			die;

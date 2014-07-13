@@ -66,14 +66,14 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 
 			self::$options = get_option( PT_CV_OPTION_NAME );
 			?>
-				<form method="post" action="options.php">
-					<?php
-					// This prints out all hidden setting fields
-					settings_fields( PT_CV_OPTION_NAME . '_group' );
-					do_settings_sections( PT_CV_DOMAIN );
-					submit_button();
-					?>
-				</form>
+			<form method="post" action="options.php">
+				<?php
+				// This prints out all hidden setting fields
+				settings_fields( PT_CV_OPTION_NAME . '_group' );
+				do_settings_sections( PT_CV_DOMAIN );
+				submit_button();
+				?>
+			</form>
 			<?php
 			$text = ob_get_clean();
 
@@ -92,25 +92,32 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 			);
 
 			// Common setting Section
-			$this_section = 'setting_unload_bootstrap';
+			$this_section = 'setting_frontend_assets';
 			add_settings_section(
 				$this_section, // ID
 				__( '', PT_CV_DOMAIN ), // Title
-				array( __CLASS__, 'section_callback_setting_unload_bootstrap' ), // Callback
+				array( __CLASS__, 'section_callback_setting_frontend_assets' ), // Callback
 				PT_CV_DOMAIN // Page
 			);
 
 			// Define Common setting fields
-			$account_fields = array(
+			$frontend_assets_fields = array(
 				array(
 					'id'    => 'unload_bootstrap',
 					'title' => '<strong>' . __( 'Frontend assets', PT_CV_DOMAIN ) . '</strong>',
 				),
 			);
 
+			// Filter Frontend assets option
+			$frontend_assets_fields = apply_filters( PT_CV_PREFIX_ . 'frontend_assets_fields', $frontend_assets_fields );
+
+			// Add classes to find callback function for extra options
+			$defined_in_class = (array) apply_filters( PT_CV_PREFIX_ . 'defined_in_class', array() );
+
 			// Register Common setting fields
-			foreach ( $account_fields as $field ) {
-				self::field_register( $field, $this_section );
+			foreach ( $frontend_assets_fields as $field ) {
+				$class = ( array_key_exists( $field['id'], $defined_in_class ) ) ? $defined_in_class[$field['id']] : __CLASS__;
+				self::field_register( $field, $this_section, $class );
 			}
 
 			do_action( PT_CV_PREFIX_ . 'settings_page' );
@@ -136,7 +143,7 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 		 *
 		 * @param array  $field_info Field information
 		 * @param string $section    Id of setting section
-		 * @param string $class    Class name to find the callback function
+		 * @param string $class      Class name to find the callback function
 		 */
 		public static function field_register( $field_info, $section, $class = __CLASS__ ) {
 			if ( ! $field_info ) {
@@ -158,7 +165,7 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 		public static function field_callback_unload_bootstrap() {
 			$field_name = 'unload_bootstrap';
 
-			self::_field_print( $field_name, 'checkbox', __( "Don't load Bootstrap style & script in frontend of website", PT_CV_DOMAIN ) );
+			self::_field_print( $field_name, 'checkbox', __( "Don't load <b>Bootstrap</b> style & script (in frontend of website)", PT_CV_DOMAIN ) );
 		}
 
 		/**
@@ -166,13 +173,13 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 		 *
 		 * @param string $field_name The ID of field
 		 * @param string $field_type The type of field
-		 * @param string $desc Description text
+		 * @param string $desc       Description text
 		 */
 		static function _field_print( $field_name, $field_type = 'text', $desc = '' ) {
 
 			// Get Saved value
 			$field_value = isset( self::$options[$field_name] ) ? esc_attr( self::$options[$field_name] ) : '';
-			$checked = '';
+			$checked     = '';
 
 			if ( in_array( $field_type, array( 'checkbox', 'radio' ) ) ) {
 				$checked = checked( 1, $field_value, false );
@@ -187,7 +194,7 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 				esc_attr( $field_type ), $field_id, PT_CV_OPTION_NAME, $field_value, $checked
 			);
 
-			if ( !empty( $desc)){
+			if ( ! empty( $desc ) ) {
 				printf( '<label for="%s" class="label-for-option">%s</label>', $field_id, $desc );
 			}
 		}
@@ -195,7 +202,7 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 		/**
 		 * Print the text for Common setting Section
 		 */
-		public static function section_callback_setting_unload_bootstrap() {
+		public static function section_callback_setting_frontend_assets() {
 
 		}
 	}

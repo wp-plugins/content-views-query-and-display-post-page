@@ -216,25 +216,30 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @param array  $html_item The HTML output of a item
 		 * @param string $class     The extra wrapper class of a item, such as col span
+		 * @param array  $post_id   The post ID
 		 *
 		 * @return string Full HTML output of a item
 		 */
-		static function content_item_wrap( $html_item, $class = '' ) {
+		static function content_item_wrap( $html_item, $class = '', $post_id = 0 ) {
 			global $dargs;
 
 			if ( empty( $html_item ) ) {
 				return '';
 			}
+
 			if ( is_array( $dargs ) ) {
 				// If only show Title
 				if ( isset( $dargs['fields'] ) && count( (array) $dargs['fields'] ) == 1 && $dargs['fields'][0] === 'title' ) {
 					$class .= ' ' . PT_CV_PREFIX . 'only-title';
 				}
 			}
+
 			// Get wrapper class of a item
 			$item_class = apply_filters( PT_CV_PREFIX_ . 'content_item_class', array( $class, PT_CV_PREFIX . 'content-item' ) );
 
-			$result = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( implode( ' ', $item_class ) ), balanceTags( $html_item ) );
+			$item_filter = apply_filters( PT_CV_PREFIX_ . 'content_item_filter_value', '', $post_id );
+
+			$result = sprintf( '<div class="%s" %s>%s</div>', esc_attr( implode( ' ', $item_class ) ), $item_filter, balanceTags( $html_item ) );
 
 			return $result;
 		}
@@ -243,9 +248,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Wrap content of all items
 		 *
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
-		 * @param int $current_page  The current page
-		 * @param int $post_per_page  The number of posts per page
-		 * @param int $id  ID of View
+		 * @param int   $current_page  The current page
+		 * @param int   $post_per_page The number of posts per page
+		 * @param int   $id            ID of View
 		 *
 		 * @return string Full HTML output for Content View
 		 */
@@ -285,9 +290,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					break;
 
 				default :
-					foreach ( $content_items as $content_item ) {
+					foreach ( $content_items as $post_id => $content_item ) {
 						// Wrap content of item
-						$content[] = PT_CV_Html::content_item_wrap( $content_item );
+						$content[] = PT_CV_Html::content_item_wrap( $content_item, '', $post_id );
 					}
 
 					$content = apply_filters( PT_CV_PREFIX_ . 'content_items_wrap', $content, $content_items, $current_page, $post_per_page );
@@ -328,7 +333,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				$output = $html;
 			}
 
-			return $output;
+			$before_output = ( $current_page === 1 ) ? apply_filters( PT_CV_PREFIX_ . 'before_output_html', '' ) : '';
+
+			return $before_output . $output;
 		}
 
 		/**
@@ -464,10 +471,17 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Custom data
 			$custom_attr = apply_filters( PT_CV_PREFIX_ . 'field_href_attrs', array(), $open_in, $oargs );
 
-			$html = sprintf(
-				'<a href="%s" class="%s" target="%s" %s>%s</a>',
-				get_permalink( $post->ID ), implode( ' ', array_filter( $href_class ) ), $open_in, implode( ' ', array_filter( $custom_attr ) ), balanceTags( $content )
-			);
+			// Don't wrap link
+			$no_link = apply_filters( PT_CV_PREFIX_ . 'field_href_no_link', 0, $open_in );
+
+			if ( $no_link ) {
+				$html = $content;
+			} else {
+				$html = sprintf(
+					'<a href="%s" class="%s" target="%s" %s>%s</a>',
+					get_permalink( $post->ID ), implode( ' ', array_filter( $href_class ) ), $open_in, implode( ' ', array_filter( $custom_attr ) ), balanceTags( $content )
+				);
+			}
 
 			return $html;
 		}
@@ -640,11 +654,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Output pagination
 		 *
 		 * @param type   $max_num_pages The total of pages
-		 * @param string $view_id       The current view id
+		 * @param string $session_id    The session ID of current view
 		 *
 		 * @return type
 		 */
-		static function pagination_output( $max_num_pages, $view_id ) {
+		static function pagination_output( $max_num_pages, $session_id ) {
 			global $dargs;
 
 			if ( ! $max_num_pages || (int) $max_num_pages === 1 ) {
@@ -655,9 +669,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 			$style = isset( $dargs['pagination-settings']['style'] ) ? $dargs['pagination-settings']['style'] : 'regular';
 			if ( $style == 'regular' ) {
-				$pagination_btn = sprintf( '<ul class="%s" data-totalpages="%s" data-id="%s"></ul>', PT_CV_PREFIX . 'pagination', esc_attr( $max_num_pages ), esc_attr( $view_id ) );
+				$pagination_btn = sprintf( '<ul class="%s" data-totalpages="%s" data-sid="%s"></ul>', PT_CV_PREFIX . 'pagination', esc_attr( $max_num_pages ), esc_attr( $session_id ) );
 			} else {
-				$pagination_btn = apply_filters( PT_CV_PREFIX_ . 'btn_more_html', $pagination_btn, $max_num_pages, $view_id );
+				$pagination_btn = apply_filters( PT_CV_PREFIX_ . 'btn_more_html', $pagination_btn, $max_num_pages, $session_id );
 			}
 			// Add loading icon
 			$pagination_btn .= self::html_loading_img( 12, PT_CV_PREFIX . 'spinner' );
@@ -735,6 +749,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 		/**
 		 * Scripts for Preview & WP frontend
+		 *
 		 * @param bool $is_admin Whether or not in WP Admin
 		 */
 		static function frontend_scripts( $is_admin = false ) {
@@ -773,7 +788,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Styles for Preview & WP frontend
 		 *
 		 * @global bool $is_IE
-		 * @param bool $is_admin Whether or not in WP Admin
+		 *
+		 * @param bool  $is_admin Whether or not in WP Admin
 		 */
 		static function frontend_styles( $is_admin = false ) {
 

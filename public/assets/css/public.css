@@ -1,9 +1,9 @@
 /* This stylesheet is used to style the public-facing components of the plugin. */
 
 .pt-cv-view {
-	position: relative;
+	position:      relative;
 	margin-bottom: 50px;
-	clear: both;
+	clear:         both;
 }
 
 /* Common */
@@ -29,9 +29,9 @@
 
 /* An Item */
 .pt-cv-content-item {
-	margin-bottom: 1.875em;
-	position:      relative;
-	overflow:      hidden;
+	padding-bottom: 1.875em;
+	position:       relative;
+	overflow:       hidden;
 }
 
 /* For the output which shows only Title */
@@ -78,12 +78,12 @@
 /* Meta fields */
 .pt-cv-meta-fields {
 	font-size:      13px;
-	margin-top: 15px;
+	margin-top:     15px;
 	padding-bottom: 15px;
 }
 
 .pt-cv-meta-fields * {
-	color:          rgba(0, 0, 0, .5);
+	color: rgba(0, 0, 0, .5);
 }
 
 .pt-cv-meta-fields a {
@@ -92,12 +92,14 @@
 
 /* Pagination */
 .pt-cv-view + .pagination {
-	float: left;
+	float:  left;
 	margin: 0 auto !important;
 }
-.pagination>li>a {
+
+.pagination > li > a {
 	cursor: pointer;
 }
+
 .pt-cv-spinner {
 	display:            inline-block;
 	opacity:            0;
@@ -117,6 +119,7 @@
 	opacity: 1;
 	filter:  alpha(opacity=100);
 }
+
 .pt-cv-clear-pagination {
 	margin-bottom: 50px;
 }
@@ -147,12 +150,12 @@
 
 /* Caption with image */
 .pt-cv-cap-w-img {
-	background:   rgba(0, 0, 0, 0.6);
-	text-shadow:  0px 1px 1px #000;
-	left:         15px !important;
-	padding-left: 10px;
+	background:     rgba(0, 0, 0, 0.6);
+	text-shadow:    0px 1px 1px #000;
+	left:           15px !important;
+	padding-left:   10px;
 	padding-bottom: 0;
-	padding-top: 10px;
+	padding-top:    10px;
 }
 
 .pt-cv-cap-w-img * {

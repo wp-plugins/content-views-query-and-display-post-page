@@ -320,7 +320,7 @@
 
 			// Create function to handle
 			var fn_content_type = function (this_val, is_change) {
-				if ( typeof this_val === 'undefined' ) {
+				if (typeof this_val === 'undefined') {
 					return;
 				}
 
@@ -437,7 +437,7 @@
 					$this_btn.html(PT_CV_ADMIN.btn.preview.show);
 
 					// Enable preview
-					setTimeout(function(){
+					setTimeout(function () {
 						$self.options.can_preview = 1;
 					}, $self.options.scroll_time);
 				}
@@ -563,12 +563,12 @@
 		 * Toggle text of Preview button
 		 * @returns {undefined}
 		 */
-		_preview_btn_toggle : function(){
+		_preview_btn_toggle         : function () {
 
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
-			var _fn = function(){
+			var _fn = function () {
 				$self.options.onload = 0;
 
 				// Toggle text of this button
@@ -588,10 +588,37 @@
 		},
 
 		/**
+		 * Do handy toggle for Excerpt settings
+		 *
+		 * @returns {undefined}
+		 */
+		handy_toggle_excerpt_settings: function () {
+			var _prefix = this.options._prefix;
+
+			var _this_toggle = function (show_content) {
+				if (!show_content) {
+					$('#' + _prefix + 'group-excerpt-settings').addClass('hidden');
+				} else {
+					$('#' + _prefix + 'group-excerpt-settings').removeClass('hidden');
+				}
+			};
+
+			var selector = '[name="' + _prefix + 'show-field-content' + '"]';
+
+			// Run on page load
+			_this_toggle($(selector).is(':checked'));
+
+			// Run on change
+			$(selector).change(function () {
+				_this_toggle($(selector).is(':checked'));
+			});
+		},
+
+		/**
 		 * Custom js for elements
 		 * @returns {undefined}
 		 */
-		custom                      : function () {
+		custom: function () {
 
 			var $self = this;
 			var _prefix = $self.options._prefix;

@@ -26,7 +26,7 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * @return array Array of rows, each row contains columns
 		 */
 		static function grid_wrapper( $content_items, &$content ) {
-			global $dargs;
+			global $dargs, $pt_cv_enable_filter;
 
 			// -- Get column span
 			$columns = ( (int) $dargs['number-columns'] < count( $content_items ) ) ? (int) $dargs['number-columns'] : count( $content_items );
@@ -52,20 +52,29 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			$row_class   = implode( ' ', $row_classes );
 
 			// Split items to rows
-			$columns_item = array_chunk( $content_items, $columns );
+			$columns_item = array_chunk( $content_items, $columns, true );
 
 			// Get HTML of each row
 			foreach ( $columns_item as $items_per_row ) {
 				$row_html = array();
 
-				foreach ( $items_per_row as $idx => $content_item ) {
+				$idx = 0;
+				foreach ( $items_per_row as $post_id => $content_item ) {
 					$_span_width = ( $idx == count( $items_per_row ) - 1 ) ? $span_width_last : $span_width;
 
 					// Wrap content of item
-					$row_html[] = PT_CV_Html::content_item_wrap( $content_item, $span_class . $_span_width );
+					$item_classes = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width ), $_span_width );
+					$item_class   = implode( ' ', array_filter( $item_classes ) );
+					$row_html[]   = PT_CV_Html::content_item_wrap( $content_item, $item_class, $post_id );
+
+					$idx ++;
 				}
 
-				$content[] = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), implode( "\n", $row_html ) );
+				$list_item = implode( "\n", $row_html );
+				if ( $pt_cv_enable_filter != 'yes' ) {
+					$list_item = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), balanceTags( $list_item ) );
+				}
+				$content[] = $list_item;
 			}
 		}
 
@@ -251,8 +260,8 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		/**
 		 * HTML output of Controls in Scrollable
 		 *
-		 * @param bool   $show       Whether or not to show this element
-		 * @param string $wrapper_id The ID of wrapper of scrollable list
+		 * @param bool   $show         Whether or not to show this element
+		 * @param string $wrapper_id   The ID of wrapper of scrollable list
 		 * @param int    $count_slides The amount of items
 		 */
 		static function scrollable_control( $show, $wrapper_id, $count_slides ) {

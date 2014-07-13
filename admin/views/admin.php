@@ -15,13 +15,39 @@
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 	<style>
-		.wrap * { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-		.wrap > .row { padding-bottom: 20px; }
-		.wrap p, .wrap form { font-size: 14px; }
-		.wrap h3 { font-size: 16px; font-weight: bold; color: #FF6A5A; }
-		.wrap h6 { font-size: 15px; font-weight: bold; }
-		.wrap img { max-width: 100%; }
-		.wrap .label-for-option { font-weight: normal; margin: auto; margin-bottom: -5px; margin-left: 4px; }
+		.wrap * {
+			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		}
+
+		.wrap > .row {
+			padding-bottom: 20px;
+		}
+
+		.wrap p, .wrap form {
+			font-size: 14px;
+		}
+
+		.wrap h3 {
+			font-size:   16px;
+			font-weight: bold;
+			color:       #FF6A5A;
+		}
+
+		.wrap h6 {
+			font-size:   15px;
+			font-weight: bold;
+		}
+
+		.wrap img {
+			max-width: 100%;
+		}
+
+		.wrap .label-for-option {
+			font-weight:   normal;
+			margin:        auto;
+			margin-bottom: -5px;
+			margin-left:   4px;
+		}
 	</style>
 
 	<?php

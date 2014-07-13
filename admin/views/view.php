@@ -193,10 +193,10 @@ $options = array(
 
 					// Parent page
 					array(
-						'label'  => array(
+						'label'      => array(
 							'text' => __( 'Parent page', PT_CV_DOMAIN ),
 						),
-						'params' => array(
+						'params'     => array(
 							array(
 								'type' => 'number',
 								'name' => 'post_parent',
@@ -204,7 +204,7 @@ $options = array(
 								'desc' => __( 'Enter ID of parent page to query child pages', PT_CV_DOMAIN ),
 							),
 						),
-						'dependence'    => array( 'content-type', 'page' ),
+						'dependence' => array( 'content-type', 'page' ),
 					),
 
 					// Limit
@@ -489,7 +489,7 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 		// Layout format of output item
 		array(
 			'label'  => array(
-				'text' => __( 'Layout format of an output item', PT_CV_DOMAIN ),
+				'text' => __( 'Layout format', PT_CV_DOMAIN ),
 			),
 			'params' => array(
 				array(
@@ -497,6 +497,7 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 					'name'    => 'layout-format',
 					'options' => PT_CV_Values::layout_format(),
 					'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::layout_format() ),
+					'desc'    => __( 'This is layout format of output for each post', PT_CV_DOMAIN ),
 				),
 			),
 		),

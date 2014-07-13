@@ -71,7 +71,7 @@
 				$self.doing = 1;
 			}
 
-			var view_id = this_.attr('data-id');
+			var session_id = this_.attr('data-sid');
 			var spinner = this_.next('.' + _prefix + 'spinner');
 
 			var pagination_wrapper = this_;
@@ -81,24 +81,24 @@
 			var pages_holder = pagination_wrapper.prev('.' + _prefix + 'view');
 
 			// For Timeline
-			if ( pages_holder.hasClass(_prefix + 'timeline') ) {
+			if (pages_holder.hasClass(_prefix + 'timeline')) {
 				pages_holder = pages_holder.children('.tl-items');
 			}
 
-			$self._get_page(view_id, selected_page, spinner, pages_holder, callback);
+			$self._get_page(session_id, selected_page, spinner, pages_holder, callback);
 		},
 
 		/**
 		 * Get wrapper of selected page
 		 *
-		 * @param string view_id The id of view
+		 * @param string session_id The session id of view
 		 * @param int selected_page The page to show
 		 * @param object spinner The jquery object of loading element
 		 * @param string pages_holder The selector expression of wrapper of pages
 		 * @param null|function callback The callback function
 		 * @returns void
 		 */
-		_get_page: function (view_id, selected_page, spinner, pages_holder, callback) {
+		_get_page: function (session_id, selected_page, spinner, pages_holder, callback) {
 
 			var $self = this;
 
@@ -111,7 +111,7 @@
 			// Setup data
 			var data = {
 				action    : 'pagination_request',
-				id        : view_id,
+				sid       : session_id,
 				page      : selected_page,
 				ajax_nonce: PT_CV_PUBLIC._nonce
 			};

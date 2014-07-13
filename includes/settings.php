@@ -36,18 +36,19 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 
 			foreach ( $terms_of_taxonomies as $taxonomy_slug => $terms ) {
 
-				$result[$taxonomy_slug] = array(					
-					
+				$result[$taxonomy_slug] = array(
+
 					// In
 					array(
 						'label'  => array(
 							'text' => __( 'In ', PT_CV_DOMAIN ),
 							//'text' => __( 'In ', PT_CV_DOMAIN ) . $taxonomies[$taxonomy_slug],
 						),
-						'params'        => array(
+						'params' => array(
 							array(
 								'type'   => 'group',
-								'params' => apply_filters( PT_CV_PREFIX_ . 'term_quick_filter_in',
+								'params' => apply_filters(
+									PT_CV_PREFIX_ . 'term_quick_filter_in',
 									array(
 										array(
 											'label'         => array(
@@ -178,7 +179,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 							'name'        => $prefix . 'items-per-page',
 							'std'         => '5',
 							'placeholder' => 'e.g. 5',
-							'desc'        => __( 'The number of items per page. If value of Limit option is not blank (empty), this value should be smaller than Limit value', PT_CV_DOMAIN ),
+							'desc'        => __( 'The number of items per page.[--br--]If value of Limit option is not blank (empty), this value should be smaller than Limit value', PT_CV_DOMAIN ),
 						),
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),

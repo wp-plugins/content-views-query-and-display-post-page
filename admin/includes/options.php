@@ -254,7 +254,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 						}
 
 						$checked = ( in_array( $key, (array) $value ) || ( $value == 'all' ) ) ? 'checked' : '';
-						$html   .= "<div class='$type'><label><input type='$type' name='$name' value='$key' class='$class' $checked $id $extend>$text</label></div>";
+						$html .= "<div class='$type'><label><input type='$type' name='$name' value='$key' class='$class' $checked $id $extend>$text</label></div>";
 					}
 
 					break;
@@ -267,7 +267,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 					foreach ( $param['options'] as $key => $text ) {
 						$selected     = ( in_array( $key, (array) $value ) || ( $value == 'all' ) ) ? 'selected' : '';
 						$option_class = isset( $param['option_class_prefix'] ) ? sprintf( "class='%s'", $param['option_class_prefix'] . esc_attr( sanitize_title( $key ) ) ) : '';
-						$options     .= "<option value='$key' $selected $option_class>$text</option>";
+						$options .= "<option value='$key' $selected $option_class>$text</option>";
 					}
 					if ( empty( $options ) ) {
 						$html .= "<div class='" . PT_CV_PREFIX . "text'>" . __( 'There is no option', PT_CV_DOMAIN ) . '</div>';
@@ -283,7 +283,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 					break;
 				case 'font_color':
 					$html .= "<div class='form-inline font-color'>";
-					$font  = self::field_type( $param['options']['font'], $data );
+					$font = self::field_type( $param['options']['font'], $data );
 					$html .= "<div class='input-group'>$font<span class='input-group-addon'>px</span></div>";
 					$color = self::field_type( $param['options']['color'], $data );
 					$html .= "<div class='form-group'>$color</div>";
@@ -306,8 +306,10 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 					break;
 			}
 
+			$description = str_replace( '[--br--]', '<br>', $description );
+			$description = apply_filters( PT_CV_PREFIX_ . 'options_description', $description, $param );
+
 			if ( ! empty( $description ) ) {
-				$description = str_replace( '[--br--]', '<br>', $description );
 				$html .= "<p class='text-muted'>$description</p>";
 			}
 
@@ -330,7 +332,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 			// Content for body
 			$content = self::do_settings( $param_group, $data );
 			// Class for wrapper
-			$class  = PT_CV_Html::html_group_class();
+			$class = PT_CV_Html::html_group_class();
 			$class .= ( isset( $settings['show_all'] ) ? '' : ' hidden' );
 			$class .= ( isset( $settings['show_only_one'] ) ? ' ' . PT_CV_PREFIX . 'only-one' : '' );
 			$class .= ( isset( $settings['no_panel'] ) ? ' ' . PT_CV_PREFIX . 'no-panel' : '' );

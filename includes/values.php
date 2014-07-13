@@ -126,7 +126,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 
 			$args  = array_merge( array( 'hide_empty' => false ), $args );
 			$terms = get_terms( array( $taxonomy ), $args );
-			
+
 			$term_slug_name = array();
 			foreach ( $terms as $term ) {
 				$term_slug_name[$term->slug] = $term->name;
@@ -215,7 +215,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 			return array(
 				'author'   => __( 'Author', PT_CV_DOMAIN ),
 				'status'   => __( 'Status', PT_CV_DOMAIN ),
-				'taxonomy' => __( 'Taxonomy', PT_CV_DOMAIN ),
+				'taxonomy' => __( 'Taxonomy (Categories, Tags...)', PT_CV_DOMAIN ),
 				'search'   => __( 'Search', PT_CV_DOMAIN ),
 				'order'    => __( 'Order & Orderby', PT_CV_DOMAIN ),
 			);

@@ -92,7 +92,7 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 					'deps' => array( 'jquery' ),
 				),
 				'bootstrap-paginator' => array(
-					'src'  => plugins_url( 'assets/bootstrap-paginator/bootstrap-paginator.min.js', PT_CV_FILE ),
+					'src' => plugins_url( 'assets/bootstrap-paginator/bootstrap-paginator.min.js', PT_CV_FILE ),
 					// 'deps' => array( PT_CV_PREFIX . 'bootstrap' . '-' . 'script' ),
 				),
 				'select2'             => array(

@@ -38,7 +38,7 @@ if ( ! class_exists( 'PT_CV_Hooks' ) ) {
 			//			echo "<pre>";
 			//			var_dump( 'query args', $args );
 			//			echo "</pre>";
-			////
+
 			//			echo "<pre>";
 			//			var_dump( 'display args', $dargs );
 			//			echo "</pre>";
@@ -75,7 +75,7 @@ if ( ! class_exists( 'PT_CV_Hooks' ) ) {
 
 			// Layout format
 			if ( empty( $dargs['layout-format'] ) ) {
-				$errors[] = $messages['field']['select'] . $messages['tab']['display'] . ' > ' . __( 'Layout format of an output item', PT_CV_DOMAIN );
+				$errors[] = $messages['field']['select'] . $messages['tab']['display'] . ' > ' . __( 'Layout format', PT_CV_DOMAIN );
 			}
 
 			// Field settings
