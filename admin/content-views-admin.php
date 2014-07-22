@@ -166,7 +166,7 @@ class PT_Content_Views_Admin {
 			// WP assets
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'media-upload' );
-			wp_enqueue_style( 'farbtastic' );
+			wp_enqueue_style( 'wp-color-picker' );
 
 			// Main admin style
 			PT_CV_Asset::enqueue(
@@ -219,7 +219,7 @@ class PT_Content_Views_Admin {
 		if ( $this->plugin_screen_hook_suffix == $screen->id || in_array( $screen->id, $this->plugin_sub_screen_hook_suffix ) ) {
 
 			// WP assets
-			wp_enqueue_script( 'farbtastic' );
+			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			// Main admin script
@@ -244,6 +244,9 @@ class PT_Content_Views_Admin {
 							'hide'   => __( 'Hide Preview', PT_CV_DOMAIN ),
 							'update' => __( 'Update Preview', PT_CV_DOMAIN ),
 						),
+					),
+					'data' => array(
+						'post_types_vs_taxonomies' => PT_CV_Values::post_types_vs_taxonomies(),
 					),
 				)
 			);

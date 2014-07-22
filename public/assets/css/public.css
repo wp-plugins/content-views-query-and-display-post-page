@@ -13,17 +13,17 @@
 
 /* Link */
 .pt-cv-view a {
-	color:           #000;
+	/*color:           #000;*/
 	text-decoration: none !important;
 }
 
 .pt-cv-view a:hover, .pt-cv-view .panel-heading:hover a {
-	color: #ff3c1f;
+	/*color: #ff3c1f;*/
 }
 
 /* Read more */
 .pt-cv-readmore {
-	color:  #fff !important;
+	color:  #fff;
 	margin: 10px 0;
 }
 
@@ -80,10 +80,6 @@
 	font-size:      13px;
 	margin-top:     15px;
 	padding-bottom: 15px;
-}
-
-.pt-cv-meta-fields * {
-	color: rgba(0, 0, 0, .5);
 }
 
 .pt-cv-meta-fields a {
@@ -175,6 +171,10 @@
 	color: #000;
 }
 
+.pt-cv-cap-wo-img .pt-cv-readmore {
+	color: #fff;
+}
+
 /* Control */
 .pt-cv-view .carousel-control {
 	background-image: none !important;
@@ -199,4 +199,9 @@
 .pt-cv-view .carousel-indicators li.active {
 	background: #428bca;
 	border:     1px solid #428bca;
+}
+
+/* Layout */
+.pt-cv-2-col .pt-cv-title {
+	clear: none !important;
 }

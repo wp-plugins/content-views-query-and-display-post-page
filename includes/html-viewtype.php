@@ -71,10 +71,15 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 				}
 
 				$list_item = implode( "\n", $row_html );
+				
 				if ( $pt_cv_enable_filter != 'yes' ) {
-					$list_item = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), balanceTags( $list_item ) );
+					$list_item = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), $list_item );
+				} else {
+					// Add the extra clearfix
+					$list_item .= '<div class="clearfix visible-xs-block"></div>';
 				}
-				$content[] = $list_item;
+				
+				$content[] = balanceTags( $list_item );
 			}
 		}
 
@@ -103,12 +108,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			}
 
 			// Data attribute
-			$open_multiple = ( isset( $dargs['view-type-settings']['open-multiple'] ) && $dargs['view-type-settings']['open-multiple'] == 'yes' ) ? 'data-multiple-open="yes"' : '';
+			$data_attr = apply_filters( PT_CV_PREFIX_ . 'collapsible_data_attr', '' );
 
 			// Collapsible wrapper class
 			$wrapper_class = apply_filters( PT_CV_PREFIX_ . 'wrapper_collapsible_class', 'panel-group' );
 
-			$output = sprintf( '<div class="%s" id="%s" %s>%s</div>', esc_attr( $wrapper_class ), esc_attr( $random_id ), $open_multiple, balanceTags( implode( "\n", $collapsible_list ) ) );
+			$output = sprintf( '<div class="%s" id="%s" %s>%s</div>', esc_attr( $wrapper_class ), esc_attr( $random_id ), $data_attr, balanceTags( implode( "\n", $collapsible_list ) ) );
 
 			$content[] = $output;
 		}

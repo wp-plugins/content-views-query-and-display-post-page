@@ -1,10 +1,10 @@
 === Query posts and display posts in responsive grid layout without coding - Content Views ===
 Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
-Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, collapsible, list, slide, layout, ui
+Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, slider, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.2.6
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,10 +12,9 @@ Query and display posts in responsive grid, list layouts easier than ever, witho
 
 == Description ==
 
-Have you ever wanted to:
+Have you ever wanted to display some posts on your WordPress homepage in grid layout, or:
 
-* display multiple posts in responsive grid layout at home page
-* display multiple posts in responsive grid layout at a specific page
+* display multiple posts in responsive grid layout in a specific page
 * display posts in descending order of Title
 * replace boring Next, Prev button of WordPress theme by a beautiful pagination
 * display thumbnail in different size than 150x150 or 300x300
@@ -29,11 +28,11 @@ It is not easy as ABC, isn't it?
 
 But now, with Content Views plugin, you can do above things in minutes, without any line of code.
 
-[Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Visit Content Views website") provides an intuitive form to query posts and display posts in **responsive** layouts (grid, scrollable list, collapsible list) quickly & easily, in very 3 simple steps:
+[Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Visit Content Views website") provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, scrollable list/slider, collapsible list) quickly & easily, in very 3 simple steps:
 
-* Step 1 : Select criteria (author, category, tag...) to query your wanted posts
-* Step 2 : Select a responsive layout to display posts
-* Step 3 : Paste shortcode **[pt_view id="UNIQUE_ID"]** to editor of a page, to a Text widget where you want to display your posts. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in current theme of your WordPress site. (Please check FAQ to know how to get UNIQUE_ID of View)
+* Step 1 : Adjust filters (author, category/tag, order...) to query your wanted posts
+* Step 2 : Customize display options to show posts in a responsive layout
+* Step 3 : Save View. You will see a shortcode **[pt_view id="UNIQUE_ID"]** at top of page, paste it to editor of a page or to a Text widget of sidebar where you want to display your posts. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in files of your WordPress theme.
 
 = A features list of Content Views plugin: =
 
@@ -63,6 +62,7 @@ Also, you can import/export 'View' to use in other WordPress sites (Please check
 
 = More amazing features: =
 
+* Completely replace WordPress layout in Category pages, Author pages, Search pages by Grid layout
 * WooCommerce support
 * Portfolio support
 * Display posts in more Awesome layouts: Pinterest, Timeline
@@ -126,10 +126,6 @@ If you have View ID or View title, paste it to the text field beside of "Search 
 Then click on Title of View you want to edit.
 You will be forwarded to editing page of View.
 
-= How to get UNIQUE_ID of View? =
-
-You can get View ID in URL of editing page of View (please check above question), it has this format: http://your_domain/wp-admin/admin.php?page=content-views-add&id=UNIQUE_ID
-
 = How many Views I can create? =
 
 You can create Unlimited Views, in Unlimited websites
@@ -147,6 +143,11 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.3.0 =
+* Bug fixed: Pagination returns Empty settings
+* Improvement: UI improvement (Add icon to tabs. Show shortcode in text field for easier selecting. )
+* Improvement: Assets loading improvement
 
 = 1.2.6 =
 * Fix bug: javascript error of missing function
@@ -223,6 +224,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+Bug fixed: Pagination returns Empty settings. Improvement: UI improvement (Add icon to tabs. Show shortcode in text field for easier selecting. ). Improvement: Assets loading improvement
 
 = 1.2.6 =
 Fix bug: javascript error of missing function. Update description for some options. Update styles

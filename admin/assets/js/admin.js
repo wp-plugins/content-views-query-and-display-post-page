@@ -86,24 +86,6 @@
 			}
 		},
 		/**
-		 * Color picker element
-		 *
-		 * @param {type} picker_el
-		 * @returns {undefined}
-		 */
-		_color_picker               : function (picker_el) {
-			$(picker_el).click(function (e) {
-				var colorPicker = $(this).next('div');
-				var input = $(this);
-				$(colorPicker).farbtastic(input);
-				colorPicker.show();
-				e.preventDefault();
-				$(document).mousedown(function () {
-					$(colorPicker).hide();
-				});
-			});
-		},
-		/**
 		 * Get field value, depends on field type & its parent is show/hide
 		 *
 		 * @param {type} el     : string to selector
@@ -333,20 +315,13 @@
 					$self._do_toggle_taxonomy_relation($taxonomy_relation, $wrap_taxonomies);
 				}
 
-				// Show taxonomies which theirs value have this format {this_val}_
+				// Show taxonomies relates to selected post type
 				if (this_val !== '') {
 					fn_taxonomy_hide($taxonomies);
 					$taxonomies.filter(function () {
 						var val = $(this).val();
-						return val.substr(0, this_val.length) === this_val;
-					}).parents('.checkbox').removeClass('hidden');
-				}
-
-				// Show Category if Content Type = Post
-				if (this_val === 'post') {
-					$taxonomies.filter(function () {
-						var val = $(this).val();
-						return val === 'category';
+						var $taxonomies_of_this = PT_CV_ADMIN.data.post_types_vs_taxonomies[this_val] || '';
+						return $.inArray(val, $taxonomies_of_this) >= 0;
 					}).parents('.checkbox').removeClass('hidden');
 				}
 
@@ -468,10 +443,6 @@
 				type      : "POST",
 				url       : ajaxurl,
 				data      : data,
-				beforeSend: function () {
-					// Show loading icon
-					// preview_box.next().toggleClass('hidden');
-				},
 			}).done(function (response) {
 					preview_box.css('opacity', '1');
 					// Hide loading icon
@@ -635,7 +606,7 @@
 			$self._toggle_panel('.' + _prefix + 'group .panel-heading');
 
 			// Color picker
-			$self._color_picker('.' + _prefix + 'color');
+			$('.' + _prefix + 'color').wpColorPicker();
 
 			// 'Thumbnail settings' toggle
 			$self._thumbnail_settings();

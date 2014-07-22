@@ -43,7 +43,7 @@ PT_CV_Functions::view_submit();
 
 <?php
 if ( $id ) {
-	echo balanceTags( sprintf( '<div class="alert alert-success" style="color: #000">[pt_view id="%s"]</div>', $id ) );
+	echo balanceTags( sprintf( '<input type="text" value="[pt_view id=&quot;%s&quot;]" onclick="this.select()" readonly="" class="form-control" style="background: #ADFFAD; margin-bottom: 20px;">', $id ) );
 }
 ?>
 
@@ -116,10 +116,10 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">
 	<li class="active">
-		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>filter-settings" data-toggle="tab"><?php _e( 'Filter Settings', PT_CV_DOMAIN ); ?></a>
+		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>filter-settings" data-toggle="tab"><span class="glyphicon glyphicon-search"></span><?php _e( 'Filter Settings', PT_CV_DOMAIN ); ?></a>
 	</li>
 	<li>
-		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>display-settings" data-toggle="tab"><?php _e( 'Display Settings', PT_CV_DOMAIN ); ?></a>
+		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>display-settings" data-toggle="tab"><span class="glyphicon glyphicon-th-large"></span><?php _e( 'Display Settings', PT_CV_DOMAIN ); ?></a>
 	</li>
 	<?php do_action( PT_CV_PREFIX_ . 'setting_tabs_header', $settings ); ?>
 </ul>
@@ -161,6 +161,8 @@ $options = array(
 				'type'   => 'group',
 				'params' => array(
 
+					apply_filters( PT_CV_PREFIX_ . 'exclude_sticky_posts_setting', array() ),
+
 					// Includes
 					array(
 						'label'  => array(
@@ -186,7 +188,7 @@ $options = array(
 								'type' => 'text',
 								'name' => 'post__not_in',
 								'std'  => '',
-								'desc' => __( 'List of ids (comma-separated values) of posts to exclude from view', PT_CV_DOMAIN ),
+								'desc' => __( 'List of ids (comma-separated values) of posts to exclude from output', PT_CV_DOMAIN ),
 							),
 						),
 					),
@@ -218,6 +220,7 @@ $options = array(
 								'name' => 'limit',
 								'std'  => '10',
 								'min'  => '1',
+								'append_text' => '1 &rarr; 999',
 								'desc' => __( 'The number of posts to show. Leaving it blank to show all found posts (which match all settings)', PT_CV_DOMAIN ),
 							),
 						),
@@ -283,41 +286,6 @@ $options = array(
 			array(
 				'type'   => 'panel_group',
 				'params' => array(
-
-					// Author Settings
-					'author'   => array(
-						array(
-							'label'  => array(
-								'text' => __( 'Written by', PT_CV_DOMAIN ),
-							),
-							'params' => array(
-								array(
-									'type'     => 'select',
-									'name'     => 'author__in[]',
-									'options'  => PT_CV_Values::user_list(),
-									'std'      => '',
-									'class'    => 'select2',
-									'multiple' => $version_gt_37 ? '1' : '0',
-								),
-							),
-						),
-						$version_gt_37 ?
-							array(
-								'label'  => array(
-									'text' => __( 'Not written by', PT_CV_DOMAIN ),
-								),
-								'params' => array(
-									array(
-										'type'     => 'select',
-										'name'     => 'author__not_in[]',
-										'options'  => PT_CV_Values::user_list(),
-										'std'      => '',
-										'class'    => 'select2',
-										'multiple' => $version_gt_37 ? '1' : '0',
-									),
-								),
-							) : array(),
-					), // End Author Settings
 
 					// Taxonomies Settings
 					'taxonomy' => array(
@@ -401,6 +369,41 @@ $options = array(
 							),
 						),
 					), // End Order by Settings
+
+					// Author Settings
+					'author'   => array(
+						array(
+							'label'  => array(
+								'text' => __( 'Written by', PT_CV_DOMAIN ),
+							),
+							'params' => array(
+								array(
+									'type'     => 'select',
+									'name'     => 'author__in[]',
+									'options'  => PT_CV_Values::user_list(),
+									'std'      => '',
+									'class'    => 'select2',
+									'multiple' => $version_gt_37 ? '1' : '0',
+								),
+							),
+						),
+						$version_gt_37 ?
+							array(
+								'label'  => array(
+									'text' => __( 'Not written by', PT_CV_DOMAIN ),
+								),
+								'params' => array(
+									array(
+										'type'     => 'select',
+										'name'     => 'author__not_in[]',
+										'options'  => PT_CV_Values::user_list(),
+										'std'      => '',
+										'class'    => 'select2',
+										'multiple' => $version_gt_37 ? '1' : '0',
+									),
+								),
+							) : array(),
+					), // End Author Settings
 
 					// Status Settings
 					'status'   => array(

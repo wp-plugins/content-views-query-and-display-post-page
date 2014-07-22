@@ -358,7 +358,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					'post_type'   => PT_CV_POST_TYPE,
 					'post_status' => 'publish',
 					'meta_key'    => PT_CV_META_ID,
-					'meta_value'  => $meta_id,
+					'meta_value'  => esc_sql( $meta_id ),
 				)
 			);
 			if ( $pt_query->have_posts() ) :
@@ -479,54 +479,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			if ( empty( $args ) || empty( $dargs ) ) {
-				/**
-				 * Get Query parameters
-				 * Set default values
-				 */
-				$args = array(
-					'post_type'           => $content_type,
-					'post_status'         => 'publish',
-					'ignore_sticky_posts' => 1,
-				);
-
-				// Post in
-				if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) ) {
-					$post_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) );
-					$args['post__in'] = array_map( 'intval', array_filter( $post_in ) );
-				}
-
-				// Post not in
-				if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $pt_view_settings ) ) {
-					$post_not_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $pt_view_settings ) );
-					$args['post__not_in'] = array_map( 'intval', array_filter( $post_not_in ) );
-				}
-
-				// Parent page
-				if ( $content_type == 'page' ) {
-					$post_parent = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_parent', $pt_view_settings );
-					if ( ! empty( $post_parent ) ) {
-						$args['post_parent'] = (int) $post_parent;
-					}
-				}
-
-				// Advance settings
-				PT_CV_Functions::view_get_advanced_settings( $args, $content_type );
-
-				/**
-				 * Get Display parameters
-				 */
-				$dargs = array();
-
-				$dargs['view-type'] = $view_type;
-
-				// Field settings of a item
-				PT_CV_Functions::view_get_display_settings( $dargs );
-
-				// Other settings
-				PT_CV_Functions::view_get_other_settings( $dargs );
-
-				// View type settings
-				$dargs['view-type-settings'] = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . $view_type . '-' );
+				$args = PT_CV_Functions::view_filter_settings( $content_type, $pt_view_settings );
+				$dargs = PT_CV_Functions::view_display_settings( $view_type );
 
 				// Filter
 				$dargs = apply_filters( PT_CV_PREFIX_ . 'all_display_settings', $dargs );
@@ -595,7 +549,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			wp_reset_postdata();
 
 			// Filter array of items
-			$content_items = apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items );;
+			$content_items = apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items );
 
 			/**
 			 * Output Pagination
@@ -618,6 +572,78 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			return $html;
+		}
+
+		/**
+		 * Get query parameters of View
+		 *
+		 * @param string $content_type The current content type
+		 * @param array $pt_view_settings The settings of View
+		 * @return array
+		 */
+		static function view_filter_settings( $content_type, $pt_view_settings ) {
+			/**
+			* Get Query parameters
+			* Set default values
+			*/
+			$args = array(
+			   'post_type'           => $content_type,
+			   'post_status'         => 'publish',
+			   'ignore_sticky_posts' => 1,
+			);
+
+			// Post in
+			if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) ) {
+			   $post_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $pt_view_settings ) );
+			   $args['post__in'] = array_map( 'intval', array_filter( $post_in ) );
+			}
+
+			// Post not in
+			if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $pt_view_settings ) ) {
+			   $post_not_in          = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__not_in', $pt_view_settings ) );
+			   $args['post__not_in'] = array_map( 'intval', array_filter( $post_not_in ) );
+			}
+
+			$args['post__not_in'] = apply_filters( PT_CV_PREFIX_ . 'post__not_in', isset( $args['post__not_in'] ) ? $args['post__not_in'] : array(), $pt_view_settings );
+
+			// Parent page
+			if ( $content_type == 'page' ) {
+			   $post_parent = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_parent', $pt_view_settings );
+			   if ( ! empty( $post_parent ) ) {
+				   $args['post_parent'] = (int) $post_parent;
+			   }
+			}
+
+			// Advance settings
+			PT_CV_Functions::view_get_advanced_settings( $args, $content_type );
+
+			return $args;
+		}
+
+		/**
+		 * Get display parameters of View
+		 *
+		 * @param string $view_type The view type of View
+		 * @return array
+		 */
+		static function view_display_settings( $view_type ) {
+			/**
+			 * Get Display parameters
+			 */
+			$dargs = array();
+
+			$dargs['view-type'] = $view_type;
+
+			// Field settings of a item
+			PT_CV_Functions::view_get_display_settings( $dargs );
+
+			// Other settings
+			PT_CV_Functions::view_get_other_settings( $dargs );
+
+			// View type settings
+			$dargs['view-type-settings'] = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . $view_type . '-' );
+
+			return $dargs;
 		}
 
 		/**
@@ -753,6 +779,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 								// Use 'meta_value_num' for numeric values
 								global $pt_content_type;
 								$all_meta_numeric_values = apply_filters( PT_CV_PREFIX_ . 'meta_numeric_values', array() );
+
 								// Get numeric values of selected content type
 								$meta_numeric_values = isset( $all_meta_numeric_values[$pt_content_type] ) ? $all_meta_numeric_values[$pt_content_type] : array();
 								$meta_orderby        = array_key_exists( $meta_key, (array) $meta_numeric_values ) ? 'meta_value_num' : 'meta_value';
@@ -764,9 +791,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 							} else {
 								// Common order by
-
 								$orderby          = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'orderby', $pt_view_settings );
 								$order_by_options = array_keys( PT_CV_Values::post_regular_orderby() );
+
 								if ( in_array( $orderby, $order_by_options ) ) {
 									$order_settings = array(
 										'orderby' => $orderby,
@@ -1072,7 +1099,10 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Session id
 			$sid = esc_sql( empty( $_POST['sid'] ) ? '' : $_POST['sid'] );
 
-			$post_fix = is_admin() ? '' : '_frontend';
+			// Is admin
+			$is_admin = ! empty( $_POST['is_admin'] ) ? $_POST['is_admin'] : 0;
+
+			$post_fix = $is_admin ? '' : '_frontend';
 
 			// Get saved $settings
 			if ( isset( $_SESSION[PT_CV_PREFIX . 'settings' . $post_fix] ) ) {
@@ -1090,6 +1120,29 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Must exit
 			die;
 		}
+
+		/**
+		 * Show Promotion Notices
+		 */
+		static function util_show_promotion() {
+			$pro_installed = get_option( 'pt_cv_version_pro' );
+			if (  ! $pro_installed ) {
+				$showed = get_transient( PT_CV_PREFIX_ . 'promotion_shown' );
+
+				// If has not shown within 3 hours. Show it again
+				if ( ! $showed ) {
+					?>
+					<div class="update-nag wrap" style="display: block; border-left: 4px solid #7ad03a; background-color: #fef7f1;">
+						<h2>30% Off Content Views Pro - YOU SAVE $10 TODAY</h2>
+						<h3>Just $19 - Until July 31, 2014</h3>
+						<a href="http://www.contentviewspro.com/pricing?utm_source=wordpress&utm_medium=notice" target="_blank" class="button button-primary">Get It Now!</a>
+					</div>
+					<?php
+					set_transient( PT_CV_PREFIX_ . 'promotion_shown', 1, 2 * HOUR_IN_SECONDS );
+				}
+			}
+		}
+
 	}
 
 }

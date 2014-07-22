@@ -235,7 +235,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			}
 
 			// Get wrapper class of a item
-			$item_class = apply_filters( PT_CV_PREFIX_ . 'content_item_class', array( $class, PT_CV_PREFIX . 'content-item' ) );
+			$layout     = $dargs['layout-format'];
+			$item_class = apply_filters( PT_CV_PREFIX_ . 'content_item_class', array( $class, PT_CV_PREFIX . 'content-item', PT_CV_PREFIX . $layout ) );
 
 			$item_filter = apply_filters( PT_CV_PREFIX_ . 'content_item_filter_value', '', $post_id );
 
@@ -414,9 +415,15 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$content = '';
 					switch ( $fargs['content']['show'] ) {
 						case 'excerpt':
-							$length   = (int) $fargs['content']['length'];
-							$readmore = '<br />' . PT_CV_Html::link_button( get_permalink(), 'success', __( 'Read More', PT_CV_DOMAIN ), PT_CV_PREFIX . 'readmore', 'btn-sm' );
-							$content  = wp_trim_words( strip_shortcodes( get_the_content() ), $length, ' ...' . apply_filters( PT_CV_PREFIX_ . 'field_content_readmore', $readmore, $fargs['content'], get_permalink() ) );
+							$length       = (int) $fargs['content']['length'];
+							$readmore     = '<br />' . PT_CV_Html::link_button( get_permalink(), 'success', __( 'Read More', PT_CV_DOMAIN ), PT_CV_PREFIX . 'readmore', 'btn-sm' );
+							$readmore_btn = ' ...' . apply_filters( PT_CV_PREFIX_ . 'field_content_readmore', $readmore, $fargs['content'], get_permalink() );
+							$content      = apply_filters( PT_CV_PREFIX_ . 'field_content_result', '', $fargs, $post );
+
+							if ( empty( $content ) ) {
+								$content = wp_trim_words( strip_shortcodes( get_the_content() ), $length, $readmore_btn );
+							}
+
 							break;
 
 						case 'full':
@@ -562,41 +569,44 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				switch ( $meta ) {
 					case 'date':
 						// Get date wrapper class
-						$date_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_date_class', 'entry-date' );
+						$date_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'entry-date', 'date' );
+						$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'date' );
 
-						$html['date'] = sprintf( '<span class="%1$s"><time datetime="%2$s">%3$s</time></span>', esc_html( $date_class ), esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() ) );
+						$html['date'] = sprintf( '<span class="%s">%s <time datetime="%s">%s</time></span>', esc_html( $date_class ), balanceTags( $prefix_text ), esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() ) );
 						break;
 
 					case 'taxonomy':
 
 						// Get terms wrapper class
-						$term_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_terms_class', 'terms' );
+						$term_class  = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'terms', 'terms' );
+						$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', __( 'in', PT_CV_DOMAIN ), 'terms' );
 
 						$terms = PT_CV_Functions::post_terms( $post );
 						if ( ! empty( $terms ) ) {
-							$html['taxonomy'] = sprintf( '<span class="%s">%s %s</span>', esc_attr( $term_class ), __( 'in', PT_CV_DOMAIN ), balanceTags( $terms ) );
+							$html['taxonomy'] = sprintf( '<span class="%s">%s %s</span>', esc_attr( $term_class ), balanceTags( $prefix_text ), balanceTags( $terms ) );
 						}
 						break;
 
 					case 'comment':
 						if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
 							// Get comment wrapper class
-							$comment_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_comment_class', 'comments-link' );
+							$comment_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'comments-link', 'comment' );
+							$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'comment' );
 
 							ob_start();
-							?>
-							<span class="<?php echo esc_attr( $comment_class ); ?>"><?php comments_popup_link( __( 'Leave a comment', PT_CV_DOMAIN ), __( '1 Comment', PT_CV_DOMAIN ), __( '% Comments', PT_CV_DOMAIN ) ); ?></span>
-							<?php
-							$html['comment'] = ob_get_clean();
+							comments_popup_link( __( 'Leave a comment', PT_CV_DOMAIN ), __( '1 Comment', PT_CV_DOMAIN ), __( '% Comments', PT_CV_DOMAIN ) );
+							$comment_content = ob_get_clean();
+							$html['comment'] = sprintf( '<span class="%s">%s %s</span>', esc_attr( $comment_class ), balanceTags( $prefix_text ), $comment_content );
 						endif;
 						break;
 
 					case 'author':
 
 						// Get author wrapper class
-						$author_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_author_class', 'author' );
+						$author_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'author', 'author' );
+						$prefix_text  = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', __( 'by', PT_CV_DOMAIN ), 'author' );
 
-						$author_html    = sprintf( '<span class="%s">%s <a href="%s" rel="author">%s</a></span>', esc_attr( $author_class ), __( 'by', PT_CV_DOMAIN ), esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ), get_the_author() );
+						$author_html    = sprintf( '<span class="%s">%s <a href="%s" rel="author">%s</a></span>', esc_attr( $author_class ), balanceTags( $prefix_text ), esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ), get_the_author() );
 						$html['author'] = apply_filters( PT_CV_PREFIX_ . 'field_meta_author_html', $author_html, $post );
 						break;
 
@@ -696,31 +706,30 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 				// With each type of asset (css, js), looking for suit file of selected style
 				foreach ( $assets as $type ) {
-					$file_path              = $view_type_dir . '/' . $type . '/' . $style . '.' . $type;
-					$assets_output[$type][] = PT_CV_Functions::file_include_content( $file_path );
-				}
-			}
-
-			// Merge content of asset files
-			if ( $assets_output ) {
-				foreach ( $assets as $type ) {
-
-					$asset_file = $type . '/' . 'assets' . '.' . $type;
-
-					// Write to file
-					$file_path = PT_CV_PUBLIC_ASSETS . $asset_file;
-
-					if ( file_exists( $file_path ) ) {
-						$fp = @fopen( $file_path, 'w' );
-						fwrite( $fp, implode( "\n", $assets_output[$type] ) );
-						fclose( $fp );
+					$file_path = $view_type_dir . '/' . $type . '/' . $style . '.' . $type;
+					$content   = PT_CV_Functions::file_include_content( $file_path );
+					if ( $content ) {
+						$assets_output[$type][] = $content;
 					}
-
-					$assets_files[$type][] = PT_CV_PUBLIC_ASSETS_URI . $asset_file;
 				}
 			}
 
-			$assets_files = apply_filters( PT_CV_PREFIX_ . 'assets_files', $assets_files );
+			// Echo script, style inline
+			if ( $assets_output ) {
+
+				foreach ( $assets_output as $type => $contents ) {
+					$content = implode( "\n", $contents );
+
+					if ( $type == 'js' ) {
+						echo self::inline_script( $content, false );
+					} else {
+						echo self::inline_style( $content );
+					}
+				}
+			}
+
+			// Link to external files
+			$assets_files = apply_filters( PT_CV_PREFIX_ . 'assets_files', array() );
 
 			if ( is_admin() ) {
 				// Include assets file in Preview
@@ -831,17 +840,18 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @return string
 		 */
-		static function inline_script( $js ) {
+		static function inline_script( $js, $wrap = true ) {
 			// Generate random id for script tag
 			$random_id = PT_CV_Functions::string_random();
 
 			ob_start();
 			?>
 			<script type="text/javascript" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-script-' . $random_id ); ?>">
-				(function ($) {
-					$(function () { <?php echo balanceTags( $js ); ?>
-					});
-				}(jQuery));
+			<?php
+			$format = $wrap ? "(function ($) {\n $(function () { %s }); \n}(jQuery));" : '%s';
+			$content = balanceTags( $js );
+			printf( $format, $content );
+			?>
 			</script>
 			<?php
 			return ob_get_clean();

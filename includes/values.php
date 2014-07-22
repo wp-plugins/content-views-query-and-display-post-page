@@ -41,6 +41,27 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 
 			return $result;
 		}
+		
+		/**
+		 * Get list of post types and related taxonomies
+		 * 
+		 * @return array
+		 */
+		static function post_types_vs_taxonomies() {
+			// Get post types
+			$args       = apply_filters( PT_CV_PREFIX_ . 'post_types', array( 'public' => true, 'show_ui' => true, '_builtin' => true ) );
+			$post_types = get_post_types( $args );
+			
+			// Get taxonomies of post types
+			$result = array();
+			
+			foreach ( $post_types as $post_type ) {
+				$taxonomy_names = get_object_taxonomies( $post_type );
+				$result[$post_type] = $taxonomy_names;
+			}
+			
+			return $result;
+		}
 
 		/**
 		 * Get list of taxonomies
@@ -213,11 +234,11 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		 */
 		static function advanced_settings() {
 			return array(
-				'author'   => __( 'Author', PT_CV_DOMAIN ),
-				'status'   => __( 'Status', PT_CV_DOMAIN ),
 				'taxonomy' => __( 'Taxonomy (Categories, Tags...)', PT_CV_DOMAIN ),
-				'search'   => __( 'Search', PT_CV_DOMAIN ),
+				'status'   => __( 'Status', PT_CV_DOMAIN ),
 				'order'    => __( 'Order & Orderby', PT_CV_DOMAIN ),
+				'search'   => __( 'Search', PT_CV_DOMAIN ),
+				'author'   => __( 'Author', PT_CV_DOMAIN ),
 			);
 		}
 

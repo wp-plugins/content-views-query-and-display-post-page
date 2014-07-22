@@ -121,7 +121,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 			$for   = isset( $label['for'] ) ? "for='{$label['for']}'" : '';
 			$width = 12 - ( isset( $extra_setting['params']['width'] ) ? intval( $extra_setting['params']['width'] ) : 10 );
 			if ( $width ) {
-				$html = "<label $for class='col-sm-$width control-label'>" . __( $label['text'], PT_CV_DOMAIN ) . '</label>';
+				$html = "<label $for class='col-md-$width control-label'>" . __( $label['text'], PT_CV_DOMAIN ) . '</label>';
 			} else {
 				$html = '';
 			}
@@ -144,7 +144,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 			$param_wrap_id    = isset( $extra_setting['params']['wrap-id'] ) ? "id='" . esc_attr( $extra_setting['params']['wrap-id'] ) . "'" : '';
 			$width            = isset( $extra_setting['params']['width'] ) ? intval( $extra_setting['params']['width'] ) : 10;
 
-			return "<div class='col-sm-$width pt-params $param_wrap_class' $param_wrap_id>$html</div>";
+			return "<div class='col-md-$width pt-params $param_wrap_class' $param_wrap_id>$html</div>";
 		}
 
 		/**
@@ -281,13 +281,8 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 						$html .= "<select name='$name' class='$class' $multiple $id $extend>$options</select>";
 					}
 					break;
-				case 'font_color':
-					$html .= "<div class='form-inline font-color'>";
-					$font = self::field_type( $param['options']['font'], $data );
-					$html .= "<div class='input-group'>$font<span class='input-group-addon'>px</span></div>";
-					$color = self::field_type( $param['options']['color'], $data );
-					$html .= "<div class='form-group'>$color</div>";
-					$html .= '</div>';
+				case 'color_picker':
+					$html .= self::field_type( $param['options'], $data );
 					break;
 				case 'html':
 					if ( isset( $param['content'] ) ) {

@@ -34,7 +34,7 @@ html {
 
 .pt-wrap .text-muted {
 	clear:  both;
-	margin: 4px 0;
+	margin: 2px 0;
 	float:  left;
 }
 
@@ -60,8 +60,16 @@ html {
 	display: none;
 }
 
+#pt-cv-form-view .nav .glyphicon {
+	margin-right: 6px;
+}
+
 #pt-cv-form-view *, .preview-wrapper label {
 	font-size: 14px;
+}
+
+.preview-wrapper .text-muted {
+	margin-top: 8px;
 }
 
 .pt-wrap h2 {
@@ -73,7 +81,7 @@ html {
 }
 
 .pt-wrap .form-group.pt-form-group {
-	margin-bottom: 5px;
+	margin-bottom: 8px;
 }
 
 .pt-cv-color {
@@ -93,7 +101,7 @@ html {
 	padding: 10px 15px;
 }
 
-.pt-cv-group .control-label {
+.pt-cv-group .control-label, .pt-form-group .pt-form-group .control-label {
 	font-weight: 400;
 }
 
