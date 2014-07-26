@@ -8,18 +8,18 @@ Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Query and display posts in responsive grid, list layouts easier than ever, without coding!
+Query and display posts by category, tag, author... in responsive grid, list layouts easier than ever, without coding!
 
 == Description ==
 
-Have you ever wanted to display some posts on your WordPress homepage in grid layout, or:
+Have you ever wanted to display posts by category, on your WordPress homepage in responsive grid layout, or:
 
-* display multiple posts in responsive grid layout in a specific page
-* display posts in descending order of Title
+* display posts in grid layout in a page
+* display posts by tag
+* display posts by author
+* sort posts in descending order of Title
 * replace boring Next, Prev button of WordPress theme by a beautiful pagination
 * display thumbnail in different size than 150x150 or 300x300
-* display posts of a specific author
-* display posts which have a specific tag or in a specific category
 ?
 
 How do you do?
@@ -28,21 +28,21 @@ It is not easy as ABC, isn't it?
 
 But now, with Content Views plugin, you can do above things in minutes, without any line of code.
 
-[Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Visit Content Views website") provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, scrollable list/slider, collapsible list) quickly & easily, in very 3 simple steps:
+[Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Get Content Views Pro") provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, scrollable list/slider, accordion/collapsible list) quickly & easily, in very 3 simple steps:
 
-* Step 1 : Adjust filters (author, category/tag, order...) to query your wanted posts
-* Step 2 : Customize display options to show posts in a responsive layout
-* Step 3 : Save View. You will see a shortcode **[pt_view id="UNIQUE_ID"]** at top of page, paste it to editor of a page or to a Text widget of sidebar where you want to display your posts. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in files of your WordPress theme.
+* Step 1 : Choose filters (author, category/tag, order...) to query your posts
+* Step 2 : Customize display options to display posts in a responsive layout
+* Step 3 : Save View. You will see a shortcode **[pt_view id="UNIQUE_ID"]** at top of page, paste it to editor of a page or to a Text widget where you want to display your posts. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in your WordPress theme.
 
 = A features list of Content Views plugin: =
 
 **in Step 1, you can:**
 
 * query single/multiple post(s)
+* query posts by category, tag
+* query posts by author
 * query child pages of a parent page
-* query posts written by, not written by authors
-* query posts associate with, not associate with categories, tags
-* query posts in any status (publish, draft, private...)
+* query posts by status (publish, draft, private...)
 * query posts which contain a specific keyword
 * sort posts by Id, Title, Created date, Modified date in ascending, descending order
 
@@ -51,7 +51,7 @@ But now, with Content Views plugin, you can do above things in minutes, without 
 * Select a responsive layout to display posts: Grid, List(Collapsible/Scrollable). More awesome layouts are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
 * Display fields (thumbnail, title, content, meta fields) in vertical direction. Or display thumbnail in left/right side of other fields
 * Select what fields (thumbnail, title, content, meta fields) to display
-* Select thumbnail size
+* Select thumbnail sizes
 * Display full content, or display only excerpt with specific amount of words
 * Select what meta fields (date, author, terms [categories, tags], comment count) to display
 * Enable/Disable pagination
@@ -62,16 +62,16 @@ Also, you can import/export 'View' to use in other WordPress sites (Please check
 
 = More amazing features: =
 
-* Completely replace WordPress layout in Category pages, Author pages, Search pages by Grid layout
+* Completely replace WordPress layout in Category page, Author page, Search page by Grid layout
 * WooCommerce support
 * Portfolio support
 * Display posts in more Awesome layouts: Pinterest, Timeline
-* More beautiful output & powerful settings of Grid, List
+* More beautiful output & powerful settings for Grid, List layout
 * Drag & drop to change display order of fields (thumbnail, title, content, meta fields)
-* Customize Font settings for Title, Content, Meta fields
+* Customize Font, Color settings for Title, Content, Meta fields
 * Custom style for Thumbnail: round, circle, border
 * Customize style & text of "Read more" button
-* "Load more" button for pagination
+* AJAX "Load more" button for pagination
 * And much more...
 
 are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro")** plugin.
