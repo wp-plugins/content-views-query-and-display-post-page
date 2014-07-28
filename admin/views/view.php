@@ -47,6 +47,8 @@ if ( $id ) {
 }
 ?>
 
+<?php PT_CV_Functions::util_show_promo_view(); ?>
+
 <div class="preview-wrapper">
 	<?php
 	// Preview

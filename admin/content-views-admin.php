@@ -278,7 +278,6 @@ class PT_Content_Views_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
-
 		/*
 		 * Add a settings page for this plugin to the Settings menu.
 		 */

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, slider, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.3.0
+Stable tag: 1.3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +30,7 @@ But now, with Content Views plugin, you can do above things in minutes, without 
 
 [Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Get Content Views Pro") provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, scrollable list/slider, accordion/collapsible list) quickly & easily, in very 3 simple steps:
 
-* Step 1 : Choose filters (author, category/tag, order...) to query your posts
+* Step 1 : Choose filters (author, category, tag, order...) to query your posts
 * Step 2 : Customize display options to display posts in a responsive layout
 * Step 3 : Save View. You will see a shortcode **[pt_view id="UNIQUE_ID"]** at top of page, paste it to editor of a page or to a Text widget where you want to display your posts. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in your WordPress theme.
 
@@ -144,6 +144,10 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.3.0.1 =
+* Update filter priority
+* Update plugin description
+
 = 1.3.0 =
 * Bug fixed: Pagination returns Empty settings
 * Improvement: UI improvement (Add icon to tabs. Show shortcode in text field for easier selecting. )
@@ -224,6 +228,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.0.1 =
+Update filter priority. Update plugin description
 
 = 1.3.0 =
 Bug fixed: Pagination returns Empty settings. Improvement: UI improvement (Add icon to tabs. Show shortcode in text field for easier selecting. ). Improvement: Assets loading improvement

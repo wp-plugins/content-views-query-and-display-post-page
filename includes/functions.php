@@ -1135,11 +1135,29 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					<div class="update-nag wrap" style="display: block; border-left: 4px solid #7ad03a; background-color: #fef7f1;">
 						<h2>30% Off Content Views Pro - YOU SAVE $10 TODAY</h2>
 						<h3>Just $19 - Until July 31, 2014</h3>
-						<a href="http://www.contentviewspro.com/pricing?utm_source=wordpress&utm_medium=notice" target="_blank" class="button button-primary">Get It Now!</a>
+						<a href="http://www.contentviewspro.com/pricing/?utm_source=wordpress&utm_medium=notice" target="_blank" class="button button-primary">Get It Now!</a>
 					</div>
 					<?php
-					set_transient( PT_CV_PREFIX_ . 'promotion_shown', 1, 2 * HOUR_IN_SECONDS );
+					set_transient( PT_CV_PREFIX_ . 'promotion_shown', 1, 6 * HOUR_IN_SECONDS );
 				}
+			}
+		}
+
+		/**
+		 * Show promotion text in View page
+		 */
+		static function util_show_promo_view() {
+			$pro_installed = get_option( 'pt_cv_version_pro' );
+			if (  ! $pro_installed ) {
+				?>
+				<div class="pull-right">
+					<h3 style="margin-top: 0;">Pro version is only $19 - Until July 31, 2014.</h3>
+					<a class="btn btn-success" target="_blank" href="http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view">&#187; Get it now</a>
+					or <a class="btn btn-info" target="_blank" href="http://sample.contentviewspro.com/?utm_source=client&utm_medium=view">Check demo site</a>
+				</div>
+				<div class="clear"></div>
+				<hr>
+				<?php
 			}
 		}
 
