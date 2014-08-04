@@ -67,8 +67,12 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @param string $class       Class name which contains function to output content of page created by this menu
 		 */
 		static function menu_add_sub( $parent_slug, $page_title, $menu_title, $sub_page, $class ) {
+			// Get user role settings option
+			$options   = get_option( PT_CV_OPTION_NAME );
+			$user_role = current_user_can('administrator') ? 'administrator' : ( isset( $options['access_role'] ) ? $options['access_role'] : 'edit_posts' );
+
 			return add_submenu_page(
-				$parent_slug, $page_title, $menu_title, 'edit_posts', $parent_slug . '-' . $sub_page, array( $class, 'display_sub_page_' . $sub_page )
+				$parent_slug, $page_title, $menu_title, $user_role, $parent_slug . '-' . $sub_page, array( $class, 'display_sub_page_' . $sub_page )
 			);
 		}
 
@@ -1049,14 +1053,15 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Generate link to View page: Add view/ Edit view
 		 *
 		 * @param string $view_id The view id
+		 * @param array $action   Custom parameters
 		 *
 		 * @return string
 		 */
-		public static function view_link( $view_id ) {
+		public static function view_link( $view_id, $action = array() ) {
 
 			$edit_link = admin_url( 'admin.php?page=' . PT_CV_DOMAIN . '-add' );
 			if ( ! empty( $view_id ) ) {
-				$query_args = array( 'id' => $view_id );
+				$query_args = array( 'id' => $view_id ) + $action;
 				$edit_link  = add_query_arg( $query_args, $edit_link );
 			}
 
@@ -1122,41 +1127,16 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		}
 
 		/**
-		 * Show Promotion Notices
-		 */
-		static function util_show_promotion() {
-			$pro_installed = get_option( 'pt_cv_version_pro' );
-			if (  ! $pro_installed ) {
-				$showed = get_transient( PT_CV_PREFIX_ . 'promotion_shown' );
-
-				// If has not shown within 3 hours. Show it again
-				if ( ! $showed ) {
-					?>
-					<div class="update-nag wrap" style="display: block; border-left: 4px solid #7ad03a; background-color: #fef7f1;">
-						<h2>30% Off Content Views Pro - YOU SAVE $10 TODAY</h2>
-						<h3>Just $19 - Until July 31, 2014</h3>
-						<a href="http://www.contentviewspro.com/pricing/?utm_source=wordpress&utm_medium=notice" target="_blank" class="button button-primary">Get It Now!</a>
-					</div>
-					<?php
-					set_transient( PT_CV_PREFIX_ . 'promotion_shown', 1, 6 * HOUR_IN_SECONDS );
-				}
-			}
-		}
-
-		/**
 		 * Show promotion text in View page
 		 */
 		static function util_show_promo_view() {
 			$pro_installed = get_option( 'pt_cv_version_pro' );
 			if (  ! $pro_installed ) {
 				?>
-				<div class="pull-right">
-					<h3 style="margin-top: 0;">Pro version is only $19 - Until July 31, 2014.</h3>
-					<a class="btn btn-success" target="_blank" href="http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view">&#187; Get it now</a>
+				<div class="pull-right" style="margin-top: -54px;">
+					<a class="btn btn-success" target="_blank" href="http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view">&#187; Get Pro version</a>
 					or <a class="btn btn-info" target="_blank" href="http://sample.contentviewspro.com/?utm_source=client&utm_medium=view">Check demo site</a>
 				</div>
-				<div class="clear"></div>
-				<hr>
 				<?php
 			}
 		}

@@ -74,7 +74,7 @@ class PT_Content_Views_Admin {
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'filter_add_action_links' ) );
 
 		// Filter link of actions in All Views page
-		add_filter( 'post_row_actions', array( $this, 'filter_post_row_actions' ), 10, 2 );
+		add_filter( 'post_row_actions', array( $this, 'filter_view_row_actions' ), 10, 2 );
 
 		// Filter link of Title in All Views page
 		add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
@@ -356,7 +356,7 @@ class PT_Content_Views_Admin {
 	 *
 	 * @return array
 	 */
-	public function filter_post_row_actions( $actions, $post ) {
+	public function filter_view_row_actions( $actions, $post ) {
 
 		// Get current post type
 		$post_type = PT_CV_Functions::admin_current_post_type();
@@ -380,6 +380,9 @@ class PT_Content_Views_Admin {
 			$edit_link       = PT_CV_Functions::view_link( $view_id );
 			$actions['edit'] = '<a href="' . esc_url( $edit_link ) . '" title="' . esc_attr( __( 'Edit this item' ) ) . '">' . __( 'Edit' ) . '</a>';
 		}
+		
+		// Filter actions
+		$actions = apply_filters( PT_CV_PREFIX_ . 'view_row_actions', $actions, $view_id );
 
 		return $actions;
 	}

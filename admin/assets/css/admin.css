@@ -191,3 +191,12 @@ html {
 #pt-cv-group-excerpt-settings {
 	margin-bottom: 20px;
 }
+
+/* View shortcode text */
+#view-shortcode {
+	background: #ADFFAD;
+	margin-bottom: 20px;
+	float: left;
+	position: relative;
+	width: 50%;
+}

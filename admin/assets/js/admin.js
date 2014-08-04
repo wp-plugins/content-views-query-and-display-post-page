@@ -274,9 +274,6 @@
 			// Taxonomies Settings wrapper div
 			var $wrap_taxonomies = $('#' + _prefix + 'group-taxonomy');
 
-			// Order Advanced Settings box
-			var $order_advance_settings = $('#' + _prefix + 'group-order #' + _prefix + 'group-advanced');
-
 			// Append <div> : "There is no taxonomy for selected content type" before description of Taxonomies
 			var no_taxonomy_id = _prefix + 'no-taxonomy';
 			var no_taxonomy_class = _prefix + 'text';
@@ -290,9 +287,6 @@
 				});
 				// Hide no taxonomy div
 				no_taxonomy.addClass('hidden');
-
-				// Hide Order Advanced Settings box
-				$order_advance_settings.addClass('hidden');
 
 				// Hide Terms group
 				$('.panel-group.terms').find('.' + _prefix + 'group').addClass('hidden');
@@ -333,11 +327,8 @@
 					no_taxonomy.removeClass('hidden');
 				}
 
-				// Show Order Advanced Settings box if Content type = product
-				if (this_val === 'product') {
-					$order_advance_settings.removeClass('hidden');
-				}
-
+				// Trigger custom actions
+				$('.pt-wrap').trigger('content-type-change', [this_val]);
 			};
 
 			// Get "Content Type" input object
@@ -507,7 +498,10 @@
 			 */
 
 			var fn_layout_format = function (this_val, layout_format) {
-				var expect_val = [ 'scrollable', 'pinterest', 'timeline' ];
+				var expect_val = [ 'scrollable' ];
+
+				// Add more layouts
+				$('.pt-wrap').trigger('toggle-layout-format', [expect_val]);
 
 				if ($.inArray(this_val, expect_val) >= 0) {
 					// Trigger select 1-col

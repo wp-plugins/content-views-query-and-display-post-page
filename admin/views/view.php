@@ -43,7 +43,7 @@ PT_CV_Functions::view_submit();
 
 <?php
 if ( $id ) {
-	echo balanceTags( sprintf( '<input type="text" value="[pt_view id=&quot;%s&quot;]" onclick="this.select()" readonly="" class="form-control" style="background: #ADFFAD; margin-bottom: 20px;">', $id ) );
+	echo balanceTags( sprintf( '<div><input id="view-shortcode" type="text" value="[pt_view id=&quot;%s&quot;]" onclick="this.select()" readonly="" class="form-control">%s</div><div class="clear"></div>', $id, apply_filters( PT_CV_PREFIX_ . 'view_actions', '', $id ) ) );
 }
 ?>
 

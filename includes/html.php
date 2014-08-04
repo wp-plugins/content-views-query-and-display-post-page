@@ -806,7 +806,14 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			$options = get_option( PT_CV_OPTION_NAME );
 
 			if ( $is_admin || ! isset( $options['unload_bootstrap'] ) ) {
-				PT_CV_Asset::enqueue( 'bootstrap', 'style' );
+				$data = apply_filters( PT_CV_PREFIX_ . 'assets_data', array(
+					'name' => 'bootstrap',
+					'type' => 'style',
+					'data' => '',
+					'prefix' => '',
+				), $is_admin, $options );
+				
+				PT_CV_Asset::enqueue( $data['name'], $data['type'], $data['data'], $data['prefix'] );
 			}
 
 			PT_CV_Asset::enqueue(

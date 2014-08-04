@@ -165,7 +165,12 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 		public static function field_callback_unload_bootstrap() {
 			$field_name = 'unload_bootstrap';
 
-			self::_field_print( $field_name, 'checkbox', __( "Don't load <b>Bootstrap</b> style & script (in frontend of website)", PT_CV_DOMAIN ) );
+			self::_field_print(
+				$field_name,
+				'checkbox',
+				__( "Don't load <b>Bootstrap</b> style & script (in frontend of website)", PT_CV_DOMAIN ),
+				__( "Only check this option if Bootstrap has been loaded by active theme or other plugin", PT_CV_DOMAIN )
+			);
 		}
 
 		/**
@@ -173,9 +178,10 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 		 *
 		 * @param string $field_name The ID of field
 		 * @param string $field_type The type of field
+		 * @param string $text       The label of field
 		 * @param string $desc       Description text
 		 */
-		static function _field_print( $field_name, $field_type = 'text', $desc = '' ) {
+		static function _field_print( $field_name, $field_type = 'text', $text = '', $desc = '' ) {
 
 			// Get Saved value
 			$field_value = isset( self::$options[$field_name] ) ? esc_attr( self::$options[$field_name] ) : '';
@@ -194,8 +200,14 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 				esc_attr( $field_type ), $field_id, PT_CV_OPTION_NAME, $field_value, $checked
 			);
 
+			// For radio, checkbox field
+			if ( ! empty( $text ) ) {
+				printf( '<label for="%s" class="label-for-option">%s</label>', $field_id, $text );
+			}
+
+			// Show description
 			if ( ! empty( $desc ) ) {
-				printf( '<label for="%s" class="label-for-option">%s</label>', $field_id, $desc );
+				printf( '<p class="description">%s</p>', $desc );
 			}
 		}
 

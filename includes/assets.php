@@ -58,7 +58,7 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 			}
 
 			// Do action
-			self::action( $name, $data, $type, 'enqueue', $prefix );
+			self::action( $name, (array) $data, $type, 'enqueue', $prefix );
 		}
 
 		/**

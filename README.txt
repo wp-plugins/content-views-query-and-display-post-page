@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, shortcode, thumbnail, title, content, excerpt, meta, date, author, term, taxonomy, pagination, grid, scrollable, slider, collapsible, list, slide, layout, ui
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.3.0.1
+Stable tag: 1.3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,6 +144,10 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.3.0.2 =
+* Refine Javascript code
+* Update description in Setting page
+
 = 1.3.0.1 =
 * Update filter priority
 * Update plugin description
@@ -228,6 +232,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.0.2 =
+Refine Javascript code. Update description in Setting page
 
 = 1.3.0.1 =
 Update filter priority. Update plugin description

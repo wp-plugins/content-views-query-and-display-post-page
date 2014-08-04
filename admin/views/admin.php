@@ -15,10 +15,6 @@
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 	<style>
-		.wrap * {
-			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-		}
-
 		.wrap > .row {
 			padding-bottom: 20px;
 		}
@@ -51,8 +47,6 @@
 	</style>
 
 	<?php
-
-
 	PT_CV_Plugin::settings_page_section_one();
 	// Settings form
 	PT_CV_Plugin::settings_page_form();
