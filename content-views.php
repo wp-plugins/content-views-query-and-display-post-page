@@ -10,7 +10,7 @@
  * Plugin Name:       Content Views
  * Plugin URI:        http://wordpress.org/plugins/content-views-query-and-display-post-page/
  * Description:       Query and display <strong>posts, pages</strong> in awesome layouts (<strong>grid, scrollable list, collapsible list</strong>) easier than ever, without coding!
- * Version:           1.3.0.2
+ * Version:           1.3.1
  * Author:            Palace Of Themes
  * Author URI:        http://profiles.wordpress.org/pt-guy
  * Text Domain:       content-views
@@ -27,21 +27,22 @@ if ( ! defined( 'WPINC' ) ) {
 /*
  * Define Constant
  */
-define( 'PT_CV_VERSION', '1.3.0.2' );
+define( 'PT_CV_VERSION', '1.3.1' );
 define( 'PT_CV_FILE', __FILE__ );
-include_once( plugin_dir_path( __FILE__ ) . 'includes/defines.php' );
+$pt_cv_path = plugin_dir_path( __FILE__ );
+include_once( $pt_cv_path . 'includes/defines.php' );
 
 /*
  * Include other library files (name ASC)
  */
-include_once( plugin_dir_path( __FILE__ ) . 'includes/assets.php' );
-include_once( plugin_dir_path( __FILE__ ) . 'includes/functions.php' );
-include_once( plugin_dir_path( __FILE__ ) . 'includes/hooks.php' );
-include_once( plugin_dir_path( __FILE__ ) . 'includes/html-viewtype.php' );
-include_once( plugin_dir_path( __FILE__ ) . 'includes/html.php' );
-include_once( plugin_dir_path( __FILE__ ) . 'includes/settings.php' );
-include_once( plugin_dir_path( __FILE__ ) . 'includes/update.php' );
-include_once( plugin_dir_path( __FILE__ ) . 'includes/values.php' );
+include_once( $pt_cv_path . 'includes/assets.php' );
+include_once( $pt_cv_path . 'includes/functions.php' );
+include_once( $pt_cv_path . 'includes/hooks.php' );
+include_once( $pt_cv_path . 'includes/html-viewtype.php' );
+include_once( $pt_cv_path . 'includes/html.php' );
+include_once( $pt_cv_path . 'includes/settings.php' );
+include_once( $pt_cv_path . 'includes/update.php' );
+include_once( $pt_cv_path . 'includes/values.php' );
 
 /*----------------------------------------------------------------------------*
  * Public-Facing Functionality
@@ -50,7 +51,7 @@ include_once( plugin_dir_path( __FILE__ ) . 'includes/values.php' );
 /*
  * the plugin's class file
  */
-include_once( plugin_dir_path( __FILE__ ) . 'public/content-views.php' );
+include_once( $pt_cv_path . 'public/content-views.php' );
 
 /*
  * Register hooks that are fired when the plugin is activated or deactivated.
@@ -71,17 +72,15 @@ add_action( 'plugins_loaded', array( 'PT_Content_Views', 'get_instance' ) );
 if ( is_admin() ) {
 
 	// Require Admin side functions
-	include_once( plugin_dir_path( __FILE__ ) . 'admin/content-views-admin.php' );
+	include_once( $pt_cv_path . 'admin/content-views-admin.php' );
 	add_action( 'plugins_loaded', array( 'PT_Content_Views_Admin', 'get_instance' ) );
 
 	// Require PT Options framework
-	include_once( plugin_dir_path( __FILE__ ) . 'admin/includes/options.php' );
+	include_once( $pt_cv_path . 'admin/includes/options.php' );
 
 	// Settings page for the plugin
-	include_once( plugin_dir_path( __FILE__ ) . 'admin/includes/plugin.php' );
+	include_once( $pt_cv_path . 'admin/includes/plugin.php' );
 }
-
-add_action( 'init', array( 'PT_CV_Functions', 'session_start' ), 1 );
 
 /**
  * Common settings

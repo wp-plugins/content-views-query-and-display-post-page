@@ -160,15 +160,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		}
 
 		/**
-		 * Start SESSION
-		 */
-		static function session_start() {
-			if ( ! session_id() ) {
-				session_start();
-			}
-		}
-
-		/**
 		 * Get thumbnail dimensions
 		 *
 		 * @param array $fargs The settings of thumbnail
@@ -438,10 +429,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				return __( 'Empty settings', PT_CV_DOMAIN );
 			}
 
-			$post_fix = empty( $id ) ? '' : '_frontend';
-
-			$_SESSION[PT_CV_PREFIX . 'settings' . $post_fix] = $settings;
-
 			// Escaped value appropriate for use in a SQL query
 			global $pt_view_settings;
 
@@ -457,29 +444,26 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Get view type
 			$view_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'view-type', $pt_view_settings );
 
-			// Store Display settings
+			// Store display settings
 			global $dargs, $pt_query_args;
 
-			if ( $pargs && isset( $pargs['session_id'] ) ) {
-				$session_id = $pargs['session_id'];
-			}
-
-			if ( empty( $session_id ) ) {
-				$session_id = PT_CV_Functions::string_random();
-			}
+			$session_id = ( $pargs && isset( $pargs['session_id'] ) ) ? $pargs['session_id'] : 0;
 
 			if ( $session_id ) {
-
-				global $pt_view_sid;
-				$pt_view_sid = $session_id;
-
 				$session_data = array_merge(
 					array( '$args' => '', '$dargs' => '' ),
-					isset( $_SESSION[PT_CV_PREFIX . 'view_' . $session_id] ) ? (array) $_SESSION[PT_CV_PREFIX . 'view_' . $session_id] : array()
+					( false === ( $saved_settings = get_transient( PT_CV_PREFIX . 'view-data-' . $session_id ) ) ) ? array() : $saved_settings
 				);
 
 				$args  = $session_data['$args'];
 				$dargs = $session_data['$dargs'];
+			} else {
+				// Generate session key for pagination
+				global $pt_view_sid;
+				$pt_view_sid = $session_id = PT_CV_Functions::string_random();
+
+				// Store settings
+				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 30 * MINUTE_IN_SECONDS  );
 			}
 
 			if ( empty( $args ) || empty( $dargs ) ) {
@@ -490,13 +474,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$dargs = apply_filters( PT_CV_PREFIX_ . 'all_display_settings', $dargs );
 				$args  = apply_filters( PT_CV_PREFIX_ . 'query_parameters', $args );
 
-				// Save settings
-				if ( ! empty( $session_id ) ) {
-					$_SESSION[PT_CV_PREFIX . 'view_' . $session_id] = array(
-						'$args'  => $args,
-						'$dargs' => $dargs,
-					);
-				}
+				// Store view data
+				set_transient( PT_CV_PREFIX . 'view-data-' . $session_id, array(
+					'$args'  => $args,
+					'$dargs' => $dargs,
+				), 30 * MINUTE_IN_SECONDS  );
 			}
 
 			// Pagination settings
@@ -572,6 +554,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				// Total number of pages
 				$max_num_pages = ceil( $total_items / $args['posts_per_page'] );
 
+				// Output pagination
 				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $session_id );
 			}
 
@@ -1082,9 +1065,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$settings = array();
 			parse_str( $_POST['data'], $settings );
 
-			// Store settings
-			$_SESSION[PT_CV_PREFIX . 'settings'] = $settings;
-
 			// Show View output
 			echo balanceTags( PT_CV_Functions::view_process_settings( null, $settings ) );
 
@@ -1102,25 +1082,16 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			check_ajax_referer( PT_CV_PREFIX_ . 'ajax_nonce', 'ajax_nonce' );
 
 			// Session id
-			$sid = esc_sql( empty( $_POST['sid'] ) ? '' : $_POST['sid'] );
-
-			// Is admin
-			$is_admin = ! empty( $_POST['is_admin'] ) ? $_POST['is_admin'] : 0;
-
-			$post_fix = $is_admin ? '' : '_frontend';
+			$session_id = empty( $_POST['sid'] ) ? '' : esc_sql( $_POST['sid'] );
 
 			// Get saved $settings
-			if ( isset( $_SESSION[PT_CV_PREFIX . 'settings' . $post_fix] ) ) {
-				$settings = $_SESSION[PT_CV_PREFIX . 'settings' . $post_fix];
-			} else {
-				$settings = '';
-			}
+			$settings = get_transient( PT_CV_PREFIX . 'view-settings-' . $session_id );
 
 			// Pagination settings
-			$pargs = array( 'session_id' => $sid, 'page' => (int) esc_sql( $_POST['page'] ) );
+			$pargs = array( 'session_id' => $session_id, 'page' => (int) esc_sql( $_POST['page'] ) );
 
 			// Show View output
-			echo balanceTags( PT_CV_Functions::view_process_settings( $post_fix, $settings, $pargs ) );
+			echo balanceTags( PT_CV_Functions::view_process_settings( '', $settings, $pargs ) );
 
 			// Must exit
 			die;

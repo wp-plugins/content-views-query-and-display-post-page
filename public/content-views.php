@@ -230,6 +230,7 @@ class PT_Content_Views {
 		$domain = $this->plugin_slug;
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
+		// Load translation file in wp-content/languages/content-views/
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( PT_CV_FILE ) ) . '/languages/' );
 	}

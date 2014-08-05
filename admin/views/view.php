@@ -25,12 +25,10 @@ if ( ! empty ( $_GET['id'] ) ) {
 	if ( $id ) {
 
 		// Get View settings
-		$settings = PT_CV_Functions::view_get_settings( $id );
+		global $pt_cv_admin_settings;
+		$pt_cv_admin_settings = $settings = PT_CV_Functions::view_get_settings( $id );
 	}
 }
-
-// Store settings
-$_SESSION[PT_CV_PREFIX . 'settings'] = $settings;
 
 // Submit handle
 PT_CV_Functions::view_submit();

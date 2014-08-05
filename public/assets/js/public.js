@@ -113,7 +113,6 @@
 				action    : 'pagination_request',
 				sid       : session_id,
 				page      : selected_page,
-				is_admin  : PT_CV_PUBLIC.is_admin,
 				ajax_nonce: PT_CV_PUBLIC._nonce
 			};
 
