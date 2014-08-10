@@ -341,7 +341,7 @@ $options = array(
 									'options' => PT_CV_Values::taxonomy_relation(),
 									'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::taxonomy_relation() ),
 									'class'   => 'taxonomy-relation',
-									'desc'    => __( 'Select AND to show posts which match ALL settings of selected taxonomies[--br--]Select OR to show posts which match settings of at least one selected taxonomy', PT_CV_DOMAIN ),
+									'desc'    => __( 'Select AND to show posts which match ALL settings of selected taxonomies<br>Select OR to show posts which match settings of at least one selected taxonomy', PT_CV_DOMAIN ),
 								),
 							),
 						),
@@ -513,6 +513,7 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 			'extra_setting' => array(
 				'params' => array(
 					'wrap-class' => PT_CV_Html::html_group_class(),
+					'wrap-id'    => PT_CV_Html::html_group_id( 'field-settings' ),
 				),
 			),
 			'params'        => array(

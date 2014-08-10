@@ -180,7 +180,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 							'std'         => '5',
 							'placeholder' => 'e.g. 5',
 							'append_text' => '1 &rarr; 100',
-							'desc'        => __( 'The number of items per page.[--br--]If value of Limit option is not blank (empty), this value should be smaller than Limit value', PT_CV_DOMAIN ),
+							'desc'        => __( 'The number of items per page.<br>If value of Limit option is not blank (empty), this value should be smaller than Limit value', PT_CV_DOMAIN ),
 						),
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),
@@ -485,8 +485,6 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 				),
 
-				apply_filters( PT_CV_PREFIX_ . 'field_display_option', array(), $prefix ),
-
 				// Show Content
 				array(
 					'label'         => array(
@@ -522,14 +520,14 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 							'type'    => 'checkbox',
 							'name'    => $prefix . 'meta-fields',
 							'options' => PT_CV_Values::yes_no( 'yes', __( 'Show Meta Fields: Author, Date, Comment...', PT_CV_DOMAIN ) ),
-							'std'     => 'yes',
+							'std'     => '',
 						),
 					),
 				),
 			);
 
 			// Add/remove params
-			$result = apply_filters( PT_CV_PREFIX_ . 'field_display', $result );
+			$result = apply_filters( PT_CV_PREFIX_ . 'field_display', $result, $prefix );
 
 			// Sort array of params by saved order
 			$result = apply_filters( PT_CV_PREFIX_ . 'settings_sort', $result, PT_CV_PREFIX . $prefix );

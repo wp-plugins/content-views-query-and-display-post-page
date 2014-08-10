@@ -187,7 +187,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 			$name        = ! empty( $param['name'] ) ? PT_CV_PREFIX . esc_attr( $param['name'] ) : '';
 			$id          = ! empty( $param['id'] ) ? "id='" . PT_CV_PREFIX . esc_attr( $param['id'] ) . "'" : '';
 			$value       = self::field_value( $data, $param, $name );
-			$description = isset( $param['desc'] ) ? esc_html__( $param['desc'], PT_CV_DOMAIN ) : '';
+			$description = isset( $param['desc'] ) ? balanceTags( $param['desc'] ) : '';
 
 			// Add extra information of option type
 			switch ( $type ) {
@@ -301,7 +301,6 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 					break;
 			}
 
-			$description = str_replace( '[--br--]', '<br>', $description );
 			$description = apply_filters( PT_CV_PREFIX_ . 'options_description', $description, $param );
 
 			if ( ! empty( $description ) ) {

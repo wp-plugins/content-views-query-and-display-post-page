@@ -18,16 +18,6 @@ html {
 	background: none;
 }
 
-.wp-color-result {
-	height: 24px;
-}
-
-.pt-wrap .font-color .input-group {
-	width:        100px;
-	float:        left;
-	margin-right: 20px;
-}
-
 .pt-wrap select {
 	height: 34px !important;
 }
