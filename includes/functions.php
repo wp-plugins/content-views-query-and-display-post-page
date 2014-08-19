@@ -44,6 +44,21 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		}
 
 		/**
+		 * Get current language of site
+		 */
+		static function get_language() {
+			$language = '';
+
+			// WPML
+			global $sitepress;
+			if ( $sitepress && method_exists( $sitepress, 'get_current_language' ) ) {
+				$language = $sitepress->get_current_language();
+			}
+
+			return $language;
+		}
+
+		/**
 		 * Get plugin info
 		 *
 		 * @param string $file Absolute path to the plugin file
@@ -836,12 +851,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 						// Get thumbnail settings
 						case 'thumbnail':
-
-							$field_setting = array();
-
-							$fields = array( 'position', 'size', 'style' );
 							$prefix = PT_CV_PREFIX . 'field-thumbnail-';
-							PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
+							$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_setting_values', $field_setting, $prefix );
 
@@ -849,14 +860,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 						// Get meta fields settings
 						case 'meta-fields':
-
-							$field_setting = array();
-
 							$prefix               = PT_CV_PREFIX . 'meta-fields-';
-							$meta_fields_settings = PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'meta-fields-' );
-							$fields               = (array) array_keys( (array) $meta_fields_settings );
-
-							PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
+							$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_meta_fields_setting_values', $field_setting, $prefix );
 
@@ -864,12 +869,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 						// Get content settings
 						case 'content':
-
-							$field_setting = array();
-
 							$prefix = PT_CV_PREFIX . 'field-content-';
-							$fields = PT_CV_Functions::settings_keys( 'field-content-', PT_CV_Settings::field_settings() );
-							PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
+							$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 							if ( $field_setting['show'] == 'excerpt' ) {
 								$field_setting = array_merge( $field_setting, PT_CV_Functions::settings_values_by_prefix( PT_CV_PREFIX . 'field-excerpt-' ) );
@@ -905,13 +906,10 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Get pagination enable/disable
 			$pagination = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'enable-pagination', $pt_view_settings );
 			if ( $pagination ) {
-				$field_setting = array();
-
 				$prefix = PT_CV_PREFIX . 'pagination-';
-				$fields = PT_CV_Functions::settings_keys( 'pagination-', PT_CV_Settings::settings_pagination() );
-				PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
+				$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
-				$dargs['pagination-settings'] = apply_filters( PT_CV_PREFIX_ . 'pagination_settings', $field_setting );
+				$dargs['pagination-settings'] = apply_filters( PT_CV_PREFIX_ . 'pagination_settings', $field_setting, $prefix );
 
 				// If Items per page is set, get its value
 				$posts_per_page = isset( $dargs['pagination-settings']['items-per-page'] ) ? (int) $dargs['pagination-settings']['items-per-page'] : $limit;
@@ -941,13 +939,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @param array $dargs The settings array of Fields
 		 */
 		static function view_get_other_settings( &$dargs ) {
-			global $pt_view_settings;
-
-			$field_setting = array();
-
 			$prefix = PT_CV_PREFIX . 'other-';
-			$fields = PT_CV_Functions::settings_keys( 'other-', PT_CV_Settings::settings_other() );
-			PT_CV_Functions::settings_values( $fields, $field_setting, $pt_view_settings, $prefix );
+			$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 			$dargs['other-settings'] = apply_filters( PT_CV_PREFIX_ . 'other_settings', $field_setting );
 		}
@@ -1089,6 +1082,14 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			// Pagination settings
 			$pargs = array( 'session_id' => $session_id, 'page' => (int) esc_sql( $_POST['page'] ) );
+
+			// Language
+			$language = empty( $_POST['lang'] ) ? '' : esc_sql( $_POST['lang'] );
+			// WPML
+			global $sitepress;
+			if ( $sitepress && $language ) {
+				$sitepress->switch_lang($language, true);
+			}
 
 			// Show View output
 			echo balanceTags( PT_CV_Functions::view_process_settings( '', $settings, $pargs ) );

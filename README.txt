@@ -1,14 +1,14 @@
-=== Query posts and display posts in responsive grid layout without coding - Content Views ===
+=== Query posts by category, author... and display posts on a Page in Grid layout without coding - Content Views ===
 Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.3.1.1
+Stable tag: 1.3.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Query and display posts by category, tag, author... in responsive grid, list layouts easier than ever, without coding!
+It is easy as 1, 2, 3 to query your WordPress posts by category, tag, author... and display your posts on any Page in a responsive Grid, List layout without any line of code!
 
 == Description ==
 
@@ -28,7 +28,7 @@ It is not easy as ABC, isn't it?
 
 But now, with Content Views plugin, you can do above things in minutes, without any line of code.
 
-[Content Views plugin](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Get Content Views Pro") provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, scrollable list/slider, accordion/collapsible list) quickly & easily, in very 3 simple steps:
+[Content Views](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Get Content Views Pro") provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, scrollable list/slider, accordion/collapsible list) quickly & easily, in very 3 simple steps:
 
 * Step 1 : Choose filters (author, category, tag, order...) to query your posts
 * Step 2 : Customize display options to display posts in a responsive layout
@@ -48,7 +48,7 @@ But now, with Content Views plugin, you can do above things in minutes, without 
 
 **in Step 2, you can:**
 
-* Select a responsive layout to display posts: Grid, List(Collapsible/Scrollable). More awesome layouts are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
+* Select a responsive layout to display posts: Grid, List(Collapsible/Slider). More awesome layouts are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
 * Display fields (thumbnail, title, content, meta fields) in vertical direction. Or display thumbnail in left/right side of other fields
 * Select what fields (thumbnail, title, content, meta fields) to display
 * Select thumbnail sizes
@@ -57,10 +57,8 @@ But now, with Content Views plugin, you can do above things in minutes, without 
 * Enable/Disable pagination
 * Open in new tab, current tab (when click on title, thumbnail of post)
 
-Also, you can import/export 'View' to use in other WordPress sites (Please check **FAQ** tab to know what is 'View')
 
-
-= More amazing features: =
+= Do you want more amazing features? =
 
 * Completely replace WordPress layout in Category page, Author page, Search page by Grid layout
 * WooCommerce support
@@ -138,11 +136,16 @@ You can create Unlimited Views, in Unlimited websites
 3. Query and display in Grid layout (Show Title, Thumbnail)
 4. Query and display in Grid layout (Show Title, Thumbnail, Content, Meta fields), with Pagination
 5. Query and display in Collapsible List
-6. Query and display in Scrollable List
+6. Query and display in Slider
 
 
 
 == Changelog ==
+
+= 1.3.1.2 =
+* Bug fixed: Loosing translation (WPML) in Ajax pagination
+* Improvement: Performance optimization (when get settings of View)
+* Improvement: Update style if only Title is selected to display (to have a more beautiful list of Posts title)
 
 = 1.3.1.1 =
 * Bug fixed: Thumbnail dimensions are empty
@@ -240,6 +243,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.1.2 =
+Bug fixed: Loosing translation (WPML) in Ajax pagination. Improvement: Performance optimization (when get settings of View). Improvement: Update style if only Title is selected to display (to have a more beautiful list of Posts title)
 
 = 1.3.1.1 =
 Bug fixed: Thumbnail dimensions are empty. Improvement: CSS code refinement

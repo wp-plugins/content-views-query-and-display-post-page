@@ -2,7 +2,7 @@
 
 .pt-cv-view {
 	position:      relative;
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 	clear:         both;
 }
 
@@ -36,7 +36,7 @@
 
 /* For the output which shows only Title */
 .pt-cv-only-title {
-	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 /* Title */

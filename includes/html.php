@@ -788,6 +788,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					'is_admin' => is_admin() ? 1 : 0,
 					'_prefix'  => PT_CV_PREFIX,
 					'ajaxurl'  => admin_url( 'admin-ajax.php' ),
+					'lang'     => PT_CV_Functions::get_language(),
 					'_nonce'   => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
 				)
 			);
