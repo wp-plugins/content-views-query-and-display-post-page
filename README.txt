@@ -8,7 +8,7 @@ Stable tag: 1.3.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-It is easy as 1, 2, 3 to query your WordPress posts by category, tag, author... and display your posts on any Page in a responsive Grid, List layout without any line of code!
+It is easy as 1, 2, 3 to query your posts by category, tag, author... and display your posts on any Page in a responsive Grid layout without coding!
 
 == Description ==
 
