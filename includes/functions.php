@@ -424,10 +424,39 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			if ( $post_id ) {
 				$view_settings = get_post_meta( $post_id, PT_CV_META_SETTINGS, true );
 
+				/* Backward compatibility
+				 * since 1.3.2
+				 */
+				self::view_backward_comp( $view_settings );
+
 				return is_array( $view_settings ) ? $view_settings : array();
 			}
 
 			return array();
+		}
+
+		/**
+		 * Update values for some new options in new version (from options in old version)
+		 *
+		 * @param type $view_settings
+		 */
+		static function view_backward_comp( &$view_settings ) {
+			if ( ! $view_settings )
+				return $view_settings;
+
+			$taxonomies = isset( $view_settings[ PT_CV_PREFIX . 'taxonomy'] ) ? $view_settings[ PT_CV_PREFIX . 'taxonomy'] : array();
+			if ( $taxonomies ) {
+				$list = array( '__in', '__not_in' );
+				foreach ( $taxonomies as $taxonomy ) {
+					// Check if IN/NOT IN list has values. NOT IN list will overwite IN list
+					foreach ( $list as $ltype ) {
+						if ( isset( $view_settings[PT_CV_PREFIX . $taxonomy . $ltype] ) ) {
+							$view_settings[PT_CV_PREFIX . $taxonomy . '-terms']    = $view_settings[PT_CV_PREFIX . $taxonomy . $ltype];
+							$view_settings[PT_CV_PREFIX . $taxonomy . '-operator'] = ( $ltype == '__in' ) ? 'IN' : 'NOT IN';
+						}
+					}
+				}
+			}
 		}
 
 		/**
@@ -737,23 +766,15 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 							// Get Terms & criterias (In, Not in)
 							foreach ( $taxonomies as $taxonomy ) {
+								// Get operator
+								$operator = PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '-operator', $pt_view_settings, 'IN' );
 
-								// If found setting for taxonomy
-								if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__in', $pt_view_settings ) ) {
-									$taxonomy_setting[] = array(
-										'taxonomy' => $taxonomy,
-										'field'    => 'slug',
-										'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__in', $pt_view_settings ),
-									);
-								}
-								if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__not_in', $pt_view_settings ) ) {
-									$taxonomy_setting[] = array(
-										'taxonomy' => $taxonomy,
-										'field'    => 'slug',
-										'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '__not_in', $pt_view_settings ),
-										'operator' => 'NOT IN',
-									);
-								}
+								$taxonomy_setting[] = array(
+									'taxonomy' => $taxonomy,
+									'field'    => 'slug',
+									'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '-terms', $pt_view_settings ),
+									'operator' => $operator,
+								);
 							}
 
 							// Get Taxonomy relation if there are more than 1 selected taxonomies | set In & Not in of a taxonomy

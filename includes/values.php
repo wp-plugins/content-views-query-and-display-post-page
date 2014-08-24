@@ -41,25 +41,25 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 
 			return $result;
 		}
-		
+
 		/**
 		 * Get list of post types and related taxonomies
-		 * 
+		 *
 		 * @return array
 		 */
 		static function post_types_vs_taxonomies() {
 			// Get post types
 			$args       = apply_filters( PT_CV_PREFIX_ . 'post_types', array( 'public' => true, 'show_ui' => true, '_builtin' => true ) );
 			$post_types = get_post_types( $args );
-			
+
 			// Get taxonomies of post types
 			$result = array();
-			
+
 			foreach ( $post_types as $post_type ) {
 				$taxonomy_names = get_object_taxonomies( $post_type );
 				$result[$post_type] = $taxonomy_names;
 			}
-			
+
 			return $result;
 		}
 
@@ -92,6 +92,18 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 			return array(
 				'AND' => __( 'AND', PT_CV_DOMAIN ),
 				'OR'  => __( 'OR', PT_CV_DOMAIN ),
+			);
+		}
+
+		/**
+		 * Operator to join. Possible values are 'IN'(default), 'NOT IN', 'AND'.
+		 * @return type
+		 */
+		static function taxonomy_operators() {
+			return array(
+				'IN' => __( 'IN (A post is displayed only if it associated with one of values in terms list)', PT_CV_DOMAIN ),
+				'NOT IN'  => __( 'NOT IN (A post is displayed only if it did NOT associated with any values in terms list)', PT_CV_DOMAIN ),
+				'AND'  => __( 'AND (A post is displayed only if it associated with all values in terms list)', PT_CV_DOMAIN ),
 			);
 		}
 

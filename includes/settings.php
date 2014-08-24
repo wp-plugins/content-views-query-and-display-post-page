@@ -38,57 +38,37 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 
 				$result[$taxonomy_slug] = array(
 
-					// In
+					// Select term to filter
 					array(
 						'label'  => array(
-							'text' => __( 'In ', PT_CV_DOMAIN ),
-							//'text' => __( 'In ', PT_CV_DOMAIN ) . $taxonomies[$taxonomy_slug],
-						),
-						'params' => array(
-							array(
-								'type'   => 'group',
-								'params' => apply_filters(
-									PT_CV_PREFIX_ . 'term_quick_filter_in',
-									array(
-										array(
-											'label'         => array(
-												'text' => __( '', PT_CV_DOMAIN ),
-											),
-											'extra_setting' => array(
-												'params' => array(
-													'width' => 12,
-												),
-											),
-											'params'        => array(
-												array(
-													'type'     => 'select',
-													'name'     => $taxonomy_slug . '__in[]',
-													'options'  => $terms,
-													'std'      => '',
-													'class'    => 'select2',
-													'multiple' => '1',
-												),
-											),
-										),
-									)
-								),
-							),
-						),
-					),
-					// Not In
-					array(
-						'label'  => array(
-							'text' => __( 'Not in ', PT_CV_DOMAIN ),
-							//'text' => __( 'Not in ', PT_CV_DOMAIN ) . $taxonomies[$taxonomy_slug],
+							'text' => __( 'Select terms', PT_CV_DOMAIN ),
 						),
 						'params' => array(
 							array(
 								'type'     => 'select',
-								'name'     => $taxonomy_slug . '__not_in[]',
+								'name'     => $taxonomy_slug . '-terms[]',
 								'options'  => $terms,
 								'std'      => '',
 								'class'    => 'select2',
 								'multiple' => '1',
+							),
+						),
+					),
+
+					// Quick filter
+					apply_filters( PT_CV_PREFIX_ . 'term_quick_filter', array() ),
+
+					//Operator
+					array(
+						'label'  => array(
+							'text' => __( 'Operator', PT_CV_DOMAIN ),
+						),
+						'params' => array(
+							array(
+								'type'    => 'radio',
+								'name'    => $taxonomy_slug . '-operator',
+								'options' => PT_CV_Values::taxonomy_operators(),
+								'std'     => 'IN',
 							),
 						),
 					),

@@ -529,7 +529,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Get thumbnail dimensions
 			$dimensions = PT_CV_Functions::field_thumbnail_dimensions( $fargs );
 			$dimensions = (array) apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_dimension_output', $dimensions, $fargs );
-			
+
 			// Check if has thumbnail ( has_post_thumbnail doesn't works )
 			$has_thumbnail = get_the_post_thumbnail( $post_id );
 			if ( ! empty( $has_thumbnail ) ) {
@@ -813,7 +813,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					'data' => '',
 					'prefix' => '',
 				), $is_admin, $options );
-				
+
 				PT_CV_Asset::enqueue( $data['name'], $data['type'], $data['data'], $data['prefix'] );
 			}
 
