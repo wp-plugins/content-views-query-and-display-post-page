@@ -766,15 +766,17 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 							// Get Terms & criterias (In, Not in)
 							foreach ( $taxonomies as $taxonomy ) {
-								// Get operator
-								$operator = PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '-operator', $pt_view_settings, 'IN' );
+								if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '-terms', $pt_view_settings ) ) {
+									// Get operator
+									$operator = PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '-operator', $pt_view_settings, 'IN' );
 
-								$taxonomy_setting[] = array(
-									'taxonomy' => $taxonomy,
-									'field'    => 'slug',
-									'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '-terms', $pt_view_settings ),
-									'operator' => $operator,
-								);
+									$taxonomy_setting[] = array(
+										'taxonomy' => $taxonomy,
+										'field'    => 'slug',
+										'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '-terms', $pt_view_settings ),
+										'operator' => $operator,
+									);
+								}
 							}
 
 							// Get Taxonomy relation if there are more than 1 selected taxonomies | set In & Not in of a taxonomy
