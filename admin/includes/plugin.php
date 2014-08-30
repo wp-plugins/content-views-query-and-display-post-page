@@ -1,14 +1,14 @@
 <?php
-
 /**
  * Form, option group, option name, option fields
  *
- * @package   PT_Content_Views
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @package   PT_Content_Views_Admin
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
+
 if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 
 	/**
@@ -169,7 +169,7 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 				$field_name,
 				'checkbox',
 				__( "Don't load <b>Bootstrap</b> style & script (in frontend of website)", PT_CV_DOMAIN ),
-				__( "Only check this option if Bootstrap has been loaded by active theme or other plugin", PT_CV_DOMAIN )
+				__( 'Only check this option if Bootstrap has been loaded by active theme or other plugin', PT_CV_DOMAIN )
 			);
 		}
 

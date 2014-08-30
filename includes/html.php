@@ -3,10 +3,10 @@
  * HTML output, class, id generating
  *
  * @package   PT_Content_Views
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
 
 if ( ! class_exists( 'PT_CV_Html' ) ) {
@@ -336,7 +336,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 			$before_output = ( $current_page === 1 ) ? apply_filters( PT_CV_PREFIX_ . 'before_output_html', '' ) : '';
 
-			return $before_output . $output;
+			return balanceTags( $before_output ) . balanceTags( $output );
 		}
 
 		/**
@@ -423,6 +423,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 							if ( empty( $content ) ) {
 								$content = wp_trim_words( strip_shortcodes( get_the_content() ), $length, $readmore_btn );
 							}
+							// Force balance tags
+							$content = force_balance_tags( $content );
 
 							break;
 
@@ -569,7 +571,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				switch ( $meta ) {
 					case 'date':
 						// Get date wrapper class
-						$date_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'entry-date', 'date' );
+						$date_class  = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'entry-date', 'date' );
 						$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'date' );
 
 						$html['date'] = sprintf( '<span class="%s">%s <time datetime="%s">%s</time></span>', esc_html( $date_class ), balanceTags( $prefix_text ), esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() ) );
@@ -591,7 +593,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
 							// Get comment wrapper class
 							$comment_class = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'comments-link', 'comment' );
-							$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'comment' );
+							$prefix_text   = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'comment' );
 
 							ob_start();
 							comments_popup_link( __( 'Leave a comment', PT_CV_DOMAIN ), __( '1 Comment', PT_CV_DOMAIN ), __( '% Comments', PT_CV_DOMAIN ) );
@@ -721,9 +723,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$content = implode( "\n", $contents );
 
 					if ( $type == 'js' ) {
-						echo self::inline_script( $content, false );
+						echo balanceTags( self::inline_script( $content, false ) );
 					} else {
-						echo self::inline_style( $content );
+						echo balanceTags( self::inline_style( $content ) );
 					}
 				}
 			}
@@ -807,12 +809,15 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			$options = get_option( PT_CV_OPTION_NAME );
 
 			if ( $is_admin || ! isset( $options['unload_bootstrap'] ) ) {
-				$data = apply_filters( PT_CV_PREFIX_ . 'assets_data', array(
-					'name' => 'bootstrap',
-					'type' => 'style',
-					'data' => '',
-					'prefix' => '',
-				), $is_admin, $options );
+				$data = apply_filters(
+					PT_CV_PREFIX_ . 'assets_data',
+					array(
+						'name' => 'bootstrap',
+						'type' => 'style',
+						'data' => '',
+						'prefix' => '',
+					), $is_admin, $options
+				);
 
 				PT_CV_Asset::enqueue( $data['name'], $data['type'], $data['data'], $data['prefix'] );
 			}
@@ -856,7 +861,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			?>
 			<script type="text/javascript" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-script-' . $random_id ); ?>">
 			<?php
-			$format = $wrap ? "(function ($) {\n $(function () { %s }); \n}(jQuery));" : '%s';
+			$format  = $wrap ? "(function ($) {\n $(function () { %s }); \n}(jQuery));" : '%s';
 			$content = balanceTags( $js );
 			printf( $format, $content );
 			?>

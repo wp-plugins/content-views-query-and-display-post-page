@@ -5,10 +5,10 @@
  * Contain all functions to display setting options on page
  *
  * @package   PT_Options_Framework
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
 
 if ( ! class_exists( 'PT_Options_Framework' ) ) {

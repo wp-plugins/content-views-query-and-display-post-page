@@ -2,15 +2,24 @@
  * Common styles for WP admin
  *
  * @package   PT_Content_Views_Admin
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
 
 /* Overwrite WP */
 .update-nag {
 	display: none;
+}
+
+/* Fix Bootstrap box-sizing "border-box" problem */
+.pt-wrap *,
+.pt-wrap *:before,
+.pt-wrap *:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 /* Fix small error when use Bootstrap */

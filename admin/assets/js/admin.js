@@ -2,10 +2,10 @@
  * Main script file for WP admin
  *
  * @package   PT_Content_Views_Admin
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
 
 ( function ($) {
@@ -76,13 +76,18 @@
 		 * @returns void
 		 */
 		_do_toggle_taxonomy_relation: function ($taxonomy_relation, $wrap_taxonomies) {
+			var $self = this;
+			var _prefix = $self.options._prefix;
+
 			// If there is no taxonomies
 			if ($wrap_taxonomies.find('.pt-params .checkbox').filter(function () {
 				return !$(this).hasClass('hidden') && $(this).find('input:checked').length;
 			}).length > 1) {
 				$taxonomy_relation.removeClass('hidden');
+				$('.pt-wrap').trigger(_prefix + 'multiple-taxonomies', [1]);
 			} else {
 				$taxonomy_relation.addClass('hidden');
+				$('.pt-wrap').trigger(_prefix + 'multiple-taxonomies', [0]);
 			}
 		},
 		/**

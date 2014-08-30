@@ -2,11 +2,11 @@
 /**
  * Add / Edit Content Views
  *
- * @package   PT_Content_Views
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @package   PT_Content_Views_Admin
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
 
 // Check if using Wordpress version 3.7 or higher

@@ -3,10 +3,10 @@
  * Define settings for options
  *
  * @package   PT_Content_Views
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
 
 if ( ! class_exists( 'PT_CV_Settings' ) ) {
@@ -663,7 +663,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 							'type' => 'number',
 							'name' => $prefix . 'number-columns',
 							'std'  => '2',
-							'append_text' => '1 &rarr; 10',
+							'append_text' => '1 &rarr; 4',
 							'desc' => __( 'The number of items on each row of grid', PT_CV_DOMAIN ),
 						),
 					),

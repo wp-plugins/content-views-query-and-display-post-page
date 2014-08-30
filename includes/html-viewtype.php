@@ -3,10 +3,10 @@
  * HTML output for specific View types
  *
  * @package   PT_Content_Views
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
 
 if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
@@ -18,15 +18,14 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 	class PT_CV_Html_ViewType {
 
 		/**
-		 * Wrap content of Grid type
+		 * Generate class for columns
 		 *
-		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
-		 * @param array $content       The output array
-		 *
-		 * @return array Array of rows, each row contains columns
+		 * @global array $dargs
+		 * @param array $content_items
+		 * @return array
 		 */
-		static function grid_wrapper( $content_items, &$content ) {
-			global $dargs, $pt_cv_enable_filter;
+		static function process_column_width( $content_items ) {
+			global $dargs;
 
 			// -- Get column span
 			$columns = ( (int) $dargs['number-columns'] < count( $content_items ) ) ? (int) $dargs['number-columns'] : count( $content_items );
@@ -49,7 +48,23 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 			// Get wrapper class of a row
 			$row_classes = apply_filters( PT_CV_PREFIX_ . 'row_class', array( 'row', PT_CV_PREFIX . 'row' ) );
-			$row_class   = implode( ' ', $row_classes );
+			$row_class   = implode( ' ', array_filter( $row_classes ) );
+
+			return array( $columns, $span_width_last, $span_width, $span_class, $row_class );
+		}
+
+		/**
+		 * Wrap content of Grid type
+		 *
+		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
+		 * @param array $content       The output array
+		 *
+		 * @return array Array of rows, each row contains columns
+		 */
+		static function grid_wrapper( $content_items, &$content ) {
+			global $pt_cv_enable_filter;
+
+			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width( $content_items );
 
 			// Split items to rows
 			$columns_item = array_chunk( $content_items, $columns, true );
@@ -71,14 +86,14 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 				}
 
 				$list_item = implode( "\n", $row_html );
-				
+
 				if ( $pt_cv_enable_filter != 'yes' ) {
-					$list_item = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), $list_item );
+					$list_item = sprintf( '<div class="%s">%s</div>', esc_attr( $row_class ), $list_item );
 				} else {
 					// Add the extra clearfix
 					$list_item .= '<div class="clearfix visible-xs-block"></div>';
 				}
-				
+
 				$content[] = balanceTags( $list_item );
 			}
 		}
@@ -92,8 +107,6 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * @return string Collapsible list, wrapped in a "panel-group" div
 		 */
 		static function collapsible_wrapper( $content_items, &$content ) {
-			global $dargs;
-
 			// Generate random id for the wrapper of Collapsible list
 			$random_id = PT_CV_Functions::string_random();
 
@@ -174,28 +187,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			// Store content of a Scrollable list
 			$scrollable_content = array();
 
-			// -- Get column span
-			$columns = ( (int) $dargs['number-columns'] < count( $content_items ) ) ? (int) $dargs['number-columns'] : count( $content_items );
-			$rows    = ( $dargs['number-rows'] ) ? (int) $dargs['number-rows'] : 1;
+			$rows = ( $dargs['number-rows'] ) ? (int) $dargs['number-rows'] : 1;
 
-			$span_width_last = $span_width = (int) ( 12 / $columns );
-
-			// Get span for the last column on row
-			if ( 12 % $columns ) {
-				$span_width_last = $span_width + ( 12 % $columns );
-			}
-
-			// Get span class
-			$span_class = apply_filters( PT_CV_PREFIX_ . 'span_class', 'col-md-' );
-
-			// -- Row output
+			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width( $content_items );
 
 			// Get wrapper class of a scrollable slide
 			$slide_class = apply_filters( PT_CV_PREFIX_ . 'scrollable_slide_class', 'item' );
-
-			// Get wrapper class of a row
-			$row_classes = apply_filters( PT_CV_PREFIX_ . 'row_class', array( 'row', PT_CV_PREFIX . 'row' ) );
-			$row_class   = implode( ' ', array_filter( $row_classes ) );
 
 			// Split items to slide
 			$slides_item = array_chunk( $content_items, $columns * $rows );
@@ -223,7 +220,7 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 				// Show first slide
 				$this_class           = $slide_class . ( ( $s_idx == 0 ) ? ' active' : '' );
-				$scrollable_content[] = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $this_class ), implode( "\n", $slide_html ) );
+				$scrollable_content[] = sprintf( '<div class="%s">%s</div>', esc_attr( $this_class ), implode( "\n", $slide_html ) );
 			}
 
 			// Get class of wrapper of content of scrollable list

@@ -3,10 +3,10 @@
  * Define values for input, select...
  *
  * @package   PT_Content_Views
- * @author    Palace Of Themes <palaceofthemes@gmail.com>
+ * @author    PT Guy <palaceofthemes@gmail.com>
  * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Palace Of Themes
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
  */
 
 if ( ! class_exists( 'PT_CV_Values' ) ) {
@@ -56,7 +56,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 			$result = array();
 
 			foreach ( $post_types as $post_type ) {
-				$taxonomy_names = get_object_taxonomies( $post_type );
+				$taxonomy_names     = get_object_taxonomies( $post_type );
 				$result[$post_type] = $taxonomy_names;
 			}
 
