@@ -70,7 +70,7 @@ class PT_Content_Views_Admin {
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
 		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
+		$plugin_basename = plugin_basename( plugin_dir_path( dirname(__FILE__) ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'filter_add_action_links' ) );
 
 		// Filter link of actions in All Views page
@@ -380,7 +380,7 @@ class PT_Content_Views_Admin {
 			$edit_link       = PT_CV_Functions::view_link( $view_id );
 			$actions['edit'] = '<a href="' . esc_url( $edit_link ) . '" title="' . esc_attr( __( 'Edit this item' ) ) . '">' . __( 'Edit' ) . '</a>';
 		}
-		
+
 		// Filter actions
 		$actions = apply_filters( PT_CV_PREFIX_ . 'view_row_actions', $actions, $view_id );
 
