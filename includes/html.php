@@ -405,6 +405,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					// Sets up global post data
 					setup_postdata( $post );
 
+					// Handle the more tag inside content
+					do_action( PT_CV_PREFIX_ . 'handle_teaser' );
+
 					// Get content class
 					$content_class = apply_filters( PT_CV_PREFIX_ . 'field_content_class', PT_CV_PREFIX . 'content' );
 

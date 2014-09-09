@@ -69,6 +69,14 @@ class PT_Content_Views_Admin {
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
+		// Ajax action
+		$action = 'preview_request';
+		add_action( 'wp_ajax_' . $action, array( 'PT_CV_Functions', 'ajax_callback_' . $action ) );
+
+		// Output assets content at footer of page
+		add_action( PT_CV_PREFIX_ . 'preview_footer', array( 'PT_CV_Html', 'assets_of_view_types' ) );
+
+
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( dirname(__FILE__) ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'filter_add_action_links' ) );
@@ -79,12 +87,8 @@ class PT_Content_Views_Admin {
 		// Filter link of Title in All Views page
 		add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
 
-		// Ajax action
-		$action = 'preview_request';
-		add_action( 'wp_ajax_' . $action, array( 'PT_CV_Functions', 'ajax_callback_' . $action ) );
-
-		// Output assets content at footer of page
-		add_action( PT_CV_PREFIX_ . 'preview_footer', array( 'PT_CV_Html', 'assets_of_view_types' ) );
+		// Filter Title of Edit View page
+		add_filter( 'admin_title', array( $this, 'filter_admin_title' ), 10, 2 );
 
 		// Custom hooks for both preview & frontend
 		PT_CV_Hooks::init();
@@ -405,6 +409,26 @@ class PT_Content_Views_Admin {
 		$edit_link = PT_CV_Functions::view_link( $view_id );
 
 		return $edit_link;
+	}
+
+	/**
+	 * Filter Title for View page
+	 *
+	 * @param string $admin_title
+	 * @param string $title
+	 */
+	public function filter_admin_title( $admin_title, $title ) {
+		$screen = get_current_screen();
+
+		// If is View page
+		if ( $this->plugin_screen_hook_suffix == $screen->id || in_array( $screen->id, $this->plugin_sub_screen_hook_suffix ) ) {
+			// If View id is passed in url
+			if ( ! empty ( $_GET['id'] ) ) {
+				$admin_title = str_replace( 'Add New', 'Edit', $admin_title );
+			}
+		}
+
+		return $admin_title;
 	}
 
 }

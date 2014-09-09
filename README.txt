@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.3.1.5
+Stable tag: 1.3.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,10 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.3.1.6 =
+* Improvement: Update page title as "Edit View" in edit View page
+* Bug fixed: Fix some warnings in PHP 5.2
+
 = 1.3.1.5 =
 * Test up to 4.0
 
@@ -253,6 +257,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.1.6 =
+Improvement: Update page title as "Edit View" in edit View page. Bug fixed: Fix some warnings in PHP 5.2
 
 = 1.3.1.5 =
 Test up to 4.0
