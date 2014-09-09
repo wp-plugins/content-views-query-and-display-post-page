@@ -1,0 +1,629 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Content Views\n"
+"POT-Creation-Date: 2014-07-01 23:54+0700\n"
+"PO-Revision-Date: 2014-08-05 22:44+0700\n"
+"Last-Translator: \n"
+"Language-Team: PT Guy <support@contentviewspro.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: pt-content-views\n"
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:237
+msgid "There is no taxonomy for selected content type"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:238
+msgid "Pagination is disabled when Limit = -1"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:239
+msgid "Opening a link is prevented in preview box"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:243
+#: content-views-query-and-display-post-page/admin/views/view.php:74
+msgid "Show Preview"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:244
+msgid "Hide Preview"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:245
+msgid "Update Preview"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:283
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:284
+msgid "Content View Settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:294
+msgid "All Content Views"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:295
+#: content-views-query-and-display-post-page/public/content-views.php:256
+msgid "All Views"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:302
+#: content-views-query-and-display-post-page/public/content-views.php:252
+msgid "Add New View"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:303
+msgid "Add New"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:342
+#: content-views-query-and-display-post-page/admin/includes/options.php:344
+msgid "Settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:343
+msgid "Add View"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:379
+msgid "Edit this item"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/content-views-admin.php:379
+msgid "Edit"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/includes/options.php:273
+#: content-views-query-and-display-post-page/includes/settings.php:752
+msgid "There is no option"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/includes/plugin.php:107
+msgid "Frontend assets"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/includes/plugin.php:161
+msgid "Don't load Bootstrap style & script in frontend of website"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:43
+#: content-views-query-and-display-post-page/public/content-views.php:254
+msgid "Edit View"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:57
+msgid "Preview"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:64
+msgid ""
+"Click \"Show Preview\" or \"Update Preview\" button to show, \"Hide Preview"
+"\" button to hide the output"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:98
+msgid "View title"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:105
+msgid "Enter a name to identify your views easily"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:115
+#: content-views-query-and-display-post-page/admin/views/view.php:569
+msgid "Save"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:120
+#: content-views-query-and-display-post-page/includes/hooks.php:53
+msgid "Filter Settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:123
+#: content-views-query-and-display-post-page/includes/hooks.php:54
+msgid "Display Settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:135
+#: content-views-query-and-display-post-page/includes/hooks.php:64
+msgid "Content type"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:152
+msgid "Common filters"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:167
+msgid "In list"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:174
+msgid "List of ids (comma-separated values) of posts to retrieve"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:182
+msgid "Excludes"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:189
+msgid "List of ids (comma-separated values) of posts to exclude from view"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:197
+msgid "Parent page"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:204
+msgid "Enter ID of parent page to query child pages"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:213
+msgid "Limit"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:221
+msgid ""
+"The number of posts to show. Leaving it blank to show all found posts (which "
+"match all settings)"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:235
+msgid "Advanced filters"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:291
+msgid "Written by"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:307
+msgid "Not written by"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:328
+msgid "Taxonomies"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:337
+msgid "Select checkbox of taxonomies to filter posts by their terms"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:345
+msgid "Terms"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:367
+msgid "Relation"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:376
+msgid ""
+"Select AND to show posts which match ALL settings of selected taxonomies[--"
+"br--]Select OR to show posts which match settings of at least one selected "
+"taxonomy"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:386
+#: content-views-query-and-display-post-page/includes/settings.php:112
+msgid "Order by"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:409
+#: content-views-query-and-display-post-page/includes/values.php:217
+msgid "Status"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:419
+msgid "Select status of posts"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:429
+msgid "Keyword"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:436
+msgid "Enter the keyword to searching for posts"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:459
+#: content-views-query-and-display-post-page/includes/hooks.php:73
+msgid "View type"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:474
+#: content-views-query-and-display-post-page/includes/hooks.php:108
+msgid "View type settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:492
+#: content-views-query-and-display-post-page/includes/hooks.php:78
+msgid "Layout format of an output item"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:507
+#: content-views-query-and-display-post-page/includes/hooks.php:83
+#: content-views-query-and-display-post-page/includes/hooks.php:90
+msgid "Fields settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:525
+#: content-views-query-and-display-post-page/includes/hooks.php:97
+msgid "Pagination settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/admin/views/view.php:543
+msgid "Other settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/functions.php:259
+msgid "View all posts in"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/functions.php:311
+#: content-views-query-and-display-post-page/includes/html.php:380
+msgid "(no title)"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/functions.php:371
+msgid "Sorry, your nonce did not verify."
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/functions.php:410
+msgid "Empty settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/functions.php:561
+msgid "No post found"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/hooks.php:49
+msgid "Please select an option in : "
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/hooks.php:50
+msgid "Please set value in : "
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/hooks.php:83
+#: content-views-query-and-display-post-page/includes/settings.php:252
+msgid "Fields display"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/hooks.php:90
+#: content-views-query-and-display-post-page/includes/settings.php:312
+msgid "Content settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/hooks.php:90
+#: content-views-query-and-display-post-page/includes/settings.php:347
+msgid "Excerpt length"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/hooks.php:97
+#: content-views-query-and-display-post-page/includes/settings.php:173
+msgid "Items per page"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/hooks.php:108
+#: content-views-query-and-display-post-page/includes/settings.php:678
+msgid "Items per row"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/html.php:89
+msgid "Click to toggle"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/html.php:128
+msgid "loading"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/html.php:411
+msgid "Read More"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/html.php:563
+msgid "in"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/html.php:574
+msgid "Leave a comment"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/html.php:574
+msgid "1 Comment"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/html.php:574
+msgid "% Comments"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/html.php:585
+msgid "by"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:44
+msgid "In "
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:80
+msgid "Not in "
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:126
+msgid "Order"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:158
+msgid "Pagination"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:164
+msgid "Enable"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:181
+msgid ""
+"The number of items per page. If value of Limit option is not blank (empty), "
+"this value should be smaller than Limit value"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:190
+msgid "Pagination style"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:220
+msgid "Open item in"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:228
+msgid "How to open an item when click on Title or Thumbnail"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:270
+msgid "Thumbnail settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:289
+msgid "Meta fields settings"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:319
+msgid "Show Full Content"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:320
+msgid "Show Excerpt"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:360
+msgid "The number of words in excerpt"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:425
+msgid "Thumbnail position"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:458
+msgid "Show Thumbnail"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:479
+msgid "Show Title"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:501
+msgid "Show Content"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:521
+msgid "Show Meta Fields"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:546
+msgid "Thumbnail size"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:590
+msgid "Show Date"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:610
+msgid "Show Author"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:630
+msgid "Show Taxonomies (categories, tags...)"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:651
+msgid "Show Comment Count"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/settings.php:685
+msgid "The number of items on each row of grid"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:72
+msgid "AND"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:73
+msgid "OR"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:144
+msgid "Yes"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:145
+msgid "No"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:161
+msgid "Show"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:162
+msgid "Hide"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:173
+msgid "Regular pagination"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:188
+msgid "ASC"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:189
+msgid "DESC"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:198
+msgid "Publish"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:199
+msgid "Pending"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:200
+msgid "Draft"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:201
+msgid "Auto draft"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:202
+msgid "Future"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:203
+msgid "Private"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:204
+msgid "Inherit"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:205
+msgid "Trash"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:216
+msgid "Author"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:218
+msgid "Taxonomy"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:219
+msgid "Search"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:220
+msgid "Order & Orderby"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:233
+#: content-views-query-and-display-post-page/includes/values.php:268
+msgid "&mdash; Select &mdash;"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:269
+msgid "ID"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:270
+msgid "Title"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:271
+msgid "Created date"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:272
+msgid "Modified date"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:288
+msgid "Grid"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:289
+msgid "Collapsible List"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:290
+msgid "Scrollable List"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:329
+msgid ""
+"1 column &#8212; All fields inside an output item are shown in one column"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:330
+msgid "2 columns &#8212; Show thumbnail on the left/right side of other fields"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:344
+msgid "New tab"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:345
+msgid "Current tab"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:390
+msgid "Original resolution (But resize automatically to fit its container)"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:413
+msgid "Top"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:414
+#: content-views-query-and-display-post-page/includes/values.php:433
+msgid "Left"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:415
+msgid "Bottom"
+msgstr ""
+
+#: content-views-query-and-display-post-page/includes/values.php:416
+#: content-views-query-and-display-post-page/includes/values.php:434
+msgid "Right"
+msgstr ""
+
+#: content-views-query-and-display-post-page/public/content-views.php:253
+msgid "New View"
+msgstr ""
+
+#: content-views-query-and-display-post-page/public/content-views.php:255
+msgid "View View"
+msgstr ""
+
+#: content-views-query-and-display-post-page/public/content-views.php:257
+msgid "Search Views"
+msgstr ""
+
+#: content-views-query-and-display-post-page/public/content-views.php:258
+msgid "Parent Views:"
+msgstr ""
+
+#: content-views-query-and-display-post-page/public/content-views.php:259
+msgid "No views found."
+msgstr ""
+
+#: content-views-query-and-display-post-page/public/content-views.php:260
+msgid "No views found in Trash."
+msgstr ""
