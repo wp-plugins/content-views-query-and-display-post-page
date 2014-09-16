@@ -538,8 +538,10 @@
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
-			var _fn = function () {
-				$self.options.onload = 0;
+			var _fn = function ( is_trigger ) {
+				if ( ! is_trigger ) {
+					$self.options.onload = 0;
+				}
 
 				// Toggle text of this button
 				$('#' + _prefix + 'show-preview').html(PT_CV_ADMIN.btn.preview.update);
@@ -548,8 +550,8 @@
 				$self.options.can_preview = 1;
 			};
 			// Bind on change input after page load
-			$('input, select, textarea', '.pt-wrap .tab-content').change(function () {
-				_fn();
+			$('input, select, textarea', '.pt-wrap .tab-content').change(function (evt, is_trigger) {
+				_fn( is_trigger );
 			});
 
 			$('body').bind(_prefix + 'preview-btn-toggle', function () {
@@ -562,9 +564,10 @@
 		 *
 		 * @returns {undefined}
 		 */
-		handy_toggle_excerpt_settings: function () {
+		multi_level_toggle: function () {
 			var _prefix = this.options._prefix;
 
+			// For Excerpt Settings
 			var _this_toggle = function (show_content) {
 				if (!show_content) {
 					$('#' + _prefix + 'group-excerpt-settings').addClass('hidden');
@@ -582,6 +585,9 @@
 			$(selector).change(function () {
 				_this_toggle($(selector).is(':checked'));
 			});
+
+			// Handy do other toggle
+			$('.pt-wrap').trigger(_prefix + 'multi-level-toggle');
 		},
 
 		/**

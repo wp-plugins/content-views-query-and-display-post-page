@@ -9,6 +9,9 @@
  */
 
 /* Fix Bootstrap box-sizing "border-box" problem */
+.pt-cv-row *,
+.pt-cv-row *:before,
+.pt-cv-row *:after,
 .pt-cv-view *,
 .pt-cv-view *:before,
 .pt-cv-view *:after {
@@ -26,6 +29,10 @@
 
 .pt-cv-page {
 	position: relative;
+}
+
+.pt-cv-row {
+	clear: left;
 }
 
 /* Link */

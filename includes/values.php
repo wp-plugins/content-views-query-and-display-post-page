@@ -73,7 +73,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		static function taxonomy_list( $args = array() ) {
 			$result     = array();
 			$args       = array_merge( array( 'public' => true, 'show_ui' => true, '_builtin' => true ), $args );
-			$args       = apply_filters( PT_CV_PREFIX_ . 'taxonomy_list', $args );
+			$args       = apply_filters( PT_CV_PREFIX_ . 'taxonomy_query_args', $args );
 			$taxonomies = get_taxonomies( $args, 'objects' );
 
 			foreach ( $taxonomies as $taxonomy ) {

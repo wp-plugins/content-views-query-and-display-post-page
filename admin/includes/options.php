@@ -379,7 +379,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 						// Toggle dependence
 						$pt_cv_admin_js.dependence_do_all('<?php echo balanceTags( $toggle_data_js ); ?>');
 
-						$pt_cv_admin_js.handy_toggle_excerpt_settings();
+						$pt_cv_admin_js.multi_level_toggle();
 					});
 				}(jQuery));
 			</script>
