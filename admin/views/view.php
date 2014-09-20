@@ -285,162 +285,164 @@ $options = array(
 		'params'        => array(
 			array(
 				'type'   => 'panel_group',
-				'params' => array(
+				'params' => apply_filters( PT_CV_PREFIX_ . 'advanced_settings_panel',
+					array(
 
-					// Taxonomies Settings
-					'taxonomy' => array(
+						// Taxonomies Settings
+						'taxonomy' => array(
 
-						// Taxonomies list
-						array(
-							'label'  => array(
-								'text' => __( 'Taxonomies', PT_CV_DOMAIN ),
-							),
-							'params' => array(
-								array(
-									'type'    => 'checkbox',
-									'name'    => 'taxonomy[]',
-									'options' => PT_CV_Values::taxonomy_list(),
-									'std'     => '',
-									'class'   => 'taxonomy-item',
-									'desc'    => __( 'Select checkbox of taxonomies to filter posts by their terms', PT_CV_DOMAIN ),
-								),
-							),
-						),
-
-						// Terms list
-						array(
-							'label'         => array(
-								'text' => __( 'Terms', PT_CV_DOMAIN ),
-							),
-							'extra_setting' => array(
-								'params' => array(
-									'wrap-class' => PT_CV_Html::html_panel_group_class() . ' terms',
-									'wrap-id'    => PT_CV_Html::html_panel_group_id( PT_CV_Functions::string_random() ),
-								),
-							),
-							'params'        => array(
-								array(
-									'type'     => 'panel_group',
-									'settings' => array(
-										'nice_name' => PT_CV_Values::taxonomy_list(),
-									),
-									'params'   => PT_CV_Settings::terms_of_taxonomies(),
-								),
-							),
-						),
-
-						// Relation of taxonomies
-						array(
-							'label'  => array(
-								'text' => __( 'Relation', PT_CV_DOMAIN ),
-							),
-							'params' => array(
-								array(
-									'type'    => 'select',
-									'name'    => 'taxonomy-relation',
-									'options' => PT_CV_Values::taxonomy_relation(),
-									'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::taxonomy_relation() ),
-									'class'   => 'taxonomy-relation',
-									'desc'    => __( 'Select AND to show posts which match ALL settings of selected taxonomies<br>Select OR to show posts which match settings of at least one selected taxonomy', PT_CV_DOMAIN ),
-								),
-							),
-						),
-					), // End Taxonomies Settings
-
-					// Order by Settings
-					'order'    => array(
-						array(
-							'label'         => array(
-								'text' => __( 'Order by', PT_CV_DOMAIN ),
-							),
-							'extra_setting' => array(
-								'params' => array(
-									'width' => 12,
-								),
-							),
-							'params'        => array(
-								array(
-									'type'     => 'panel_group',
-									'settings' => array(
-										'show_all' => 1,
-									),
-									'params'   => PT_CV_Settings::orderby(),
-								),
-							),
-						),
-					), // End Order by Settings
-
-					// Author Settings
-					'author'   => array(
-						array(
-							'label'  => array(
-								'text' => __( 'Written by', PT_CV_DOMAIN ),
-							),
-							'params' => array(
-								array(
-									'type'     => 'select',
-									'name'     => 'author__in[]',
-									'options'  => PT_CV_Values::user_list(),
-									'std'      => '',
-									'class'    => 'select2',
-									'multiple' => $version_gt_37 ? '1' : '0',
-								),
-							),
-						),
-						$version_gt_37 ?
+							// Taxonomies list
 							array(
 								'label'  => array(
-									'text' => __( 'Not written by', PT_CV_DOMAIN ),
+									'text' => __( 'Taxonomies', PT_CV_DOMAIN ),
+								),
+								'params' => array(
+									array(
+										'type'    => 'checkbox',
+										'name'    => 'taxonomy[]',
+										'options' => PT_CV_Values::taxonomy_list(),
+										'std'     => '',
+										'class'   => 'taxonomy-item',
+										'desc'    => __( 'Select checkbox of taxonomies to filter posts by their terms', PT_CV_DOMAIN ),
+									),
+								),
+							),
+
+							// Terms list
+							array(
+								'label'         => array(
+									'text' => __( 'Terms', PT_CV_DOMAIN ),
+								),
+								'extra_setting' => array(
+									'params' => array(
+										'wrap-class' => PT_CV_Html::html_panel_group_class() . ' terms',
+										'wrap-id'    => PT_CV_Html::html_panel_group_id( PT_CV_Functions::string_random() ),
+									),
+								),
+								'params'        => array(
+									array(
+										'type'     => 'panel_group',
+										'settings' => array(
+											'nice_name' => PT_CV_Values::taxonomy_list(),
+										),
+										'params'   => PT_CV_Settings::terms_of_taxonomies(),
+									),
+								),
+							),
+
+							// Relation of taxonomies
+							array(
+								'label'  => array(
+									'text' => __( 'Relation', PT_CV_DOMAIN ),
+								),
+								'params' => array(
+									array(
+										'type'    => 'select',
+										'name'    => 'taxonomy-relation',
+										'options' => PT_CV_Values::taxonomy_relation(),
+										'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::taxonomy_relation() ),
+										'class'   => 'taxonomy-relation',
+										'desc'    => __( 'Select AND to show posts which match ALL settings of selected taxonomies<br>Select OR to show posts which match settings of at least one selected taxonomy', PT_CV_DOMAIN ),
+									),
+								),
+							),
+						), // End Taxonomies Settings
+
+						// Order by Settings
+						'order'    => array(
+							array(
+								'label'         => array(
+									'text' => __( 'Order by', PT_CV_DOMAIN ),
+								),
+								'extra_setting' => array(
+									'params' => array(
+										'width' => 12,
+									),
+								),
+								'params'        => array(
+									array(
+										'type'     => 'panel_group',
+										'settings' => array(
+											'show_all' => 1,
+										),
+										'params'   => PT_CV_Settings::orderby(),
+									),
+								),
+							),
+						), // End Order by Settings
+
+						// Author Settings
+						'author'   => array(
+							array(
+								'label'  => array(
+									'text' => __( 'Written by', PT_CV_DOMAIN ),
 								),
 								'params' => array(
 									array(
 										'type'     => 'select',
-										'name'     => 'author__not_in[]',
+										'name'     => 'author__in[]',
 										'options'  => PT_CV_Values::user_list(),
 										'std'      => '',
 										'class'    => 'select2',
 										'multiple' => $version_gt_37 ? '1' : '0',
 									),
 								),
-							) : array(),
-					), // End Author Settings
-
-					// Status Settings
-					'status'   => array(
-						array(
-							'label'  => array(
-								'text' => __( 'Status', PT_CV_DOMAIN ),
 							),
-							'params' => array(
+							$version_gt_37 ?
 								array(
-									'type'     => 'select',
-									'name'     => 'post_status',
-									'options'  => PT_CV_Values::post_statuses(),
-									'std'      => 'publish',
-									'class'    => 'select2',
-									'multiple' => '1',
-									'desc'     => __( 'Select status of posts', PT_CV_DOMAIN ),
+									'label'  => array(
+										'text' => __( 'Not written by', PT_CV_DOMAIN ),
+									),
+									'params' => array(
+										array(
+											'type'     => 'select',
+											'name'     => 'author__not_in[]',
+											'options'  => PT_CV_Values::user_list(),
+											'std'      => '',
+											'class'    => 'select2',
+											'multiple' => $version_gt_37 ? '1' : '0',
+										),
+									),
+								) : array(),
+						), // End Author Settings
+
+						// Status Settings
+						'status'   => array(
+							array(
+								'label'  => array(
+									'text' => __( 'Status', PT_CV_DOMAIN ),
+								),
+								'params' => array(
+									array(
+										'type'     => 'select',
+										'name'     => 'post_status',
+										'options'  => PT_CV_Values::post_statuses(),
+										'std'      => 'publish',
+										'class'    => 'select2',
+										'multiple' => '1',
+										'desc'     => __( 'Select status of posts', PT_CV_DOMAIN ),
+									),
 								),
 							),
-						),
-					), // End Status Settings
+						), // End Status Settings
 
-					// Keyword Settings
-					'search'   => array(
-						array(
-							'label'  => array(
-								'text' => __( 'Keyword', PT_CV_DOMAIN ),
-							),
-							'params' => array(
-								array(
-									'type' => 'text',
-									'name' => 's',
-									'std'  => '',
-									'desc' => __( 'Enter the keyword to searching for posts', PT_CV_DOMAIN ),
+						// Keyword Settings
+						'search'   => array(
+							array(
+								'label'  => array(
+									'text' => __( 'Keyword', PT_CV_DOMAIN ),
+								),
+								'params' => array(
+									array(
+										'type' => 'text',
+										'name' => 's',
+										'std'  => '',
+										'desc' => __( 'Enter the keyword to searching for posts', PT_CV_DOMAIN ),
+									),
 								),
 							),
-						),
-					), // End Keyword Settings
+						), // End Keyword Settings
+					)
 				),
 			),
 		),

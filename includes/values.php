@@ -245,12 +245,15 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		 * @return array
 		 */
 		static function advanced_settings() {
-			return array(
-				'taxonomy' => __( 'Taxonomy (Categories, Tags...)', PT_CV_DOMAIN ),
-				'status'   => __( 'Status', PT_CV_DOMAIN ),
-				'order'    => __( 'Order & Orderby', PT_CV_DOMAIN ),
-				'search'   => __( 'Search', PT_CV_DOMAIN ),
-				'author'   => __( 'Author', PT_CV_DOMAIN ),
+			return apply_filters(
+				PT_CV_PREFIX_ . 'advanced_settings',
+				array(
+					'taxonomy' => __( 'Taxonomy (Categories, Tags...)', PT_CV_DOMAIN ),
+					'status'   => __( 'Status', PT_CV_DOMAIN ),
+					'order'    => __( 'Order & Orderby', PT_CV_DOMAIN ),
+					'search'   => __( 'Search', PT_CV_DOMAIN ),
+					'author'   => __( 'Author', PT_CV_DOMAIN ),
+				)
 			);
 		}
 
