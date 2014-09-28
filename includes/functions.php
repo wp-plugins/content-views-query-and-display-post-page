@@ -441,11 +441,12 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @param type $view_settings
 		 */
 		static function view_backward_comp( &$view_settings ) {
-			if ( ! $view_settings )
+			if ( ! $view_settings ) {
 				return $view_settings;
+			}
 
 			$taxonomies = isset( $view_settings[ PT_CV_PREFIX . 'taxonomy'] ) ? $view_settings[ PT_CV_PREFIX . 'taxonomy'] : array();
-			if ( $taxonomies ) {
+			if ( is_array( $taxonomies ) ) {
 				$list = array( '__in', '__not_in' );
 				foreach ( $taxonomies as $taxonomy ) {
 					// Check if IN/NOT IN list has values. NOT IN list will overwite IN list

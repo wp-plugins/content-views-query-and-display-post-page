@@ -402,47 +402,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						break;
 					}
 
-					// Sets up global post data
-					setup_postdata( $post );
-
-					// Handle the more tag inside content
-					do_action( PT_CV_PREFIX_ . 'handle_teaser' );
-
-					// Get content class
-					$content_class = apply_filters( PT_CV_PREFIX_ . 'field_content_class', PT_CV_PREFIX . 'content' );
-
-					// Get content tag (div/p/span...)
-					$tag = apply_filters( PT_CV_PREFIX_ . 'field_content_tag', 'div' );
-
-					// Get full content/exceprt
-					$content = '';
-					switch ( $fargs['content']['show'] ) {
-						case 'excerpt':
-							$length       = (int) $fargs['content']['length'];
-							$readmore     = '<br />' . PT_CV_Html::link_button( get_permalink(), 'success', __( 'Read More', PT_CV_DOMAIN ), PT_CV_PREFIX . 'readmore', 'btn-sm' );
-							$readmore_btn = ' ...' . apply_filters( PT_CV_PREFIX_ . 'field_content_readmore', $readmore, $fargs['content'], get_permalink() );
-							$content      = apply_filters( PT_CV_PREFIX_ . 'field_content_result', '', $fargs, $post );
-
-							if ( empty( $content ) ) {
-								$content = wp_trim_words( strip_shortcodes( get_the_content() ), $length, $readmore_btn );
-							}
-							// Force balance tags
-							$content = force_balance_tags( $content );
-
-							break;
-
-						case 'full':
-							ob_start();
-							the_content();
-							$content = ob_get_clean();
-
-							break;
-					}
-
-					$html = sprintf(
-						'<%1$s class="%2$s">%3$s</%1$s>',
-						$tag, esc_attr( $content_class ), balanceTags( $content )
-					);
+					$html = self::_field_content( $post, $fargs );
 
 					break;
 
@@ -466,19 +426,79 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		}
 
 		/**
+		 * Get content
+		 * 
+		 * @param object $post
+		 * @param array $fargs
+		 * @return string
+		 */
+		static function _field_content( $post, $fargs ) {
+			global $dargs;
+			
+			// Get other settings
+			$oargs = isset( $dargs['other-settings'] ) ? $dargs['other-settings'] : array();
+
+			// Sets up global post data
+			setup_postdata( $post );
+
+			// Handle the more tag inside content
+			do_action( PT_CV_PREFIX_ . 'handle_teaser' );
+
+			// Get content class
+			$content_class = apply_filters( PT_CV_PREFIX_ . 'field_content_class', PT_CV_PREFIX . 'content' );
+
+			// Get content tag (div/p/span...)
+			$tag = apply_filters( PT_CV_PREFIX_ . 'field_content_tag', 'div' );
+
+			// Get full content/exceprt
+			$content = '';
+			switch ( $fargs['content']['show'] ) {
+				case 'excerpt':
+					$length       = (int) $fargs['content']['length'];
+					$text         = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
+					$readmore     = self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore btn' );
+					$readmore_btn = ' ...' . '<br />' . $readmore;
+					
+					$content      = apply_filters( PT_CV_PREFIX_ . 'field_content_result', '', $fargs, $post );
+
+					if ( empty( $content ) ) {
+						$content = wp_trim_words( get_the_content(), $length, $readmore_btn );
+					}
+					// Force balance tags
+					$content = force_balance_tags( strip_shortcodes( $content ) );
+
+					break;
+
+				case 'full':
+					ob_start();
+					the_content();
+					$content = ob_get_clean();
+
+					break;
+			}
+
+			$html = sprintf(
+				'<%1$s class="%2$s">%3$s</%1$s>',
+				$tag, esc_attr( $content_class ), balanceTags( $content )
+			);
+
+			return $html;
+		}
+
+		/**
 		 * Output link to item
 		 *
 		 * @param array  $oargs   The other settings
 		 * @param object $post    The post object
 		 * @param string $content The HTML of <a> tag
 		 */
-		static function _field_href( $oargs, $post, $content ) {
+		static function _field_href( $oargs, $post, $content, $defined_class = '' ) {
 
 			// Open in
 			$open_in = isset( $oargs['open-in'] ) ? $oargs['open-in'] : '_blank';
 
 			// Class of href
-			$href_class = apply_filters( PT_CV_PREFIX_ . 'field_href_class', array( $open_in ), $oargs );
+			$href_class = apply_filters( PT_CV_PREFIX_ . 'field_href_class', array( $open_in, $defined_class ), $oargs );
 
 			// Custom data
 			$custom_attr = apply_filters( PT_CV_PREFIX_ . 'field_href_attrs', array(), $open_in, $oargs );
@@ -726,9 +746,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$content = implode( "\n", $contents );
 
 					if ( $type == 'js' ) {
-						echo balanceTags( self::inline_script( $content, false ) );
+						echo '' . self::inline_script( $content, false );
 					} else {
-						echo balanceTags( self::inline_style( $content ) );
+						echo '' . self::inline_style( $content );
 					}
 				}
 			}
@@ -812,17 +832,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			$options = get_option( PT_CV_OPTION_NAME );
 
 			if ( $is_admin || ! isset( $options['unload_bootstrap'] ) ) {
-				$data = apply_filters(
-					PT_CV_PREFIX_ . 'assets_data',
-					array(
-						'name' => 'bootstrap',
-						'type' => 'style',
-						'data' => '',
-						'prefix' => '',
-					), $is_admin, $options
-				);
-
-				PT_CV_Asset::enqueue( $data['name'], $data['type'], $data['data'], $data['prefix'] );
+				PT_CV_Asset::enqueue( 'bootstrap', 'style' );
 			}
 
 			PT_CV_Asset::enqueue(
@@ -865,8 +875,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			<script type="text/javascript" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-script-' . $random_id ); ?>">
 			<?php
 			$format  = $wrap ? "(function ($) {\n $(function () { %s }); \n}(jQuery));" : '%s';
-			$content = balanceTags( $js );
-			printf( $format, $content );
+			printf( $format, $js );
 			?>
 			</script>
 			<?php
@@ -887,7 +896,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			ob_start();
 			?>
 			<style type="text/css" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-style-' . $random_id ); ?>">
-				<?php echo balanceTags( $css ); ?>
+				<?php echo '' . $css; ?>
 			</style>
 			<?php
 			return ob_get_clean();
