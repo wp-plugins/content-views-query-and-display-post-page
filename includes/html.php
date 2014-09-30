@@ -455,9 +455,13 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			switch ( $fargs['content']['show'] ) {
 				case 'excerpt':
 					$length       = (int) $fargs['content']['length'];
-					$text         = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
-					$readmore     = self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore btn' );
-					$readmore_btn = ' ...' . '<br />' . $readmore;
+
+					$readmore_btn = ' ...';
+					if ( apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_enable', 1, $fargs['content'] ) ) {
+						$text          = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
+						$readmore      = self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore btn' );
+						$readmore_btn .= '<br />' . $readmore;
+					}
 					
 					$content      = apply_filters( PT_CV_PREFIX_ . 'field_content_result', '', $fargs, $post );
 

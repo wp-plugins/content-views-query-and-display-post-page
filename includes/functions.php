@@ -494,6 +494,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			$session_id = ( $pargs && isset( $pargs['session_id'] ) ) ? $pargs['session_id'] : 0;
 
+			// If is pagination request
 			if ( $session_id ) {
 				$session_data = array_merge(
 					array( '$args' => '', '$dargs' => '' ),
@@ -503,9 +504,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$args  = $session_data['$args'];
 				$dargs = $session_data['$dargs'];
 			} else {
-				// Generate session key for pagination
 				global $pt_view_sid;
-				$pt_view_sid = $session_id = PT_CV_Functions::string_random();
+				// If id is passed, assign it to session id, otherwise, generate random number
+				$pt_view_sid = $session_id = $id ? $id : PT_CV_Functions::string_random();
 
 				// Store settings
 				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 30 * MINUTE_IN_SECONDS  );
@@ -1107,6 +1108,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Get saved $settings
 			$settings = get_transient( PT_CV_PREFIX . 'view-settings-' . $session_id );
 
+			// If empty, get settings by ID
+			if ( ! $settings ) {
+				$settings = PT_CV_Functions::view_get_settings( $session_id );
+			}
+
 			// Pagination settings
 			$pargs = array( 'session_id' => $session_id, 'page' => (int) esc_sql( $_POST['page'] ) );
 
@@ -1119,7 +1125,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			// Show View output
-			echo balanceTags( PT_CV_Functions::view_process_settings( '', $settings, $pargs ) );
+			echo balanceTags( PT_CV_Functions::view_process_settings( null, $settings, $pargs ) );
 
 			// Must exit
 			die;

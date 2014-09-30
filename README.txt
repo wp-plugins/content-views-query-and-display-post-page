@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,9 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.3.3 =
+* Bug fixed: Return 'Empty settings' message for pagination request
+
 = 1.3.2 =
 * Update: Official refined Bootstrap version (bring here from Pro plugin)
 * Update: Apply "Open in" setting for "Read more" button, too
@@ -268,6 +271,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.3 =
+Bug fixed: Return 'Empty settings' message for pagination request
 
 = 1.3.2 =
 Update: Official refined Bootstrap version (bring here from Pro plugin). Update: Apply "Open in" setting for "Read more" button, too. Bug fixed: Get wrong excerpt if content of post contains shortcode tags
