@@ -134,11 +134,11 @@ You can create Unlimited Views, in Unlimited websites
 == Screenshots ==
 
 1. Content Views plugin overview
-2. Display Setting form to customize output of queried posts at frontend
+2. Display Setting form to customize output of queried posts at front-end
 3. Query and display in Grid layout (Show Title, Thumbnail)
-4. Query and display in Grid layout (Show Title, Thumbnail, Content, Meta fields), with Pagination
-5. Query and display in Collapsible List
-6. Query and display in Slider
+4. Query and display in Grid layout (Show Title, Thumbnail, Content) with Pagination
+5. Query and display in Collapsible layout
+6. Query and display in Slider layout
 
 
 
