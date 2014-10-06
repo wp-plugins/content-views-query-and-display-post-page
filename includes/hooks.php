@@ -83,14 +83,6 @@ if ( ! class_exists( 'PT_CV_Hooks' ) ) {
 				$errors[] = $messages['field']['select'] . $messages['tab']['display'] . ' > ' . __( 'Fields settings', PT_CV_DOMAIN ) . ' > ' . __( 'Fields display', PT_CV_DOMAIN );
 			}
 
-			// Excerpt length
-			$fargs = isset( $dargs['field-settings'] ) ? $dargs['field-settings'] : array();
-			if ( isset( $fargs['content'] ) && $fargs['content']['show'] === 'excerpt' ) {
-				if ( empty( $fargs['content']['length'] ) ) {
-					$errors[] = $messages['field']['text'] . $messages['tab']['display'] . ' > ' . __( 'Fields settings', PT_CV_DOMAIN ) . ' > ' . __( 'Content settings', PT_CV_DOMAIN ) . __( 'Excerpt length', PT_CV_DOMAIN );
-				}
-			}
-
 			// Item per page
 			if ( isset( $dargs['pagination-settings'] ) ) {
 				if ( empty( $dargs['pagination-settings']['items-per-page'] ) ) {

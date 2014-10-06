@@ -459,14 +459,18 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$readmore_btn = ' ...';
 					if ( apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_enable', 1, $fargs['content'] ) ) {
 						$text          = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
-						$readmore      = self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore btn' );
+						$readmore      = self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore' . ' btn btn-success btn-sm' );
 						$readmore_btn .= '<br />' . $readmore;
 					}
 					
-					$content      = apply_filters( PT_CV_PREFIX_ . 'field_content_result', '', $fargs, $post );
+					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_result', '', $fargs, $post );
 
 					if ( empty( $content ) ) {
-						$content = wp_trim_words( get_the_content(), $length, $readmore_btn );
+						if ( $length ) {
+							$content = wp_trim_words( get_the_content(), $length, $readmore_btn );
+						} else {
+							$content = isset( $readmore ) ? $readmore : '';
+						}
 					}
 					// Force balance tags
 					$content = force_balance_tags( strip_shortcodes( $content ) );

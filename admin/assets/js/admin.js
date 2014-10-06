@@ -550,7 +550,7 @@
 				$self.options.can_preview = 1;
 			};
 			// Bind on change input after page load
-			$('input, select, textarea', '.pt-wrap .tab-content').change(function (evt, is_trigger) {
+			$('.pt-wrap .tab-content').on('change', 'input, select, textarea', function (evt, is_trigger) {
 				_fn( is_trigger );
 			});
 

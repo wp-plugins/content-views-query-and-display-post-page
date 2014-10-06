@@ -4,77 +4,78 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-It is easy as 1, 2, 3 to query your posts by category, tag, author... and display your posts on any Page in a responsive Grid layout without coding!
+It is easy as 1, 2, 3 to query posts by category, tag, author... and display posts on any Page in responsive Grid layout without coding!
 
 == Description ==
 
-Have you ever wanted to display posts by category, on your WordPress homepage in responsive grid layout, or:
+Do you want to display posts by category on WordPress homepage, in responsive grid layout?
 
-* display posts in grid layout in a page
-* display posts by tag
-* display posts by author
-* sort posts in descending order of Title
+Or:
+
+* display posts in grid layout in a specific page
+* display posts in grid layout in a widget of sidebar
+* display posts by a specific tag
+* display posts by an author
+* display posts in descending order of Title
 * replace boring Next, Prev button of WordPress theme by a beautiful pagination
 * display thumbnail in different size than 150x150 or 300x300
-?
 
-How do you do?
+With **Content Views** plugin, you can do above things in minutes, without any line of code!
 
-It is not easy as ABC, isn't it?
+With [Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Get Content Views Pro"), you can do even more than you expect!
 
-But now, with Content Views plugin, you can do above things in minutes, without any line of code.
+**Content Views** provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, slider/scrollable list, accordion/collapsible list) quickly & easily, in very 3 simple steps:
 
-[Content Views](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=post&utm_campaign=content-views "Get Content Views Pro") provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, scrollable list/slider, accordion/collapsible list) quickly & easily, in very 3 simple steps:
-
-* Step 1 : Choose filters (author, category, tag, order...) to query your posts
-* Step 2 : Customize display options to display posts in a responsive layout
-* Step 3 : Save View. You will see a shortcode **[pt_view id="UNIQUE_ID"]** at top of page, paste it to editor of a page or to a Text widget where you want to display your posts. If you are a developer, you can **`<?php echo do_shortcode('[pt_view id="UNIQUE_ID"]'); ?>`** in your WordPress theme.
+* Step 1 : Customize filters (category, tag, author, order...) to query your desired posts
+* Step 2 : Customize output (select a layout from 3 responsive layout, show title/content/excerpt/pagination ? ...)
+* Step 3 : Save View then paste the generated shortcode **[pt_view id="VIEW_ID"]** to editor of page/Text widget where you want to display your posts. If you are a developer, you can paste `<?php echo do_shortcode('[pt_view id="VIEW_ID"]'); ?>` to file in WordPress theme
 
 = A features list of Content Views plugin: =
 
-**in Step 1, you can:**
+
+**in Step 1:**
 
 * query single/multiple post(s)
-* query posts by category, tag
-* query posts by author
+* query posts by category, tag, author
 * query child pages of a parent page
 * query posts by status (publish, draft, private...)
 * query posts which contain a specific keyword
-* sort posts by Id, Title, Created date, Modified date in ascending, descending order
+* sort posts by Id, Title, Created date, Modified date in Ascending, Descending order
 
-**in Step 2, you can:**
+**in Step 2:**
 
-* Select a responsive layout to display posts: Grid, List(Collapsible/Slider). More awesome layouts are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro plugin")**
+* Select a responsive layout to display posts: Grid, List(Collapsible/Slider).
 * Display fields (thumbnail, title, content, meta fields) in vertical direction. Or display thumbnail in left/right side of other fields
 * Select what fields (thumbnail, title, content, meta fields) to display
 * Select thumbnail sizes
-* Display full content, or display only excerpt with specific amount of words
+* Display full content, or display excerpt with specific amount of words
 * Select what meta fields (date, author, terms [categories, tags], comment count) to display
 * Enable/Disable pagination
 * Open in new tab, current tab (when click on title, thumbnail of post)
 
 
-= Do you want more amazing features? =
+= Need more awesome features? =
 
-* Completely replace WordPress layout in Category page, Author page, Search page by Grid layout
-* WooCommerce support
-* Portfolio support
-* Display posts in more Awesome layouts: Pinterest, Timeline
+* More amazing layouts: **Pinterest, Timeline**
+* Completely **replace WordPress layout** in Category page, Author page, Search page... by Grid, Pinterest, Timeline layout
+* Display **WooCommerce** product in beautiful output
+* Display **Portfolio** with shuffle animation
 * More beautiful output & powerful settings for Grid, List layout
-* Drag & drop to change display order of fields (thumbnail, title, content, meta fields)
-* Customize Font, Color settings for Title, Content, Meta fields
-* Custom style for Thumbnail: round, circle, border
-* Customize style & text of "Read more" button
-* AJAX "Load more" button for pagination
+* **Drag & drop** to change display order of fields (thumbnail, title, content, meta fields)
+* Customize **Font, Color** settings of Title, Content, Meta fields
+* Custom **style of Thumbnail**: round, circle, border
+* Customize style & text of **Read more** button
+* Ajax **Load more** pagination
 * And much more...
 
-are available in **[Content Views PRO](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Content Views Pro")** plugin.
+Please check [Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Get Content Views Pro")
 
 Just give a try (30 day money back guarantee), then you will know how it is awesome :)
+
 
 
 == Installation ==
@@ -97,8 +98,8 @@ Just give a try (30 day money back guarantee), then you will know how it is awes
 = Using FTP =
 
 1. Download `content-views-query-and-display-post-page.zip`
-2. Extract the `pt-content-views` directory to your computer
-3. Upload the `pt-content-views` directory to the `/wp-content/plugins/` directory
+2. Extract the `content-views-query-and-display-post-page` directory to your computer
+3. Upload the `content-views-query-and-display-post-page` directory to the `/wp-content/plugins/` directory
 4. Activate the plugin in the Plugin dashboard
 
 
@@ -129,6 +130,7 @@ You will be forwarded to editing page of View.
 You can create Unlimited Views, in Unlimited websites
 
 
+
 == Screenshots ==
 
 1. Content Views plugin overview
@@ -141,6 +143,10 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.3.4 =
+* Bug fixed: Read more button is invisible (color is white and no background color)
+* Update: Able to set 0 as 'Excerpt length'
 
 = 1.3.3 =
 * Bug fixed: Return 'Empty settings' message for pagination request
@@ -252,7 +258,7 @@ You can create Unlimited Views, in Unlimited websites
 
 = 1.1 =
 * Add "Parent page" option to query child pages of a parent page
-* Show shortcode [pt_view id="UNIQUE_ID"] to able to copy in editing page of a View
+* Show shortcode [pt_view id="VIEW_ID"] to able to copy in editing page of a View
 * Add link to Thumbnail
 * Update Settings page
 * Fix import/export bugs
@@ -271,6 +277,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.4 =
+Bug fixed: Read more button is invisible (color is white and no background color). Update: Able to set 0 as 'Excerpt length'
 
 = 1.3.3 =
 Bug fixed: Return 'Empty settings' message for pagination request
@@ -354,7 +363,7 @@ Fix offset bug
 Fix pagination bug
 
 = 1.1 =
-Add "Parent page" option to query child pages of a parent page. Show shortcode [pt_view id="UNIQUE_ID"] to able to copy in editing page of a View. Add link to Thumbnail. Update Settings page. Fix import/export bugs. Classify "Add New View" vs "Edit View"
+Add "Parent page" option to query child pages of a parent page. Show shortcode [pt_view id="VIEW_ID"] to able to copy in editing page of a View. Add link to Thumbnail. Update Settings page. Fix import/export bugs. Classify "Add New View" vs "Edit View"
 
 = 1.0.2 =
 Add some WP filters. Add main action for Pro plugin to trigger

@@ -173,10 +173,11 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 		 * Print HTML code of field type: input, select, textarea...
 		 *
 		 * @param array $param Array of parameters of a setting option
+		 * @param array $data  Array of stored data
 		 *
 		 * @return string
 		 */
-		public static function field_type( $param, $data ) {
+		public static function field_type( $param, $data, $value_ = NULL ) {
 			if ( ! $param || ! isset( $param['type'] ) ) {
 				return '';
 			}
@@ -186,7 +187,7 @@ if ( ! class_exists( 'PT_Options_Framework' ) ) {
 			$type        = esc_attr( $param['type'] );
 			$name        = ! empty( $param['name'] ) ? PT_CV_PREFIX . esc_attr( $param['name'] ) : '';
 			$id          = ! empty( $param['id'] ) ? "id='" . PT_CV_PREFIX . esc_attr( $param['id'] ) . "'" : '';
-			$value       = self::field_value( $data, $param, $name );
+			$value       = isset( $value_ ) ? $value_ : self::field_value( $data, $param, $name );
 			$description = isset( $param['desc'] ) ? balanceTags( $param['desc'] ) : '';
 
 			// Add extra information of option type

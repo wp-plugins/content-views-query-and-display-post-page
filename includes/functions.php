@@ -238,13 +238,19 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Get value of some setting options by prefix
 		 *
 		 * @param string $prefix The prefix in name of setting options
+		 * @param bool $backend Get settings from Backend form
 		 */
-		static function settings_values_by_prefix( $prefix ) {
+		static function settings_values_by_prefix( $prefix, $backend = FALSE ) {
 			global $pt_view_settings;
+
+			if ( ! $pt_view_settings && $backend ) {
+				global $pt_cv_admin_settings;
+				$pt_view_settings = $pt_cv_admin_settings;
+			}
 
 			$result = array();
 
-			foreach ( $pt_view_settings as $name => $value ) {
+			foreach ( (array) $pt_view_settings as $name => $value ) {
 				// If name of setting match with prefix string, got it name
 				if ( substr( $name, 0, strlen( $prefix ) ) === $prefix ) {
 					$result[substr( $name, strlen( $prefix ) )] = $value;
