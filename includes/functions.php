@@ -384,6 +384,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				endwhile;
 			endif;
 
+			// Restore $wp_query and original Post Data
+			wp_reset_query();
+
 			return $post_id;
 		}
 
@@ -573,7 +576,10 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					global $post;
 
 					// Output HTML for this item
-					$content_items[$post->ID] = PT_CV_Html::view_type_output( $view_type, $post );
+					$post_id = apply_filters( PT_CV_PREFIX_ . 'show_this_post', $post->ID );
+					if ( $post_id ) {
+						$content_items[$post->ID] = PT_CV_Html::view_type_output( $view_type, $post );
+					}
 				}
 			} else {
 				// Get no post found class
@@ -586,8 +592,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$content_items[] = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $_class ), balanceTags( $_text ) );
 			}
 
-			// Restore original Post Data
-			wp_reset_postdata();
+			// Restore $wp_query and original Post Data
+			wp_reset_query();
 
 			// Filter array of items
 			$content_items = apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items );
@@ -650,7 +656,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			// Parent page
 			if ( $content_type == 'page' ) {
-				$post_parent = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_parent', $pt_view_settings );
+				$post_parent = apply_filters( PT_CV_PREFIX_ . 'post_parent_id', PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_parent', $pt_view_settings ) );
 				if ( ! empty( $post_parent ) ) {
 					$args['post_parent'] = (int) $post_parent;
 				}
@@ -803,40 +809,13 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 						// Order
 						case 'order':
-
-							$order_settings = array();
-
-							// Advanced order by
-							if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . $content_type . '-orderby', $pt_view_settings ) ) {
-
-								// Get meta key to order by
-								$meta_key = PT_CV_Functions::setting_value( PT_CV_PREFIX . $content_type . '-orderby', $pt_view_settings );
-
-								// Use 'meta_value_num' for numeric values
-								global $pt_content_type;
-								$all_meta_numeric_values = apply_filters( PT_CV_PREFIX_ . 'meta_numeric_values', array() );
-
-								// Get numeric values of selected content type
-								$meta_numeric_values = isset( $all_meta_numeric_values[$pt_content_type] ) ? $all_meta_numeric_values[$pt_content_type] : array();
-								$meta_orderby        = array_key_exists( $meta_key, (array) $meta_numeric_values ) ? 'meta_value_num' : 'meta_value';
-								$order_settings      = array(
-									'meta_key' => isset( $meta_numeric_values[$meta_key] ) ? $meta_numeric_values[$meta_key] : $meta_key,
-									'orderby'  => $meta_orderby,
-									'order'    => PT_CV_Functions::setting_value( PT_CV_PREFIX . 'advanced-order', $pt_view_settings ),
-								);
-
-							} else {
-								// Common order by
-								$orderby          = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'orderby', $pt_view_settings );
-								$order_by_options = array_keys( PT_CV_Values::post_regular_orderby() );
-
-								if ( in_array( $orderby, $order_by_options ) ) {
-									$order_settings = array(
-										'orderby' => $orderby,
-										'order'   => PT_CV_Functions::setting_value( PT_CV_PREFIX . 'order', $pt_view_settings )
-									);
-								}
-							}
+							$order_settings = apply_filters(
+								PT_CV_PREFIX_ . 'order_setting',
+								array(
+									'orderby' => PT_CV_Functions::setting_value( PT_CV_PREFIX . 'orderby', $pt_view_settings ),
+									'order'   => PT_CV_Functions::setting_value( PT_CV_PREFIX . 'order', $pt_view_settings ),
+								)
+							);
 
 							$args = array_merge( $args, $order_settings );
 							break;

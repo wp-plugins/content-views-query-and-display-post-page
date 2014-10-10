@@ -194,6 +194,7 @@ html {
 /* View shortcode text */
 #view-shortcode {
 	background: #ADFFAD;
+	cursor: pointer;
 	margin-bottom: 20px;
 	float: left;
 	position: relative;

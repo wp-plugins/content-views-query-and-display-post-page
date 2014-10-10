@@ -209,6 +209,8 @@ $options = array(
 						'dependence' => array( 'content-type', 'page' ),
 					),
 
+					apply_filters( PT_CV_PREFIX_ . 'post_parent_settings', array() ),
+
 					// Limit
 					array(
 						'label'  => array(

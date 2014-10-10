@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.3.4
+Stable tag: 1.3.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,8 +34,8 @@ With [Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&ut
 * Step 2 : Customize output (select a layout from 3 responsive layout, show title/content/excerpt/pagination ? ...)
 * Step 3 : Save View then paste the generated shortcode **[pt_view id="VIEW_ID"]** to editor of page/Text widget where you want to display your posts. If you are a developer, you can paste `<?php echo do_shortcode('[pt_view id="VIEW_ID"]'); ?>` to file in WordPress theme
 
-= A features list of Content Views plugin: =
 
+= A features list of Content Views plugin: =
 
 **in Step 1:**
 
@@ -143,6 +143,10 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.3.4.1 =
+* Improvement: Clean up 'Read more' button code
+* Improvement: Remove unused code of Order setting
 
 = 1.3.4 =
 * Bug fixed: Read more button is invisible (color is white and no background color)
@@ -277,6 +281,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.4.1 =
+Improvement: Clean up 'Read more' button code. Improvement: Remove unused code of Order setting
 
 = 1.3.4 =
 Bug fixed: Read more button is invisible (color is white and no background color). Update: Able to set 0 as 'Excerpt length'

@@ -455,23 +455,26 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			switch ( $fargs['content']['show'] ) {
 				case 'excerpt':
 					$length       = (int) $fargs['content']['length'];
-
+					$readmore     = '';
 					$readmore_btn = ' ...';
+
+					// Read more button
 					if ( apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_enable', 1, $fargs['content'] ) ) {
 						$text          = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
-						$readmore      = self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore' . ' btn btn-success btn-sm' );
+						$readmore     .= self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore' . ' btn btn-success btn-sm' );
 						$readmore_btn .= '<br />' . $readmore;
 					}
-					
-					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_result', '', $fargs, $post );
 
-					if ( empty( $content ) ) {
-						if ( $length ) {
-							$content = wp_trim_words( get_the_content(), $length, $readmore_btn );
-						} else {
-							$content = isset( $readmore ) ? $readmore : '';
-						}
-					}
+					// Filter content
+					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_result', get_the_content(), $fargs, $post );
+
+					/*
+					 * Trim some words, or show only button (if length = 0)
+					 * Don't set $readmore_btn as 3rd parameter for wp_trim_words(),
+					 * to show Read more button always (even if manual excerpt length < $length)
+					 */
+					$content = $length ? rtrim( wp_trim_words( $content, $length, '' ), '.' ) . $readmore_btn : $readmore;
+					
 					// Force balance tags
 					$content = force_balance_tags( strip_shortcodes( $content ) );
 
