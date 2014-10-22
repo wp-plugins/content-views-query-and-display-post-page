@@ -58,6 +58,11 @@
 	overflow:       hidden;
 }
 
+/* Add default margin-bottom */
+.pt-cv-content-item > * {
+	margin-bottom: 10px;
+}
+
 /* For the output which shows only Title */
 .pt-cv-only-title {
 	padding-bottom: 0;
@@ -75,6 +80,7 @@
 
 /* Thumbnail */
 .pt-cv-thumbnail {
+	height: auto;
 	max-width:     100% !important;
 	margin-bottom: 15px;
 }
@@ -223,6 +229,7 @@
 .pt-cv-view .carousel-indicators li {
 	background: #cecece;
 	border:     1px solid #cecece;
+	margin:     0 0;
 }
 
 .pt-cv-view .carousel-indicators li.active {

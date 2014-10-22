@@ -14,10 +14,15 @@
 	$.PT_CV_Public = $.PT_CV_Public || { };
 
 	$.PT_CV_Public = function (options) {
-		this.options = options;
+		this.options = $.extend({
+			_autoload : 1
+		}, options);
 
-		this.pagination();
-		this.openin_window();
+		// Autoload all registered functions
+		if (this.options._autoload !== 0) {
+			this.pagination();
+			this.openin_window();
+		}
 	};
 
 	$.PT_CV_Public.prototype = {
@@ -181,7 +186,7 @@
 			}
 
 			// Trigger to make Pinterest layout works when do pagination
-			if ($('.' + _prefix + 'pinterest').length && PT_CV_PUBLIC.is_admin) {
+			if ($('.' + _prefix + 'pinterest').length || $('.' + _prefix + 'same-height').length) {
 				$('body').trigger(_prefix + 'custom-trigger');
 			}
 
@@ -221,15 +226,7 @@
 		var _prefix = PT_CV_PUBLIC._prefix;
 
 		// Run at page load
-		var $pt_cv_public_js = new $.PT_CV_Public({_prefix: _prefix});
-
-		// Trigger in Admin, for Preview
-		if (PT_CV_PUBLIC.is_admin) {
-			$('body').bind(_prefix + 'custom-trigger', function () {
-				$pt_cv_public_js.pagination();
-			});
-		}
-
+		new $.PT_CV_Public({_prefix: _prefix});
 	});
 
 }(jQuery));

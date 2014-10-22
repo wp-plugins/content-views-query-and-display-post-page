@@ -632,6 +632,12 @@
 			$('#pt-cv-preview-box').on('click', 'a', function (e) {
 				e.preventDefault();
 			});
+
+			// Handle Pagination actions
+			$('body').bind(_prefix + 'custom-trigger', function () {
+				var $pt_cv_public_js = new $.PT_CV_Public({_prefix: _prefix,_autoload: 0});
+				$pt_cv_public_js.pagination();
+			});
 		},
 	};
 }(jQuery) );

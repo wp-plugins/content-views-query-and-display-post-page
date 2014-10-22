@@ -240,6 +240,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 			$item_filter = apply_filters( PT_CV_PREFIX_ . 'content_item_filter_value', '', $post_id );
 
+			// Add custom HTML for each item
+			ob_start();
+			do_action( PT_CV_PREFIX_ . 'item_extra_html', $post_id );
+			$html_item .= ob_get_clean();
+
 			$result = sprintf( '<div class="%s" %s>%s</div>', esc_attr( implode( ' ', $item_class ) ), $item_filter, balanceTags( $html_item ) );
 
 			return $result;
@@ -427,14 +432,14 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 		/**
 		 * Get content
-		 * 
+		 *
 		 * @param object $post
 		 * @param array $fargs
 		 * @return string
 		 */
 		static function _field_content( $post, $fargs ) {
 			global $dargs;
-			
+
 			// Get other settings
 			$oargs = isset( $dargs['other-settings'] ) ? $dargs['other-settings'] : array();
 
@@ -456,7 +461,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				case 'excerpt':
 					$length       = (int) $fargs['content']['length'];
 					$readmore     = '';
-					$readmore_btn = ' ...';
+					$readmore_btn = apply_filters( PT_CV_PREFIX_ . 'field_excerpt_dots', 1, $fargs ) ? ' ...' : '';
 
 					// Read more button
 					if ( apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_enable', 1, $fargs['content'] ) ) {
@@ -474,9 +479,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					 * to show Read more button always (even if manual excerpt length < $length)
 					 */
 					$content = $length ? rtrim( wp_trim_words( $content, $length, '' ), '.' ) . $readmore_btn : $readmore;
-					
+
 					// Force balance tags
 					$content = force_balance_tags( strip_shortcodes( $content ) );
+
+					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_final', $content );
 
 					break;
 
@@ -488,10 +495,10 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					break;
 			}
 
-			$html = sprintf(
+			$html = rtrim( $content, '.' ) ? sprintf(
 				'<%1$s class="%2$s">%3$s</%1$s>',
 				$tag, esc_attr( $content_class ), balanceTags( $content )
-			);
+			) : '';
 
 			return $html;
 		}
@@ -673,6 +680,10 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 */
 		static function _field_meta_wrap( $meta_html, $seperator = NULL ) {
 
+			if ( ! $meta_html ) {
+				return '';
+			}
+
 			$seperator = isset( $seperator ) ? $seperator : apply_filters( PT_CV_PREFIX_ . 'field_meta_seperator', ' / ' );
 
 			// Get meta fields class
@@ -732,6 +743,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * by merging css files to public/assets/css/public.css, js files to public/assets/js/public.js
 		 */
 		static function assets_of_view_types() {
+			// Don't execute this function in footer again
+			remove_action( 'wp_footer', array( 'PT_CV_Html', 'assets_of_view_types' ) );
+
 			$assets        = array( 'css', 'js' );
 			$assets_output = $assets_files = array();
 
@@ -752,7 +766,6 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 			// Echo script, style inline
 			if ( $assets_output ) {
-
 				foreach ( $assets_output as $type => $contents ) {
 					$content = implode( "\n", $contents );
 
@@ -788,7 +801,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				}
 			}
 
-			// Output font style for views
+			// Output custom inline style for Views
 			do_action( PT_CV_PREFIX_ . 'print_view_style' );
 		}
 
@@ -834,15 +847,13 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Styles for Preview & WP frontend
 		 *
 		 * @global bool $is_IE
-		 *
-		 * @param bool  $is_admin Whether or not in WP Admin
 		 */
-		static function frontend_styles( $is_admin = false ) {
+		static function frontend_styles() {
 
 			// Get settings option
 			$options = get_option( PT_CV_OPTION_NAME );
 
-			if ( $is_admin || ! isset( $options['unload_bootstrap'] ) ) {
+			if ( ! is_admin() && ! isset( $options['unload_bootstrap'] ) ) {
 				PT_CV_Asset::enqueue( 'bootstrap', 'style' );
 			}
 

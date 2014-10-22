@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.3.4.1
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,6 +144,12 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.3.5 =
+* Bug fixed: Show more posts than Limit value in some cases when pagination is enable
+* Improvement: Customized Bootstrap style which only contains necessary properties
+* Update: Display inline assets of View right after HTML if possible
+* Update: Refine Javascript code for Preview/Front-end
+
 = 1.3.4.1 =
 * Improvement: Clean up 'Read more' button code
 * Improvement: Remove unused code of Order setting
@@ -281,6 +287,9 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Upgrade Notice ==
+
+= 1.3.5 =
+Bug fixed: Show more posts than Limit value in some cases when pagination is enable. Improvement: Customized Bootstrap style which only contains necessary properties. Update: Display inline assets of View right after HTML if possible. Update: Refine Javascript code for Preview/Front-end
 
 = 1.3.4.1 =
 Improvement: Clean up 'Read more' button code. Improvement: Remove unused code of Order setting

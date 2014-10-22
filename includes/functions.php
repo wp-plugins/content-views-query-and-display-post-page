@@ -760,9 +760,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 						// Search
 						case 'search':
 							if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $pt_view_settings ) ) {
+								$search_terms = PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $pt_view_settings );
+
 								$args = array_merge(
 									$args, array(
-										's' => PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $pt_view_settings ),
+										's' => apply_filters( PT_CV_PREFIX_ . 'search_terms', $search_terms ),
 									)
 								);
 							}
@@ -937,6 +939,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				// Get offset
 				if ( isset( $pargs['page'] ) ) {
 					$offset = $posts_per_page * ( (int) $pargs['page'] - 1 );
+
+					// Update posts_per_page
+					if ( intval( $args['posts_per_page'] ) > $limit - $offset ) {
+						$args['posts_per_page'] = $limit - $offset;
+					}
 				}
 			}
 
@@ -1035,7 +1042,14 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$settings = PT_CV_Functions::view_get_settings( $id );
 
 			// Show View output
-			return balanceTags( PT_CV_Functions::view_process_settings( $id, $settings ) );
+			$view_html = balanceTags( PT_CV_Functions::view_process_settings( $id, $settings ) );
+
+			// Print View assets
+			ob_start();
+			PT_CV_Html::assets_of_view_types();
+			$view_assets = ob_get_clean();
+
+			return $view_html . $view_assets;
 		}
 
 		/**

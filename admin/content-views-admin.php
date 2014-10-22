@@ -197,8 +197,15 @@ class PT_Content_Views_Admin {
 				);
 			}
 
+			// Bootstrap for Admin
+			PT_CV_Asset::enqueue(
+				'bootstrap-admin', 'style', array(
+					'src' => plugins_url( 'assets/bootstrap/css/bootstrap.full.min.css', PT_CV_FILE ),
+				)
+			);
+
 			// For Preview
-			PT_CV_Html::frontend_styles( true );
+			PT_CV_Html::frontend_styles();
 
 			// Main scripts
 			PT_CV_Asset::enqueue( 'select2', 'style' );
