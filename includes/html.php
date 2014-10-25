@@ -853,7 +853,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Get settings option
 			$options = get_option( PT_CV_OPTION_NAME );
 
-			if ( ! is_admin() && ! isset( $options['unload_bootstrap'] ) ) {
+			if ( is_admin() || ! isset( $options['unload_bootstrap'] ) ) {
 				PT_CV_Asset::enqueue( 'bootstrap', 'style' );
 			}
 
