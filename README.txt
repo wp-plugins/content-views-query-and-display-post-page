@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.3.5.1
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,10 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.3.6 =
+* Improvement: A very new customized Bootstrap style
+* Bug fixed: script which hooks to wp_footer is not loaded
 
 = 1.3.5.1 =
 * Bug fixed: Bootstrap style ruins theme layout
@@ -291,107 +295,3 @@ You can create Unlimited Views, in Unlimited websites
 
 == Upgrade Notice ==
 
-= 1.3.5.1 =
-Bug fixed: Bootstrap style ruins theme layout
-
-= 1.3.5 =
-Bug fixed: Show more posts than Limit value in some cases when pagination is enable. Improvement: Customized Bootstrap style which only contains necessary properties. Update: Display inline assets of View right after HTML if possible. Update: Refine Javascript code for Preview/Front-end
-
-= 1.3.4.1 =
-Improvement: Clean up 'Read more' button code. Improvement: Remove unused code of Order setting
-
-= 1.3.4 =
-Bug fixed: Read more button is invisible (color is white and no background color). Update: Able to set 0 as 'Excerpt length'
-
-= 1.3.3 =
-Bug fixed: Return 'Empty settings' message for pagination request
-
-= 1.3.2 =
-Update: Official refined Bootstrap version (bring here from Pro plugin). Update: Apply "Open in" setting for "Read more" button, too. Bug fixed: Get wrong excerpt if content of post contains shortcode tags
-
-= 1.3.1.9 =
-Update: Add some new hook for customizing options
-
-= 1.3.1.8 =
-Bug fixed: Fix row style bug
-
-= 1.3.1.6 =
-Improvement: Update page title as "Edit View" in edit View page. Bug fixed: Fix some warnings in PHP 5.2
-
-= 1.3.1.5 =
-Test up to 4.0
-
-= 1.3.1.4 =
-Update: Fix some layout problems by influence of "box-sizing" property of Bootstrap. Improvement: Code improvement for Grid rendering
-
-= 1.3.1.3 =
-Update: Restructure Taxonomy filter (remove "Not In" list, add operator[In, Not in, And])
-
-= 1.3.1.2 =
-Bug fixed: Loosing translation (WPML) in Ajax pagination. Improvement: Performance optimization (when get settings of View). Improvement: Update style if only Title is selected to display (to have a more beautiful list of Posts title)
-
-= 1.3.1.1 =
-Bug fixed: Thumbnail dimensions are empty. Improvement: CSS code refinement
-
-= 1.3.1 =
-Update: Important update about caching mechanism. Update: Update translation file
-
-= 1.3.0.2 =
-Refine Javascript code. Update description in Setting page
-
-= 1.3.0.1 =
-Update filter priority. Update plugin description
-
-= 1.3.0 =
-Bug fixed: Pagination returns Empty settings. Improvement: UI improvement (Add icon to tabs. Show shortcode in text field for easier selecting. ). Improvement: Assets loading improvement
-
-= 1.2.6 =
-Fix bug: javascript error of missing function. Update description for some options. Update styles
-
-= 1.2.5 =
-Fix bug: doesn't save Layout format value when select '2 columns' option. Fix constant notice
-
-= 1.2.4 =
-Update translation feature: load translation file from /wp-content/languages/content-views/. Fix pagination bug
-
-= 1.2.3 =
-Fix warning: Cannot send session cache limiter - headers already sent
-
-= 1.2.2 =
-Performance optimization for pagination request. Add translation file (.po)
-
-= 1.2.1 =
-Fix pagination bug if number of pages > 10. Fix bug of Preview button: click event fires twice. Enable other user roles (Editor, Author, Contributor) to see Content Views menu and manage Views
-
-= 1.2.0 =
-Remove shortcodes in excerpt. Fix Scroll bug when click Show/Hide preview. Update Pagination setting. Optimize filters system. Compatibility update
-
-= 1.1.6 =
-Fix bug auto selected terms which its value is number in Taxonomy settings box
-
-= 1.1.5 =
-Fix pagination bug (return 0)
-
-= 1.1.4 =
-Fix pagination bug when don't load Bootstrap in frontend
-
-= 1.1.3 =
-Add option to Settings page to enable/disable load Bootstrap in frontend. Enable to search by View ID in "All Views" page. Fix bug Scrollable List (when slide count = 1). Update settings page. Add some custom filters
-
-= 1.1.2 =
-Fix offset bug
-
-= 1.1.1 =
-Fix pagination bug
-
-= 1.1 =
-Add "Parent page" option to query child pages of a parent page. Show shortcode [pt_view id="VIEW_ID"] to able to copy in editing page of a View. Add link to Thumbnail. Update Settings page. Fix import/export bugs. Classify "Add New View" vs "Edit View"
-
-= 1.0.2 =
-Add some WP filters. Add main action for Pro plugin to trigger
-
-= 1.0.1 =
-Adjust styles
-
-= 1.0.0 =
-Initial release

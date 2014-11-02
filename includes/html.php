@@ -474,11 +474,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_result', get_the_content(), $fargs, $post );
 
 					/*
-					 * Trim some words, or show only button (if length = 0)
+					 * Trim some words (in both case: auto generate & get manual excerpt), or show only button (if length = 0)
 					 * Don't set $readmore_btn as 3rd parameter for wp_trim_words(),
 					 * to show Read more button always (even if manual excerpt length < $length)
 					 */
-					$content = $length ? rtrim( wp_trim_words( $content, $length, '' ), '.' ) . $readmore_btn : $readmore;
+					$content = $length ? wp_trim_words( $content, $length, '' ) . $readmore_btn : $readmore;
 
 					// Force balance tags
 					$content = force_balance_tags( strip_shortcodes( $content ) );
@@ -524,14 +524,17 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Don't wrap link
 			$no_link = apply_filters( PT_CV_PREFIX_ . 'field_href_no_link', 0, $open_in );
 
-			if ( $no_link ) {
-				$html = $content;
-			} else {
-				$html = sprintf(
-					'<a href="%s" class="%s" target="%s" %s>%s</a>',
-					get_permalink( $post->ID ), implode( ' ', array_filter( $href_class ) ), $open_in, implode( ' ', array_filter( $custom_attr ) ), balanceTags( $content )
-				);
+			// Change href
+			$href = get_permalink( $post->ID );
+			if ( $no_link && strpos( $defined_class, 'readmore' ) === false ) {
+				$href = 'javascript:void(0)';
 			}
+
+			// Generate a tag
+			$html = sprintf(
+				'<a href="%s" class="%s" target="%s" %s>%s</a>',
+				$href, implode( ' ', array_filter( $href_class ) ), $open_in, implode( ' ', array_filter( $custom_attr ) ), balanceTags( $content )
+			);
 
 			return $html;
 		}
@@ -744,7 +747,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 */
 		static function assets_of_view_types() {
 			// Don't execute this function in footer again
-			remove_action( 'wp_footer', array( 'PT_CV_Html', 'assets_of_view_types' ) );
+			remove_action( 'wp_footer', array( 'PT_CV_Html', 'assets_of_view_types' ), 100 );
 
 			$assets        = array( 'css', 'js' );
 			$assets_output = $assets_files = array();
@@ -853,7 +856,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Get settings option
 			$options = get_option( PT_CV_OPTION_NAME );
 
-			if ( is_admin() || ! isset( $options['unload_bootstrap'] ) ) {
+			if ( ! is_admin() && ! isset( $options['unload_bootstrap'] ) ) {
 				PT_CV_Asset::enqueue( 'bootstrap', 'style' );
 			}
 

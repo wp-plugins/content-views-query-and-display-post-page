@@ -28,7 +28,7 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		 * if an asset doesn't have configed version, it will get plugin version as asset version
 		 */
 		static $version = array(
-			'bootstrap'           => '3.1.1',
+			'bootstrap'           => '3.3.0',
 			'bootstrap-paginator' => '0.5',
 			'select2'             => '3.4.5',
 			'select2-bootstrap'   => '3.4.5',

@@ -760,11 +760,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 						// Search
 						case 'search':
 							if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $pt_view_settings ) ) {
-								$search_terms = PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $pt_view_settings );
-
 								$args = array_merge(
 									$args, array(
-										's' => apply_filters( PT_CV_PREFIX_ . 'search_terms', $search_terms ),
+										's' => PT_CV_Functions::setting_value( PT_CV_PREFIX . 's', $pt_view_settings ),
 									)
 								);
 							}

@@ -56,7 +56,7 @@ class PT_Content_Views {
 		add_action( 'wp_head', array( &$this, 'update_view_count' ) );
 
 		// Output assets content at footer of page
-		add_action( 'wp_footer', array( 'PT_CV_Html', 'assets_of_view_types' ) );
+		add_action( 'wp_footer', array( 'PT_CV_Html', 'assets_of_view_types' ), 100 );
 
 		// Ajax action
 		$action = 'pagination_request';

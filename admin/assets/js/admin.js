@@ -84,10 +84,10 @@
 				return !$(this).hasClass('hidden') && $(this).find('input:checked').length;
 			}).length > 1) {
 				$taxonomy_relation.removeClass('hidden');
-				$('.pt-wrap').trigger(_prefix + 'multiple-taxonomies', [1]);
+				$('.pt-wrap').trigger(_prefix + 'multiple-taxonomies', [1, $self.options.onload]);
 			} else {
 				$taxonomy_relation.addClass('hidden');
-				$('.pt-wrap').trigger(_prefix + 'multiple-taxonomies', [0]);
+				$('.pt-wrap').trigger(_prefix + 'multiple-taxonomies', [0, $self.options.onload]);
 			}
 		},
 		/**
