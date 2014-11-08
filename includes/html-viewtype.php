@@ -28,8 +28,8 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			global $dargs;
 
 			// -- Get column span
-			$columns = ( (int) $dargs['number-columns'] < count( $content_items ) ) ? (int) $dargs['number-columns'] : count( $content_items );
 
+			$columns = (int) $dargs['number-columns'];
 			if ( ! $columns ) {
 				$columns = 1;
 			}

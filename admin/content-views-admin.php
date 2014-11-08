@@ -426,6 +426,9 @@ class PT_Content_Views_Admin {
 	 */
 	public function filter_admin_title( $admin_title, $title ) {
 		$screen = get_current_screen();
+		
+		if ( ! $this || ! isset ( $this->plugin_sub_screen_hook_suffix ) )
+			return $admin_title;
 
 		// If is View page
 		if ( $this->plugin_screen_hook_suffix == $screen->id || in_array( $screen->id, $this->plugin_sub_screen_hook_suffix ) ) {

@@ -746,8 +746,17 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * by merging css files to public/assets/css/public.css, js files to public/assets/js/public.js
 		 */
 		static function assets_of_view_types() {
-			// Don't execute this function in footer again
-			remove_action( 'wp_footer', array( 'PT_CV_Html', 'assets_of_view_types' ), 100 );
+			global $did_assets_of_view_types, $pt_view_sid;
+
+			// If already processed | have no View on this page -> return
+			if ( ( $did_assets_of_view_types && isset( $did_assets_of_view_types[$pt_view_sid] ) ) || ! $pt_view_sid ) {
+				return;
+			}
+			// Mark as processed
+			if ( ! $did_assets_of_view_types ) {
+				$did_assets_of_view_types = array();
+			}
+			$did_assets_of_view_types[$pt_view_sid] = 1;
 
 			$assets        = array( 'css', 'js' );
 			$assets_output = $assets_files = array();
