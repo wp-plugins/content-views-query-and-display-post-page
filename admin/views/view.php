@@ -251,7 +251,7 @@ $options = array(
 				'params' => array(
 					array(
 						'label'         => array(
-							'text' => __( '', PT_CV_DOMAIN ),
+							'text' => '',
 						),
 						'extra_setting' => array(
 							'params' => array(

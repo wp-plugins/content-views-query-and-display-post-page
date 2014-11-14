@@ -95,7 +95,7 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 			$this_section = 'setting_frontend_assets';
 			add_settings_section(
 				$this_section, // ID
-				__( '', PT_CV_DOMAIN ), // Title
+				'', // Title
 				array( __CLASS__, 'section_callback_setting_frontend_assets' ), // Callback
 				PT_CV_DOMAIN // Page
 			);

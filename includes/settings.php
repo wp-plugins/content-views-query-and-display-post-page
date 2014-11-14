@@ -310,7 +310,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				// Excerpt settings
 				array(
 					'label'         => array(
-						'text' => __( '', PT_CV_DOMAIN ),
+						'text' => '',
 					),
 					'extra_setting' => array(
 						'params' => array(
@@ -368,7 +368,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 			$field_display_settings = array(
 				array(
 					'label'         => array(
-						'text' => __( '', PT_CV_DOMAIN ),
+						'text' => '',
 					),
 					'extra_setting' => array(
 						'params' => array(
@@ -427,7 +427,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				// Show Thumbnail
 				array(
 					'label'         => array(
-						'text' => __( '', PT_CV_DOMAIN ),
+						'text' => '',
 					),
 					'extra_setting' => array(
 						'params' => array(
@@ -448,7 +448,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				// Show Title
 				array(
 					'label'         => array(
-						'text' => __( '', PT_CV_DOMAIN ),
+						'text' => '',
 					),
 					'extra_setting' => array(
 						'params' => array(
@@ -468,7 +468,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				// Show Content
 				array(
 					'label'         => array(
-						'text' => __( '', PT_CV_DOMAIN ),
+						'text' => '',
 					),
 					'extra_setting' => array(
 						'params' => array(
@@ -488,7 +488,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				// Show Meta fields
 				array(
 					'label'         => array(
-						'text' => __( '', PT_CV_DOMAIN ),
+						'text' => '',
 					),
 					'extra_setting' => array(
 						'params' => array(
@@ -721,7 +721,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 
 			return array(
 				'label'         => array(
-					'text' => __( '', PT_CV_DOMAIN ),
+					'text' => '',
 				),
 				'extra_setting' => array(
 					'params' => array(

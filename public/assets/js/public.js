@@ -20,12 +20,27 @@
 
 		// Autoload all registered functions
 		if (this.options._autoload !== 0) {
+			this.move_bootstrap_to_top();
 			this.pagination();
 			this.openin_window();
 		}
 	};
 
 	$.PT_CV_Public.prototype = {
+
+		/**
+		 * Manually move Bootstrap to top of all styles
+		 *
+		 * @returns {undefined}
+		 */
+		move_bootstrap_to_top: function () {
+			var _prefix = PT_CV_PUBLIC._prefix;
+
+			var selector = _prefix + 'bootstrap-style-css';
+			var bootstrap_css = $('#' + selector);
+			bootstrap_css.remove();
+			$('head').find('title').after( "<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr('href') + "' type='text/css' media='all' />" );
+		},
 
 		/**
 		 * Bootstrap pagination

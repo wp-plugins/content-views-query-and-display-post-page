@@ -190,7 +190,7 @@ th {
   padding: 0;
 }
 /* @Customizer-1 start */
-/* @Glyphicons-full */
+/* @Glyphicons */
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../fonts/glyphicons-halflings-regular.eot');
@@ -1009,29 +1009,29 @@ hr {
 .text-nowrap {
   white-space: nowrap;
 }
-/* @Grid system-full */
-.container {
+/* @Grid system-customized: Replace .container = .pt-cv-container (.container is not required) */
+.pt-cv-container {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
 }
 @media (min-width: 768px) {
-  .container {
+  .pt-cv-container {
     width: 750px;
   }
 }
 @media (min-width: 992px) {
-  .container {
+  .pt-cv-container {
     width: 970px;
   }
 }
 @media (min-width: 1200px) {
-  .container {
+  .pt-cv-container {
     width: 1170px;
   }
 }
-.container-fluid {
+.pt-cv-container-fluid {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -1679,18 +1679,18 @@ hr {
 }
 .clearfix:before,
 .clearfix:after,
-.container:before,
-.container:after,
-.container-fluid:before,
-.container-fluid:after,
+.pt-cv-container:before,
+.pt-cv-container:after,
+.pt-cv-container-fluid:before,
+.pt-cv-container-fluid:after,
 .row:before,
 .row:after {
   content: " ";
   display: table;
 }
 .clearfix:after,
-.container:after,
-.container-fluid:after,
+.pt-cv-container:after,
+.pt-cv-container-fluid:after,
 .row:after {
   clear: both;
 }
@@ -1984,121 +1984,127 @@ fieldset[disabled] .btn {
 .btn-group-vertical > .btn-group:after {
   clear: both;
 }
-/* @Navs-customized */
-.pt-cv-client-tab {
+/* @Navs-minified */
+.nav {
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;
 }
-.pt-cv-client-tab > li {
+.nav > li {
   position: relative;
   display: block;
 }
-.pt-cv-client-tab > li > a {
+.nav > li > a {
   position: relative;
   display: block;
   padding: 10px 15px;
 }
-.pt-cv-client-tab > li > a:hover,
-.pt-cv-client-tab > li > a:focus {
+.nav > li > a:hover,
+.nav > li > a:focus {
   text-decoration: none;
   background-color: #eeeeee;
 }
-.pt-cv-client-tab > li.disabled > a {
+.nav > li.disabled > a {
   color: #777777;
 }
-.pt-cv-client-tab > li.disabled > a:hover,
-.pt-cv-client-tab > li.disabled > a:focus {
+.nav > li.disabled > a:hover,
+.nav > li.disabled > a:focus {
   color: #777777;
   text-decoration: none;
   background-color: transparent;
   cursor: not-allowed;
 }
-.pt-cv-client-tab .open > a,
-.pt-cv-client-tab .open > a:hover,
-.pt-cv-client-tab .open > a:focus {
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
   background-color: #eeeeee;
   border-color: #428bca;
 }
-.pt-cv-client-tab .nav-divider {
+.nav .nav-divider {
   height: 1px;
   margin: 9px 0;
   overflow: hidden;
   background-color: #e5e5e5;
 }
-.pt-cv-client-tab > li > a > img {
+.nav > li > a > img {
   max-width: none;
 }
-.pt-cv-client-tab.nav-tabs {
+.nav-tabs {
   border-bottom: 1px solid #dddddd;
 }
-.pt-cv-client-tab.nav-tabs > li {
+.nav-tabs > li {
   float: left;
   margin-bottom: -1px;
 }
-.pt-cv-client-tab.nav-tabs > li > a {
+.nav-tabs > li > a {
   margin-right: 2px;
   line-height: 1.42857143;
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
 }
-.pt-cv-client-tab.nav-tabs > li > a:hover {
+.nav-tabs > li > a:hover {
   border-color: #eeeeee #eeeeee #dddddd;
 }
-.pt-cv-client-tab.nav-tabs > li.active > a,
-.pt-cv-client-tab.nav-tabs > li.active > a:hover,
-.pt-cv-client-tab.nav-tabs > li.active > a:focus {
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
   color: #555555;
   background-color: #ffffff;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
 }
-.pt-cv-client-tab.nav-tabs.nav-justified {
+.nav-tabs.nav-justified {
   width: 100%;
   border-bottom: 0;
 }
-.pt-cv-client-tab.nav-tabs.nav-justified > li {
+.nav-tabs.nav-justified > li {
   float: none;
 }
-.pt-cv-client-tab.nav-tabs.nav-justified > li > a {
+.nav-tabs.nav-justified > li > a {
   text-align: center;
   margin-bottom: 5px;
 }
-.pt-cv-client-tab.nav-tabs.nav-justified > .dropdown .dropdown-menu {
+.nav-tabs.nav-justified > .dropdown .dropdown-menu {
   top: auto;
   left: auto;
 }
 @media (min-width: 768px) {
-  .pt-cv-client-tab.nav-tabs.nav-justified > li {
+  .nav-tabs.nav-justified > li {
     display: table-cell;
     width: 1%;
   }
-  .pt-cv-client-tab.nav-tabs.nav-justified > li > a {
+  .nav-tabs.nav-justified > li > a {
     margin-bottom: 0;
   }
 }
-.pt-cv-client-tab.nav-tabs.nav-justified > li > a {
+.nav-tabs.nav-justified > li > a {
   margin-right: 0;
   border-radius: 4px;
 }
-.pt-cv-client-tab.nav-tabs.nav-justified > .active > a,
-.pt-cv-client-tab.nav-tabs.nav-justified > .active > a:hover,
-.pt-cv-client-tab.nav-tabs.nav-justified > .active > a:focus {
+.nav-tabs.nav-justified > .active > a,
+.nav-tabs.nav-justified > .active > a:hover,
+.nav-tabs.nav-justified > .active > a:focus {
   border: 1px solid #dddddd;
 }
 @media (min-width: 768px) {
-  .pt-cv-client-tab.nav-tabs.nav-justified > li > a {
+  .nav-tabs.nav-justified > li > a {
     border-bottom: 1px solid #dddddd;
     border-radius: 4px 4px 0 0;
   }
-  .pt-cv-client-tab.nav-tabs.nav-justified > .active > a,
-  .pt-cv-client-tab.nav-tabs.nav-justified > .active > a:hover,
-  .pt-cv-client-tab.nav-tabs.nav-justified > .active > a:focus {
+  .nav-tabs.nav-justified > .active > a,
+  .nav-tabs.nav-justified > .active > a:hover,
+  .nav-tabs.nav-justified > .active > a:focus {
     border-bottom-color: #ffffff;
   }
 }
 /* + */
+.nav-tabs:before, .nav-tabs:after {
+	clear: both;
+	content: " ";
+	display: table;
+}
+/* + Tab-panel */
 .tab-content > .tab-pane {
   display: none;
   visibility: hidden;
@@ -2106,12 +2112,6 @@ fieldset[disabled] .btn {
 .tab-content > .active {
   display: block;
   visibility: visible;
-}
-/* + Customized */
-.pt-cv-client-tab:before, .pt-cv-client-tab:after {
-	clear: both;
-	content: " ";
-	display: table;
 }
 /* @Pagination */
 .pagination {
@@ -2278,14 +2278,14 @@ a.thumbnail.active {
 .fade.in {
   opacity: 1;
 }
-.collapse {
+/*.collapse {
   display: none;
   visibility: hidden;
 }
 .collapse.in {
   display: block;
   visibility: visible;
-}
+}*/
 tr.collapse.in {
   display: table-row;
 }

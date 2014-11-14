@@ -49,7 +49,7 @@ class PT_Content_Views {
 		add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
 
 		// Load public-facing style sheet and JavaScript.
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 0 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// Update view count of post

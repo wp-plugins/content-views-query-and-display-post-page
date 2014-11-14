@@ -241,3 +241,13 @@
 .pt-cv-2-col .pt-cv-title {
 	clear: none !important;
 }
+
+/* Collapsible layout */
+.pt-cv-view .collapse {
+	display: none;
+	visibility: hidden;
+}
+.pt-cv-view .collapse.in {
+	display: block;
+	visibility: visible;
+}

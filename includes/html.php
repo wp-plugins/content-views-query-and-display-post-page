@@ -629,7 +629,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 						$terms = PT_CV_Functions::post_terms( $post );
 						if ( ! empty( $terms ) ) {
-							$html['taxonomy'] = sprintf( '<span class="%s">%s %s</span>', esc_attr( $term_class ), balanceTags( $prefix_text ), balanceTags( $terms ) );
+							$term_html = sprintf( '<span class="%s">%s %s</span>', esc_attr( $term_class ), balanceTags( $prefix_text ), balanceTags( $terms ) );
+							$html['taxonomy'] = apply_filters( PT_CV_PREFIX_ . 'field_term_html', $term_html, $terms );
 						}
 						break;
 
