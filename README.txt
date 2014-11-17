@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.3.9
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,10 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.4.0 =
+* Bug fixed: Grid only shows 1 column
+* Improvement: Update description, styles, refine code
 
 = 1.3.9 =
 * Bug fixed: Menu bar is disappeared

@@ -847,7 +847,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Localize for Public script
 			PT_CV_Asset::localize_script(
 				'public', PT_CV_PREFIX_UPPER . 'PUBLIC', array(
-					'is_admin' => is_admin() ? 1 : 0,
+					'is_admin' => is_admin(),
+					'is_mobile' => wp_is_mobile(),
 					'_prefix'  => PT_CV_PREFIX,
 					'ajaxurl'  => admin_url( 'admin-ajax.php' ),
 					'lang'     => PT_CV_Functions::get_language(),

@@ -22,7 +22,6 @@
 		if (this.options._autoload !== 0) {
 			this.move_bootstrap_to_top();
 			this.pagination();
-			this.openin_window();
 		}
 	};
 
@@ -39,7 +38,7 @@
 			var selector = _prefix + 'bootstrap-style-css';
 			var bootstrap_css = $('#' + selector);
 			bootstrap_css.remove();
-			$('head').find('title').after( "<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr('href') + "' type='text/css' media='all' />" );
+			$('title').after( "<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr('href') + "' type='text/css' media='all' />" );
 		},
 
 		/**
@@ -209,30 +208,6 @@
 			$('body').trigger(_prefix + 'pagination-finished');
 
 			return page_existed;
-		},
-
-		/**
-		 * Open in new window
-		 *
-		 * @returns {undefined}
-		 */
-		openin_window: function () {
-			var _prefix = PT_CV_PUBLIC._prefix;
-
-			$('body').on('click', '.' + _prefix + 'window', function (e) {
-				e.preventDefault();
-
-				var this_ = $(this);
-
-				var href = this_.attr('href');
-				var width = this_.attr('data-width');
-				var height = this_.attr('data-height');
-				var left = (window.screen.width / 2) - (width / 2);
-				var top = (window.screen.height / 2) - (height / 2);
-
-				var settings = 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, ';
-				window.open(href, "_blank", settings + ' top=' + top + ', left=' + left + ', width=' + width + ', height=' + height);
-			});
 		}
 	};
 

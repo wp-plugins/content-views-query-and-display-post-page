@@ -160,14 +160,14 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 			// Indicator html
 			$show_indicator    = isset( $dargs['view-type-settings']['indicator'] ) ? $dargs['view-type-settings']['indicator'] : 'yes';
-			$scrollable_html[] = self::scrollable_indicator( ( $show_indicator == 'yes' ) ? 1 : 0, $wrapper_id, $count_slides );
+			$scrollable_html[] = self::scrollable_indicator( $show_indicator == 'yes', $wrapper_id, $count_slides );
 
 			// Content html
 			$scrollable_html[] = $scrollable_content;
 
 			// Control html
 			$show_navigation   = isset( $dargs['view-type-settings']['navigation'] ) ? $dargs['view-type-settings']['navigation'] : 'yes';
-			$scrollable_html[] = self::scrollable_control( ( $show_navigation == 'yes' ) ? 1 : 0, $wrapper_id, $count_slides );
+			$scrollable_html[] = self::scrollable_control( $show_navigation == 'yes', $wrapper_id, $count_slides );
 
 			// Get wrapper class scrollable
 			$scrollable_class = apply_filters( PT_CV_PREFIX_ . 'scrollable_class', 'carousel slide' );

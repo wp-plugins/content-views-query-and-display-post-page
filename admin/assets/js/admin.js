@@ -250,7 +250,7 @@
 				// Scroll to
 				if (!$self.options.onload && !$(toggle_id).hasClass(_prefix + 'no-animation') && $(toggle_id).offset()) {
 					$('html, body').animate({
-						scrollTop: $(toggle_id).offset().top - 20
+						scrollTop: $(toggle_id).offset().top - 40
 					}, $self.options.scroll_time);
 				}
 
@@ -261,7 +261,7 @@
 				// Remove highlight color
 				setTimeout(function () {
 					$(toggle_id).removeClass(activate_group);
-				}, 800);
+				}, 3000);
 
 			} else {
 				$('#' + id_prefix + $this.val()).addClass('hidden');
