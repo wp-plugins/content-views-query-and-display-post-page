@@ -59,6 +59,10 @@ html {
 	display: none;
 }
 
+#pt-cv-form-view .tab-content {
+	display: block !important;
+}
+
 #pt-cv-form-view .nav .glyphicon {
 	margin-right: 6px;
 }

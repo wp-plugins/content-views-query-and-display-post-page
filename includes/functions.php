@@ -1042,12 +1042,21 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Show View output
 			$view_html = balanceTags( PT_CV_Functions::view_process_settings( $id, $settings ) );
 
+			return PT_CV_Functions::view_final_output( $view_html );
+		}
+
+		/**
+		 * Final output of View: HTML & Assets
+		 *
+		 * @param string $html
+		 */
+		static function view_final_output( $html ) {
 			// Print View assets
 			ob_start();
 			PT_CV_Html::assets_of_view_types();
 			$view_assets = ob_get_clean();
 
-			return $view_html . $view_assets;
+			return $html . $view_assets;
 		}
 
 		/**

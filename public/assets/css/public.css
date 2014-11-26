@@ -80,9 +80,10 @@
 
 /* Thumbnail */
 .pt-cv-thumbnail {
-	height: auto;
+	height:        auto;
 	max-width:     100% !important;
 	margin-bottom: 15px !important;
+	min-width:     inherit !important;
 }
 
 .pt-cv-thumbnail.pull-left {

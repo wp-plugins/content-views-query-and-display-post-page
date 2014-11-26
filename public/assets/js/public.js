@@ -103,10 +103,13 @@
 			var session_id = this_.attr('data-sid');
 			var spinner = this_.next('.' + _prefix + 'spinner');
 
+			// Get the pagination element
 			var pagination_wrapper = this_;
 			if (this_.parent('.' + _prefix + 'pagination-wrapper').length) {
 				pagination_wrapper = this_.parent('.' + _prefix + 'pagination-wrapper');
 			}
+
+			// Get the View element
 			var pages_holder = pagination_wrapper.prev('.' + _prefix + 'view');
 
 			// For Timeline

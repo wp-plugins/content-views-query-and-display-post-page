@@ -467,7 +467,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					if ( apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_enable', 1, $fargs['content'] ) ) {
 						$text          = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
 						$readmore     .= self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore' . ' btn btn-success btn-sm' );
-						$readmore_btn .= '<br />' . $readmore;
+						$readmore_btn .= '<br/>' . $readmore;
 					}
 
 					// Filter content
