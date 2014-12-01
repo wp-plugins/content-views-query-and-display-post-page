@@ -87,11 +87,9 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 				$list_item = implode( "\n", $row_html );
 
+				// Only wrap in row if shuffle filter is not enable
 				if ( $pt_cv_enable_filter != 'yes' ) {
 					$list_item = sprintf( '<div class="%s">%s</div>', esc_attr( $row_class ), $list_item );
-				} else {
-					// Add the extra clearfix
-					$list_item .= '<div class="clearfix visible-xs-block"></div>';
 				}
 
 				$content[] = balanceTags( $list_item );

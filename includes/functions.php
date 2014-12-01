@@ -496,7 +496,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$pt_content_type = $content_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'content-type', $pt_view_settings );
 
 			// Get view type
-			$view_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'view-type', $pt_view_settings );
+			global $pt_view_type;
+			$pt_view_type = $view_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'view-type', $pt_view_settings );
 
 			// Store display settings
 			global $dargs, $pt_query_args;

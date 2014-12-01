@@ -252,3 +252,22 @@
 	display: block;
 	visibility: visible;
 }
+
+/* @Panels-minified */
+.pt-cv-view .panel {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.pt-cv-view .panel-default {
+  border-color: #dddddd;
+}
+.pt-cv-view .panel-default > .panel-heading {
+  color: #333333;
+  background-color: #f5f5f5;
+  border-color: #dddddd;
+}
