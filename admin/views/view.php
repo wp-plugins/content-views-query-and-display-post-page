@@ -116,10 +116,12 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 <!-- Nav tabs -->
 <ul class="nav nav-tabs">
 	<li class="active">
-		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>filter-settings" data-toggle="tab"><span class="glyphicon glyphicon-search"></span><?php _e( 'Filter Settings', PT_CV_DOMAIN ); ?></a>
+		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>filter-settings" data-toggle="tab"><span class="glyphicon glyphicon-search"></span><?php _e( 'Filter Settings', PT_CV_DOMAIN ); ?>
+		</a>
 	</li>
 	<li>
-		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>display-settings" data-toggle="tab"><span class="glyphicon glyphicon-th-large"></span><?php _e( 'Display Settings', PT_CV_DOMAIN ); ?></a>
+		<a href="#<?php echo esc_attr( PT_CV_PREFIX ); ?>display-settings" data-toggle="tab"><span class="glyphicon glyphicon-th-large"></span><?php _e( 'Display Settings', PT_CV_DOMAIN ); ?>
+		</a>
 	</li>
 	<?php do_action( PT_CV_PREFIX_ . 'setting_tabs_header', $settings ); ?>
 </ul>
@@ -218,12 +220,12 @@ $options = array(
 						),
 						'params' => array(
 							array(
-								'type' => 'number',
-								'name' => 'limit',
-								'std'  => '10',
-								'min'  => '1',
+								'type'        => 'number',
+								'name'        => 'limit',
+								'std'         => '10',
+								'min'         => '1',
 								'append_text' => '1 &rarr; 999',
-								'desc' => __( 'The number of posts to show. Leaving it blank to show all found posts (which match all filter settings)', PT_CV_DOMAIN ),
+								'desc'        => __( 'The number of posts to show. Leaving it blank to show all found posts (which match all filter settings)', PT_CV_DOMAIN ),
 							),
 						),
 					),

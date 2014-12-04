@@ -436,9 +436,9 @@
 
 			// Sent POST request
 			$.ajax({
-				type      : "POST",
-				url       : ajaxurl,
-				data      : data,
+				type: "POST",
+				url : ajaxurl,
+				data: data,
 			}).done(function (response) {
 					preview_box.css('opacity', '1');
 					// Hide loading icon
@@ -538,8 +538,8 @@
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
-			var _fn = function ( is_trigger ) {
-				if ( ! is_trigger ) {
+			var _fn = function (is_trigger) {
+				if (!is_trigger) {
 					$self.options.onload = 0;
 				}
 
@@ -551,7 +551,7 @@
 			};
 			// Bind on change input after page load
 			$('.pt-wrap .tab-content').on('change', 'input, select, textarea', function (evt, is_trigger) {
-				_fn( is_trigger );
+				_fn(is_trigger);
 			});
 
 			$('body').bind(_prefix + 'preview-btn-toggle', function () {
@@ -635,7 +635,7 @@
 
 			// Handle Pagination actions
 			$('body').bind(_prefix + 'custom-trigger', function () {
-				var $pt_cv_public_js = new $.PT_CV_Public({_prefix: _prefix,_autoload: 0});
+				var $pt_cv_public_js = new $.PT_CV_Public({_prefix: _prefix, _autoload: 0});
 				$pt_cv_public_js.pagination();
 			});
 		},

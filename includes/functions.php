@@ -237,8 +237,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get value of some setting options by prefix
 		 *
-		 * @param string $prefix The prefix in name of setting options
-		 * @param bool $backend Get settings from Backend form
+		 * @param string $prefix  The prefix in name of setting options
+		 * @param bool   $backend Get settings from Backend form
 		 */
 		static function settings_values_by_prefix( $prefix, $backend = FALSE ) {
 			global $pt_view_settings;
@@ -427,7 +427,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				return;
 			}
 
-			$post_id = PT_CV_Functions::post_id_from_meta_id( $meta_id );
+			$post_id = apply_filters( PT_CV_PREFIX_ . 'view_get_post_id', PT_CV_Functions::post_id_from_meta_id( $meta_id ), $meta_id );
 
 			// Get view settings
 			if ( $post_id ) {
@@ -454,7 +454,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				return $view_settings;
 			}
 
-			$taxonomies = isset( $view_settings[ PT_CV_PREFIX . 'taxonomy'] ) ? $view_settings[ PT_CV_PREFIX . 'taxonomy'] : array();
+			$taxonomies = isset( $view_settings[PT_CV_PREFIX . 'taxonomy'] ) ? $view_settings[PT_CV_PREFIX . 'taxonomy'] : array();
 			if ( is_array( $taxonomies ) ) {
 				$list = array( '__in', '__not_in' );
 				foreach ( $taxonomies as $taxonomy ) {
@@ -519,7 +519,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$pt_view_sid = $session_id = $id ? $id : PT_CV_Functions::string_random();
 
 				// Store settings
-				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 30 * MINUTE_IN_SECONDS  );
+				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 30 * MINUTE_IN_SECONDS );
 			}
 
 			if ( empty( $args ) || empty( $dargs ) ) {
@@ -626,15 +626,16 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		/**
 		 * Get query parameters of View
 		 *
-		 * @param string $content_type The current content type
-		 * @param array $pt_view_settings The settings of View
+		 * @param string $content_type     The current content type
+		 * @param array  $pt_view_settings The settings of View
+		 *
 		 * @return array
 		 */
 		static function view_filter_settings( $content_type, $pt_view_settings ) {
 			/**
-			* Get Query parameters
-			* Set default values
-			*/
+			 * Get Query parameters
+			 * Set default values
+			 */
 			$args = array(
 				'post_type'           => $content_type,
 				'post_status'         => 'publish',
@@ -673,6 +674,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Get display parameters of View
 		 *
 		 * @param string $view_type The view type of View
+		 *
 		 * @return array
 		 */
 		static function view_display_settings( $view_type ) {
@@ -865,7 +867,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 						// Get thumbnail settings
 						case 'thumbnail':
-							$prefix = PT_CV_PREFIX . 'field-thumbnail-';
+							$prefix        = PT_CV_PREFIX . 'field-thumbnail-';
 							$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_setting_values', $field_setting, $prefix );
@@ -874,7 +876,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 						// Get meta fields settings
 						case 'meta-fields':
-							$prefix               = PT_CV_PREFIX . 'meta-fields-';
+							$prefix        = PT_CV_PREFIX . 'meta-fields-';
 							$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_meta_fields_setting_values', $field_setting, $prefix );
@@ -883,7 +885,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 						// Get content settings
 						case 'content':
-							$prefix = PT_CV_PREFIX . 'field-content-';
+							$prefix        = PT_CV_PREFIX . 'field-content-';
 							$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 							if ( $field_setting['show'] == 'excerpt' ) {
@@ -920,7 +922,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Get pagination enable/disable
 			$pagination = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'enable-pagination', $pt_view_settings );
 			if ( $pagination ) {
-				$prefix = PT_CV_PREFIX . 'pagination-';
+				$prefix        = PT_CV_PREFIX . 'pagination-';
 				$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 				$dargs['pagination-settings'] = apply_filters( PT_CV_PREFIX_ . 'pagination_settings', $field_setting, $prefix );
@@ -958,7 +960,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @param array $dargs The settings array of Fields
 		 */
 		static function view_get_other_settings( &$dargs ) {
-			$prefix = PT_CV_PREFIX . 'other-';
+			$prefix        = PT_CV_PREFIX . 'other-';
 			$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
 
 			$dargs['other-settings'] = apply_filters( PT_CV_PREFIX_ . 'other_settings', $field_setting );
@@ -1064,7 +1066,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * Generate link to View page: Add view/ Edit view
 		 *
 		 * @param string $view_id The view id
-		 * @param array $action   Custom parameters
+		 * @param array  $action  Custom parameters
 		 *
 		 * @return string
 		 */
@@ -1073,7 +1075,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$edit_link = admin_url( 'admin.php?page=' . PT_CV_DOMAIN . '-add' );
 			if ( ! empty( $view_id ) ) {
 				$query_args = array( 'id' => $view_id ) + $action;
-				$edit_link = add_query_arg( $query_args, $edit_link );
+				$edit_link  = add_query_arg( $query_args, $edit_link );
 			}
 
 			return $edit_link;
@@ -1147,9 +1149,10 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				?>
 				<div class="pull-right" style="margin-top: -54px;">
 					<a class="btn btn-success" target="_blank" href="http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view">&#187; Get Pro version</a>
-					or <a class="btn btn-info" target="_blank" href="http://sample.contentviewspro.com/?utm_source=client&utm_medium=view">Check demo site</a>
+					or
+					<a class="btn btn-info" target="_blank" href="http://sample.contentviewspro.com/?utm_source=client&utm_medium=view">Check demo site</a>
 				</div>
-				<?php
+			<?php
 			}
 		}
 

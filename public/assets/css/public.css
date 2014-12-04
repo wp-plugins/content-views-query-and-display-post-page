@@ -15,16 +15,16 @@
 .pt-cv-view *,
 .pt-cv-view *:before,
 .pt-cv-view *:after {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:    border-box;
+	box-sizing:         border-box;
 }
 
 /* Common */
 .pt-cv-view {
-	position:      relative;
+	position: relative;
 	/*margin-bottom: 30px;*/
-	clear:         both;
+	clear:    both;
 }
 
 .pt-cv-page {
@@ -123,8 +123,7 @@
 	margin: 0 auto !important;
 }
 
-.pagination > li
-{
+.pagination > li {
 	background: none !important;
 }
 
@@ -200,7 +199,7 @@
 
 /* Caption without image */
 .pt-cv-cap-wo-img {
-	position: relative;
+	position: relative !important;
 }
 
 .pt-cv-cap-wo-img * {
@@ -245,29 +244,31 @@
 
 /* Collapsible layout */
 .pt-cv-view .collapse {
-	display: none;
+	display:    none;
 	visibility: hidden;
 }
+
 .pt-cv-view .collapse.in {
-	display: block;
+	display:    block;
 	visibility: visible;
 }
 
 /* @Panels-minified */
 .pt-cv-view .panel {
-  margin-bottom: 20px;
-  background-color: #ffffff;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	margin-bottom:      20px;
+	background-color:   #ffffff;
+	border:             1px solid transparent;
+	border-radius:      4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow:         0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .pt-cv-view .panel-default {
-  border-color: #dddddd;
+	border-color: #dddddd;
 }
+
 .pt-cv-view .panel-default > .panel-heading {
-  color: #333333;
-  background-color: #f5f5f5;
-  border-color: #dddddd;
+	color:            #333333;
+	background-color: #f5f5f5;
+	border-color:     #dddddd;
 }

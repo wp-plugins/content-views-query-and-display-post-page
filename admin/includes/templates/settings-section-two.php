@@ -5,7 +5,8 @@
 
 <p>
 	<a href="http://www.contentviewspro.com/pricing/?utm_source=settings_page&utm_medium=link&utm_campaign=content-views" target="_blank" class="btn btn-success">Upgrade now</a>
-	or <a href="http://sample.contentviewspro.com/?utm_source=client&utm_medium=view" target="_blank" class="btn btn-info">Check demo site</a>
+	or
+	<a href="http://sample.contentviewspro.com/?utm_source=client&utm_medium=view" target="_blank" class="btn btn-info">Check demo site</a>
 </p>
 
 <div class="row">

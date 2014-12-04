@@ -661,11 +661,11 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'params'     => array(
 						array(
-							'type' => 'number',
-							'name' => $prefix . 'number-columns',
-							'std'  => '2',
+							'type'        => 'number',
+							'name'        => $prefix . 'number-columns',
+							'std'         => '2',
 							'append_text' => '1 &rarr; 4',
-							'desc' => __( 'The number of items on each row of grid', PT_CV_DOMAIN ),
+							'desc'        => __( 'The number of items on each row of grid', PT_CV_DOMAIN ),
 						),
 					),
 					'dependence' => array( 'view-type', 'grid' ),

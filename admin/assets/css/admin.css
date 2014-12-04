@@ -17,9 +17,9 @@
 .pt-wrap *,
 .pt-wrap *:before,
 .pt-wrap *:after {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:    border-box;
+	box-sizing:         border-box;
 }
 
 /* Fix small error when use Bootstrap */
@@ -157,10 +157,11 @@ html {
 
 /* Activate group */
 #pt-cv-filter-settings .pt-cv-group-activate {
-	padding: 5px;
+	padding:            5px;
 	-webkit-box-shadow: inset 0 1px 1px rgba(255, 105, 105, 0.075), 0 0 8px rgba(0, 142, 255, 0.6) !important;
 	box-shadow:         inset 0 1px 1px rgba(255, 105, 105, 0.075), 0 0 8px rgba(0, 142, 255, 0.6) !important;
 }
+
 #pt-cv-filter-settings .pt-cv-group-activate .panel-body {
 	background: #FFCFCF;
 }
@@ -203,10 +204,10 @@ html {
 
 /* View shortcode text */
 #view-shortcode {
-	background: #ADFFAD;
-	cursor: pointer;
+	background:    #ADFFAD;
+	cursor:        pointer;
 	margin-bottom: 20px;
-	float: left;
-	position: relative;
-	width: 50%;
+	float:         left;
+	position:      relative;
+	width:         50%;
 }

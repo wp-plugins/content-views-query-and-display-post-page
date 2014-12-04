@@ -434,7 +434,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Get content
 		 *
 		 * @param object $post
-		 * @param array $fargs
+		 * @param array  $fargs
+		 *
 		 * @return string
 		 */
 		static function _field_content( $post, $fargs ) {
@@ -465,8 +466,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 					// Read more button
 					if ( apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_enable', 1, $fargs['content'] ) ) {
-						$text          = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
-						$readmore     .= self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore' . ' btn btn-success btn-sm' );
+						$text = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
+						$readmore .= self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore' . ' btn btn-success btn-sm' );
 						$readmore_btn .= '<br/>' . $readmore;
 					}
 
@@ -629,7 +630,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 						$terms = PT_CV_Functions::post_terms( $post );
 						if ( ! empty( $terms ) ) {
-							$term_html = sprintf( '<span class="%s">%s %s</span>', esc_attr( $term_class ), balanceTags( $prefix_text ), balanceTags( $terms ) );
+							$term_html        = sprintf( '<span class="%s">%s %s</span>', esc_attr( $term_class ), balanceTags( $prefix_text ), balanceTags( $terms ) );
 							$html['taxonomy'] = apply_filters( PT_CV_PREFIX_ . 'field_term_html', $term_html, $terms );
 						}
 						break;
@@ -847,12 +848,12 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Localize for Public script
 			PT_CV_Asset::localize_script(
 				'public', PT_CV_PREFIX_UPPER . 'PUBLIC', array(
-					'is_admin' => is_admin(),
+					'is_admin'  => is_admin(),
 					'is_mobile' => wp_is_mobile(),
-					'_prefix'  => PT_CV_PREFIX,
-					'ajaxurl'  => admin_url( 'admin-ajax.php' ),
-					'lang'     => PT_CV_Functions::get_language(),
-					'_nonce'   => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
+					'_prefix'   => PT_CV_PREFIX,
+					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
+					'lang'      => PT_CV_Functions::get_language(),
+					'_nonce'    => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
 				)
 			);
 		}
@@ -909,10 +910,10 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			ob_start();
 			?>
 			<script type="text/javascript" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-script-' . $random_id ); ?>">
-			<?php
-			$format  = $wrap ? "(function ($) {\n $(function () { %s }); \n}(jQuery));" : '%s';
-			printf( $format, $js );
-			?>
+				<?php
+				$format  = $wrap ? "(function ($) {\n $(function () { %s }); \n}(jQuery));" : '%s';
+				printf( $format, $js );
+				?>
 			</script>
 			<?php
 			return ob_get_clean();

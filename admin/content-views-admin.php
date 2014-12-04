@@ -78,7 +78,7 @@ class PT_Content_Views_Admin {
 
 
 		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( dirname(__FILE__) ) . $this->plugin_slug . '.php' );
+		$plugin_basename = plugin_basename( plugin_dir_path( dirname( __FILE__ ) ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'filter_add_action_links' ) );
 
 		// Filter link of actions in All Views page
@@ -426,9 +426,10 @@ class PT_Content_Views_Admin {
 	 */
 	public function filter_admin_title( $admin_title, $title ) {
 		$screen = get_current_screen();
-		
-		if ( ! $this || ! isset ( $this->plugin_sub_screen_hook_suffix ) )
+
+		if ( ! $this || ! isset ( $this->plugin_sub_screen_hook_suffix ) ) {
 			return $admin_title;
+		}
 
 		// If is View page
 		if ( $this->plugin_screen_hook_suffix == $screen->id || in_array( $screen->id, $this->plugin_sub_screen_hook_suffix ) ) {

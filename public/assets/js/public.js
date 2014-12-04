@@ -15,7 +15,7 @@
 
 	$.PT_CV_Public = function (options) {
 		this.options = $.extend({
-			_autoload : 1
+			_autoload: 1
 		}, options);
 
 		// Autoload all registered functions
@@ -38,7 +38,7 @@
 			var selector = _prefix + 'bootstrap-style-css';
 			var bootstrap_css = $('#' + selector);
 			bootstrap_css.remove();
-			$('title').after( "<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr('href') + "' type='text/css' media='all' />" );
+			$('title').after("<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr('href') + "' type='text/css' media='all' />");
 		},
 
 		/**
@@ -205,6 +205,7 @@
 			// Trigger to make Pinterest layout works when do pagination
 			if ($('.' + _prefix + 'pinterest').length || $('.' + _prefix + 'same-height').length) {
 				$('body').trigger(_prefix + 'custom-trigger');
+				$(window).trigger(_prefix + 'resize');
 			}
 
 			// Trigger action after pagination finished

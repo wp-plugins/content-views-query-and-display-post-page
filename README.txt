@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.0.1
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,11 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.4.3 =
+* Bug fixed: Scrollable list without image display blank output
+* Bug fixed: Position of pagination button is incorrect after pagination finished (in some case)
+* Improvement: Code refinement
 
 = 1.4.2 =
 * Bug fixed: Style of Panel (.panel) is weird
