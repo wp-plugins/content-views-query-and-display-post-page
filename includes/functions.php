@@ -175,6 +175,25 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		}
 
 		/**
+		* Trims text to a certain number of words.
+		*
+		* @since 1.4.3
+		*/
+		static function wp_trim_words( $text, $num_words = 55 ) {
+			$result = wp_strip_all_tags( $text );
+			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );;
+
+			//  Already short enough, return the whole thing
+			if ( count( $array ) > $num_words )
+			{
+				array_splice( $array, $num_words );
+				$result = implode( ' ', $array );
+			}
+
+			return $result;
+		}
+
+		/**
 		 * Get thumbnail dimensions
 		 *
 		 * @param array $fargs The settings of thumbnail
@@ -454,6 +473,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				return $view_settings;
 			}
 
+			// Taxonomy In, Not in
 			$taxonomies = isset( $view_settings[PT_CV_PREFIX . 'taxonomy'] ) ? $view_settings[PT_CV_PREFIX . 'taxonomy'] : array();
 			if ( is_array( $taxonomies ) ) {
 				$list = array( '__in', '__not_in' );
@@ -467,6 +487,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					}
 				}
 			}
+
+			$view_settings = apply_filters( PT_CV_PREFIX_ . 'backward_comp', $view_settings );
 		}
 
 		/**
@@ -639,7 +661,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$args = array(
 				'post_type'           => $content_type,
 				'post_status'         => 'publish',
-				'ignore_sticky_posts' => 1,
+				'ignore_sticky_posts' => apply_filters( PT_CV_PREFIX_ . 'ignore_sticky_posts', 1 ),
 			);
 
 			// Post in
@@ -864,6 +886,15 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 					// Get field settings
 					switch ( $field ) {
+
+						// Get title settings
+						case 'title':
+							$prefix        = PT_CV_PREFIX . 'field-title-';
+							$field_setting = PT_CV_Functions::settings_values_by_prefix( $prefix );
+
+							$dargs['field-settings'][$field] = apply_filters( PT_CV_PREFIX_ . 'field_title_setting_values', $field_setting, $prefix );
+
+							break;
 
 						// Get thumbnail settings
 						case 'thumbnail':

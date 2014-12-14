@@ -232,11 +232,12 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				// Fields display
 				array(
 					'label'         => array(
-						'text' => __( 'Fields display', PT_CV_DOMAIN ),
+						'text' => '',
 					),
 					'extra_setting' => array(
 						'params' => array(
 							'wrap-class' => PT_CV_Html::html_group_class(),
+							'width'      => 12,
 						),
 					),
 					'params'        => array(
@@ -246,6 +247,27 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 						),
 					),
 				),
+
+				// Upgrade to Pro
+				apply_filters( PT_CV_PREFIX_ . 'upgrade_to_pro_text', array(
+					'label'         => array(
+						'text' => '',
+					),
+					'extra_setting' => array(
+						'params' => array(
+							'width'  => 12,
+						),
+					),
+					'params'        => array(
+						array(
+							'type'    => 'html',
+							'content' => sprintf( '<p class="text-muted" style="margin-top: -10px; margin-bottom: 15px;">&rarr; %s</p>', __( 'Customize display order of above fields by a simple drag-and-drop ?', PT_CV_DOMAIN ) . sprintf( ' <a href="%s" target="_blank">%s</a>', esc_url( 'http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view' ), __( 'Please upgrade to Pro', PT_CV_DOMAIN ) ) ),
+						),
+					),
+				) ),
+
+				// Title settings
+				apply_filters( PT_CV_PREFIX_ . 'settings_title_display', array(), $prefix, $prefix2 ),
 
 				// Thumbnail settings
 				array(
@@ -265,29 +287,6 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'dependence'    => array( $prefix2 . 'thumbnail', 'yes' ),
 				),
-
-				// Meta fields settings
-				array(
-					'label'         => array(
-						'text' => __( 'Meta fields settings', PT_CV_DOMAIN ),
-					),
-					'extra_setting' => array(
-						'params' => array(
-							'wrap-class' => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'meta-fields-settings',
-						),
-					),
-					'params'        => array(
-						array(
-							'type'   => 'group',
-							'params' => PT_CV_Settings::field_meta_fields( 'meta-fields-' ),
-							'desc'   => apply_filters( PT_CV_PREFIX_ . 'settings_sort_text', '' ),
-						),
-					),
-					'dependence'    => array( $prefix2 . 'meta-fields', 'yes' ),
-				),
-
-				// Taxonomies settings
-				apply_filters( PT_CV_PREFIX_ . 'settings_taxonomies_display', array() ),
 
 				// Content settings
 				array(
@@ -352,6 +351,29 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'dependence'    => array( array( $prefix . 'content-show', 'excerpt' ) ),
 				),
+
+				// Meta fields settings
+				array(
+					'label'         => array(
+						'text' => __( 'Meta fields settings', PT_CV_DOMAIN ),
+					),
+					'extra_setting' => array(
+						'params' => array(
+							'wrap-class' => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'meta-fields-settings',
+						),
+					),
+					'params'        => array(
+						array(
+							'type'   => 'group',
+							'params' => PT_CV_Settings::field_meta_fields( 'meta-fields-' ),
+							'desc'   => apply_filters( PT_CV_PREFIX_ . 'settings_sort_text', '' ),
+						),
+					),
+					'dependence'    => array( $prefix2 . 'meta-fields', 'yes' ),
+				),
+
+				// Taxonomies settings
+				apply_filters( PT_CV_PREFIX_ . 'settings_taxonomies_display', array(), 'meta-fields-' ),
 			);
 
 			$result = apply_filters( PT_CV_PREFIX_ . 'field_settings', $result, $prefix2 );

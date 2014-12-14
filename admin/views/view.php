@@ -132,6 +132,7 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 <div class="tab-pane active" id="<?php echo esc_attr( PT_CV_PREFIX ); ?>filter-settings">
 <?php
 $options = array(
+	// Content type
 	array(
 		'label'  => array(
 			'text' => __( 'Content type', PT_CV_DOMAIN ),
@@ -145,6 +146,24 @@ $options = array(
 			),
 		),
 	),
+
+	// Upgrade to Pro
+	apply_filters( PT_CV_PREFIX_ . 'upgrade_to_pro_text', array(
+		'label'         => array(
+			'text' => '',
+		),
+		'extra_setting' => array(
+			'params' => array(
+				'width'  => 10,
+			),
+		),
+		'params'        => array(
+			array(
+				'type'    => 'html',
+				'content' => sprintf( '<p class="text-muted">&rarr; %s</p>', __( 'Filter custom content type (or post type) ?', PT_CV_DOMAIN ) . sprintf( ' <a href="%s" target="_blank">%s</a>', esc_url( 'http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view' ), __( 'Please upgrade to Pro', PT_CV_DOMAIN ) ) ),
+			),
+		),
+	) ),
 
 	apply_filters( PT_CV_PREFIX_ . 'custom_filters', array() ),
 
@@ -163,7 +182,7 @@ $options = array(
 				'type'   => 'group',
 				'params' => array(
 
-					apply_filters( PT_CV_PREFIX_ . 'exclude_sticky_posts_setting', array() ),
+					apply_filters( PT_CV_PREFIX_ . 'sticky_posts_setting', array() ),
 
 					// Includes
 					array(

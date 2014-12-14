@@ -381,22 +381,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				// Title
 				case 'title':
 
-					// Get title class
-					$title_class = apply_filters( PT_CV_PREFIX_ . 'field_title_class', PT_CV_PREFIX . 'title' );
-
-					// Get title tag
-					$tag = apply_filters( PT_CV_PREFIX_ . 'field_title_tag', 'h4' );
-
-					// Get post title
-					$title = get_the_title( $post );
-					if ( empty( $title ) ) {
-						$title = __( '(no title)', PT_CV_DOMAIN );
-					}
-
-					$html = sprintf(
-						'<%1$s class="%2$s">%3$s</%1$s>',
-						$tag, esc_attr( $title_class ), self::_field_href( $oargs, $post, $title )
-					);
+					$html = self::_field_title( $post, $oargs, $fargs );
 
 					break;
 
@@ -426,6 +411,36 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$html = apply_filters( PT_CV_PREFIX_ . 'field_item_html', $html, $field_name, $post );
 					break;
 			}
+
+			return $html;
+		}
+
+		/**
+		 * Get Title
+		 *
+		 * @param object $post
+		 * @param array  $oargs
+		 * @return string
+		 */
+		static function _field_title( $post, $oargs, $fargs ) {
+			// Get title class
+			$title_class = apply_filters( PT_CV_PREFIX_ . 'field_title_class', PT_CV_PREFIX . 'title' );
+
+			// Get title tag
+			$tag = apply_filters( PT_CV_PREFIX_ . 'field_title_tag', 'h4' );
+
+			// Get post title
+			$title = get_the_title( $post );
+			if ( empty( $title ) ) {
+				$title = __( '(no title)', PT_CV_DOMAIN );
+			}
+
+			$title = apply_filters( PT_CV_PREFIX_ . 'field_title_result', $title, $fargs );
+
+			$html = sprintf(
+				'<%1$s class="%2$s">%3$s</%1$s>',
+				$tag, esc_attr( $title_class ), self::_field_href( $oargs, $post, $title )
+			);
 
 			return $html;
 		}
@@ -479,7 +494,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					 * Don't set $readmore_btn as 3rd parameter for wp_trim_words(),
 					 * to show Read more button always (even if manual excerpt length < $length)
 					 */
-					$content = $length ? wp_trim_words( $content, $length, '' ) . $readmore_btn : $readmore;
+					$content = $length ? PT_CV_Functions::wp_trim_words( $content, $length ) . $readmore_btn : $readmore;
 
 					// Force balance tags
 					$content = force_balance_tags( strip_shortcodes( $content ) );
