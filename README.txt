@@ -145,6 +145,7 @@ You can create Unlimited Views, in Unlimited websites
 == Changelog ==
 
 = 1.4.5 =
+* Test up to 4.1
 * Improvement: Add shortcode column to All Views page
 * Improvement: Add some css properties to prevent style overwrite problem
 
