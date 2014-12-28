@@ -261,7 +261,7 @@
 				// Remove highlight color
 				setTimeout(function () {
 					$(toggle_id).removeClass(activate_group);
-				}, 3000);
+				}, 2000);
 
 			} else {
 				$('#' + id_prefix + $this.val()).addClass('hidden');

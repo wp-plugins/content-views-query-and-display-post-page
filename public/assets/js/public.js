@@ -156,11 +156,11 @@
 				data      : data,
 				beforeSend: function () {
 					// Show loading icon
-					spinner.toggleClass('active');
+					spinner.addClass('active');
 				}
 			}).done(function (response) {
 					// Hide loading icon
-					spinner.toggleClass('active');
+					spinner.removeClass('active');
 
 					// Update content of Preview box
 					pages_holder.append(response);
