@@ -84,6 +84,10 @@ class PT_Content_Views_Admin {
 		// Filter link of actions in All Views page
 		add_filter( 'post_row_actions', array( $this, 'filter_view_row_actions' ), 10, 2 );
 
+		// Add Shortcode column
+		add_filter( 'manage_pt_view_posts_columns', array( $this, 'filter_view_custom_column_header' ) );
+		add_action( 'manage_pt_view_posts_custom_column', array( $this, 'action_view_custom_column_content' ), 10, 2 );
+
 		// Filter link of Title in All Views page
 		add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
 
@@ -200,7 +204,7 @@ class PT_Content_Views_Admin {
 			// Bootstrap for Admin
 			PT_CV_Asset::enqueue(
 				'bootstrap-admin', 'style', array(
-					'src' => plugins_url( 'assets/bootstrap/css/bootstrap.full.min.css', PT_CV_FILE ),
+					'src' => plugins_url( 'assets/bootstrap/css/bootstrap.admin.css', PT_CV_FILE ),
 				)
 			);
 
@@ -292,10 +296,14 @@ class PT_Content_Views_Admin {
 		/*
 		 * Add a settings page for this plugin to the Settings menu.
 		 */
+		// Get user role settings option
+		$options   = get_option( PT_CV_OPTION_NAME );
+		$user_role = current_user_can( 'administrator' ) ? 'administrator' : ( isset( $options['access_role'] ) ? $options['access_role'] : 'edit_posts' );
+
 		$this->plugin_screen_hook_suffix = add_menu_page(
 			__( 'Content View Settings', $this->plugin_slug ),
 			__( 'Content View Settings', $this->plugin_slug ),
-			'edit_posts',
+			$user_role,
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' ),
 			'',
@@ -306,6 +314,7 @@ class PT_Content_Views_Admin {
 			$this->plugin_slug,
 			__( 'All Content Views', $this->plugin_slug ),
 			__( 'All Views', $this->plugin_slug ),
+			$user_role,
 			'list',
 			__CLASS__
 		);
@@ -314,10 +323,26 @@ class PT_Content_Views_Admin {
 			$this->plugin_slug,
 			__( 'Add New View', $this->plugin_slug ),
 			__( 'Add New', $this->plugin_slug ),
+			$user_role,
 			'add',
 			__CLASS__
 		);
 
+	}
+
+	/**
+	 * Admin custom column content
+	 *
+	 * @param type $column_name
+	 * @param type $post_id
+	 */
+	public function action_view_custom_column_content( $column_name, $post_id ) {
+		if ( $column_name == 'shortcode' ) {
+			// Get View id
+			$view_id = get_post_meta( $post_id, PT_CV_META_ID, true );
+
+			printf( '<input style="width: 250px; background: #ADFFAD;" type="text" value="[pt_view id=&quot;%s&quot;]" onclick="this.select()" readonly="">', $view_id );
+		}
 	}
 
 	/**
@@ -396,6 +421,22 @@ class PT_Content_Views_Admin {
 		$actions = apply_filters( PT_CV_PREFIX_ . 'view_row_actions', $actions, $view_id );
 
 		return $actions;
+	}
+
+	/**
+	 * Modify column in View list page (Admin)
+	 * 
+	 * @param type $defaults
+	 */
+	public function filter_view_custom_column_header( $defaults ) {
+		unset( $defaults['author'] );
+		unset( $defaults['date'] );
+
+		$defaults['shortcode'] = __( 'Shortcode' );
+		$defaults['author'] = __( 'Author' );
+		$defaults['date'] = __( 'Date' );
+
+		return $defaults;
 	}
 
 	/**

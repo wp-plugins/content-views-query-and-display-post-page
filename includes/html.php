@@ -540,8 +540,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Don't wrap link
 			$no_link = apply_filters( PT_CV_PREFIX_ . 'field_href_no_link', 0, $open_in );
 
+			$href = apply_filters( PT_CV_PREFIX_ . 'field_href', get_permalink( $post->ID ) );
+
 			// Change href
-			$href = get_permalink( $post->ID );
 			if ( $no_link && strpos( $defined_class, 'readmore' ) === false ) {
 				$href = 'javascript:void(0)';
 			}

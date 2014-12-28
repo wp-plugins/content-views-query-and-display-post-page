@@ -3,8 +3,8 @@ Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
-Tested up to: 4.0.1
-Stable tag: 1.4.4
+Tested up to: 4.1
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,10 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.4.5 =
+* Improvement: Add shortcode column to All Views page
+* Improvement: Add some css properties to prevent style overwrite problem
 
 = 1.4.4 =
 * Bug fixed: Length of excerpt is wrong if there is filter of other plugin or active theme
