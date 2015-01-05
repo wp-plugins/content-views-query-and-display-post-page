@@ -177,8 +177,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		* @since 1.4.3
 		*/
 		static function wp_trim_words( $text, $num_words = 55 ) {
-			$result = wp_strip_all_tags( $text );
-			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );;
+			$result = self::pt_strip_tags( $text );
+			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );
 
 			//  Already short enough, return the whole thing
 			if ( count( $array ) > $num_words )
@@ -189,8 +189,25 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			// Trim space, dot at the end of string
 			$result = rtrim( $result, '\s.' );
+			// Trim start, end p
+			$result = trim( $result, '<p></p>' );
 
 			return $result;
+		}
+		
+		/**
+		 * Custom strip tags, allow some tags
+		 * 
+		 * @since 1.4.6
+		 * @param string $string
+		 * @return string
+		 */
+		static function pt_strip_tags( $string ) {
+			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
+			# allow some tags
+			$string = strip_tags( $string, '<p><a><br><strong><em><i><ul><ol><li>' );
+
+			return trim( $string );
 		}
 
 		/**

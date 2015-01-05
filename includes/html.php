@@ -499,7 +499,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					// Force balance tags
 					$content = force_balance_tags( strip_shortcodes( $content ) );
 
-					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_final', $content );
+					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_final', $content, $post );
 
 					break;
 
@@ -634,8 +634,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						// Get date wrapper class
 						$date_class  = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'entry-date', 'date' );
 						$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'date' );
+						$date        = apply_filters( PT_CV_PREFIX_ . 'field_meta_date_final', get_the_date(), get_the_time( 'U' ) );
 
-						$html['date'] = sprintf( '<span class="%s">%s <time datetime="%s">%s</time></span>', esc_html( $date_class ), balanceTags( $prefix_text ), esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() ) );
+						$html['date'] = sprintf( '<span class="%s">%s <time datetime="%s">%s</time></span>', esc_html( $date_class ), balanceTags( $prefix_text ), esc_attr( get_the_date( 'c' ) ), esc_html( $date ) );
 						break;
 
 					case 'taxonomy':
