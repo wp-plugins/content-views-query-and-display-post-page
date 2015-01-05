@@ -12,6 +12,10 @@
 .update-nag {
 	display: none;
 }
+.pt-wrap a:focus {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
 
 /* Fix Bootstrap box-sizing "border-box" problem */
 .pt-wrap *,

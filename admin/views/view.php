@@ -244,7 +244,7 @@ $options = array(
 								'std'         => '10',
 								'min'         => '1',
 								'append_text' => '1 &rarr; 999',
-								'desc'        => __( 'The number of posts to show. Leaving it blank to show all found posts (which match all filter settings)', PT_CV_DOMAIN ),
+								'desc'        => __( 'The number of posts to show. Set empty to show all found posts (which match all filter settings)', PT_CV_DOMAIN ),
 							),
 						),
 					),

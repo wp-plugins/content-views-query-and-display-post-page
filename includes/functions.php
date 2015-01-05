@@ -78,14 +78,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @param string $parent_slug Slug of parent menu
 		 * @param string $page_title  Title of page
 		 * @param string $menu_title  Title of menu
+		 * @param string $user_role   Required role to see this menu
 		 * @param string $sub_page    Slug of sub menu
 		 * @param string $class       Class name which contains function to output content of page created by this menu
 		 */
-		static function menu_add_sub( $parent_slug, $page_title, $menu_title, $sub_page, $class ) {
-			// Get user role settings option
-			$options   = get_option( PT_CV_OPTION_NAME );
-			$user_role = current_user_can( 'administrator' ) ? 'administrator' : ( isset( $options['access_role'] ) ? $options['access_role'] : 'edit_posts' );
-
+		static function menu_add_sub( $parent_slug, $page_title, $menu_title, $user_role, $sub_page, $class ) {
 			return add_submenu_page(
 				$parent_slug, $page_title, $menu_title, $user_role, $parent_slug . '-' . $sub_page, array( $class, 'display_sub_page_' . $sub_page )
 			);
@@ -180,8 +177,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		* @since 1.4.3
 		*/
 		static function wp_trim_words( $text, $num_words = 55 ) {
-			$result = wp_strip_all_tags( $text );
-			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );;
+			$result = self::pt_strip_tags( $text );
+			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );
 
 			//  Already short enough, return the whole thing
 			if ( count( $array ) > $num_words )
@@ -190,7 +187,25 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$result = implode( ' ', $array );
 			}
 
+			// Trim space, dot at the end of string
+			$result = rtrim( $result, '\s.' );
+
 			return $result;
+		}
+		
+		/**
+		 * Custom strip tags, allow some tags
+		 * 
+		 * @since 1.4.6
+		 * @param string $string
+		 * @return string
+		 */
+		static function pt_strip_tags( $string ) {
+			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
+			# allow some tags
+			$string = strip_tags( $string, '<a><br><strong><em><i><ul><ol><li>' );
+
+			return trim( $string );
 		}
 
 		/**
