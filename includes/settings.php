@@ -326,7 +326,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 									// Excerpt length
 									array(
 										'label'         => array(
-											'text' => __( 'Excerpt length', PT_CV_DOMAIN ),
+											'text' => __( 'Excerpt settings', PT_CV_DOMAIN ),
 										),
 										'extra_setting' => array(
 											'params' => array(
