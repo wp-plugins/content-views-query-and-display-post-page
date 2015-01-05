@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.4.6
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,8 +144,11 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.4.8 =
+* Bug fixed: Some code appears in excerpt
+
 = 1.4.6 =
-* Improvement: Allow some HTML tags (p, a, br, strong, em, i, ul, ol, li) in excerpt
+* Improvement: Allow some HTML tags (a, br, strong, em, i, ul, ol, li) in excerpt
 * Update: Exclude Views from front-end search results
 
 = 1.4.5 =

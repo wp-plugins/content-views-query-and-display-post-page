@@ -189,8 +189,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			// Trim space, dot at the end of string
 			$result = rtrim( $result, '\s.' );
-			// Trim start, end p
-			$result = trim( $result, '<p></p>' );
 
 			return $result;
 		}
@@ -205,7 +203,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		static function pt_strip_tags( $string ) {
 			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
 			# allow some tags
-			$string = strip_tags( $string, '<p><a><br><strong><em><i><ul><ol><li>' );
+			$string = strip_tags( $string, '<a><br><strong><em><i><ul><ol><li>' );
 
 			return trim( $string );
 		}
