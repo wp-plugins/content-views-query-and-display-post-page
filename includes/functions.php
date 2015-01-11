@@ -202,8 +202,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 */
 		static function pt_strip_tags( $string ) {
 			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
+
 			# allow some tags
-			$string = strip_tags( $string, '<a><br><strong><em><i><ul><ol><li>' );
+			global $dargs;
+			$allowed_tags = ! empty( $dargs['field-settings']['content']['allow_html'] ) ? '<a><br><strong><em><strike><i><ul><ol><li>' : '';
+			$string       = strip_tags( $string, $allowed_tags );
 
 			return trim( $string );
 		}
@@ -556,7 +559,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$pt_view_sid = $session_id = $id ? $id : PT_CV_Functions::string_random();
 
 				// Store settings
-				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 30 * MINUTE_IN_SECONDS );
+				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 7 * DAY_IN_SECONDS );
 			}
 
 			if ( empty( $args ) || empty( $dargs ) ) {
@@ -573,7 +576,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					array(
 						'$args'  => $args,
 						'$dargs' => $dargs,
-					), 30 * MINUTE_IN_SECONDS
+					), 7 * DAY_IN_SECONDS
 				);
 			}
 

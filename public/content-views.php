@@ -265,9 +265,7 @@ class PT_Content_Views {
 
 		$args = array(
 			'labels'             => $labels,
-			'public'             => true,
-			'publicly_queryable' => true,
-			'exclude_from_search' => true, #exclude posts with this post type from front end search results
+			'public'             => false,
 
 			// Hide in menu, but can see All Views page
 			'show_ui'            => false,

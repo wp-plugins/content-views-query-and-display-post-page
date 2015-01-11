@@ -344,6 +344,28 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 											),
 										),
 									),
+									
+									// Allow HTML tags
+									array(
+										'label'         => array(
+											'text' => '',
+										),
+										'extra_setting' => array(
+											'params' => array(
+												'wrap-class' => PT_CV_PREFIX . 'full-fields',
+												'width'      => 9,
+											),
+										),
+										'params'        => array(
+											array(
+												'type'    => 'checkbox',
+												'name'    => $prefix . 'excerpt-allow_html',
+												'options' => PT_CV_Values::yes_no( 'yes', __( 'Allow HTML tags (a, br, strong, em, strike, i, ul, ol, li) in excerpt', PT_CV_DOMAIN ) ),
+												'std'     => '',
+												'desc'    => __( 'This option can cause broken HTML output. Please be careful when check it', PT_CV_DOMAIN ),
+											),
+										),
+									),
 								),
 								$prefix . 'excerpt-'
 							),

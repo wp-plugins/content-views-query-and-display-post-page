@@ -124,11 +124,11 @@
 	margin: 0 auto !important;
 }
 
-.pagination > li {
+.pt-cv-view + .pagination > li {
 	background: none !important;
 }
 
-.pagination > li > a {
+.pt-cv-view + .pagination > li > a {
 	cursor: pointer;
 }
 
