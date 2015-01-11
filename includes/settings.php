@@ -326,7 +326,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 									// Excerpt length
 									array(
 										'label'         => array(
-											'text' => __( 'Excerpt length', PT_CV_DOMAIN ),
+											'text' => __( 'Excerpt settings', PT_CV_DOMAIN ),
 										),
 										'extra_setting' => array(
 											'params' => array(
@@ -341,6 +341,28 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 												'placeholder' => 'e.g. 20',
 												'append_text' => 'words',
 												'desc'        => __( 'Generating excerpt by selecting the first X words of the content', PT_CV_DOMAIN ),
+											),
+										),
+									),
+									
+									// Allow HTML tags
+									array(
+										'label'         => array(
+											'text' => '',
+										),
+										'extra_setting' => array(
+											'params' => array(
+												'wrap-class' => PT_CV_PREFIX . 'full-fields',
+												'width'      => 9,
+											),
+										),
+										'params'        => array(
+											array(
+												'type'    => 'checkbox',
+												'name'    => $prefix . 'excerpt-allow_html',
+												'options' => PT_CV_Values::yes_no( 'yes', __( 'Allow HTML tags (a, br, strong, em, strike, i, ul, ol, li) in excerpt', PT_CV_DOMAIN ) ),
+												'std'     => '',
+												'desc'    => __( 'This option can cause broken HTML output. Please be careful when check it', PT_CV_DOMAIN ),
 											),
 										),
 									),
