@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.4.9
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,10 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.5.0 =
+* New feature: Able to use Normal pagination (without Ajax)
+* Update: Add filter allows to customize labels for pagination
 
 = 1.4.9 =
 * Update: Able to check/uncheck to allow HTML tags in excerpt (to preventing broken HTML output)

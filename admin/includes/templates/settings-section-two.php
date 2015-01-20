@@ -1,11 +1,13 @@
-<hr>
-
 <style>
 	#pt-cv-features {padding-right: 0; margin-bottom: 30px;}
 	#pt-cv-features * {font-size: 14px;}
 	#pt-cv-features h3 {font-size: 18px;}
 	#pt-cv-features .col-md-6 {padding: 0;}	
 </style>
+
+<h3>&DoubleRightArrow; <a style="font-size: 18px;" href="http://www.contentviewspro.com/docs/?utm_source=settings_page" target="_blank">Content Views Documentation</a></h3>
+
+<hr>
 
 <h2>Want more powerful features?</h2>
 
@@ -40,14 +42,14 @@
 		</div>
 	</div>
 	
-	<a style="font-size: 18px;" href="http://sample.contentviewspro.com/?utm_source=client&utm_medium=view" target="_blank">See all features</a>
+	<h3>&raquo; <a style="font-size: 18px;" href="http://sample.contentviewspro.com/?utm_source=settings_page" target="_blank">See all features</a></h3>
 	<br>
 </div>
 
 <p style="margin-top: 20px;">
-	<a href="http://www.contentviewspro.com/pricing/?utm_source=settings_page&utm_medium=link&utm_campaign=content-views" target="_blank" class="btn btn-success">Upgrade now</a>
+	<a href="http://www.contentviewspro.com/pricing/?utm_source=settings_page" target="_blank" class="btn btn-success">Upgrade now</a>
 	or
-	<a href="http://sample.contentviewspro.com/?utm_source=client&utm_medium=view" target="_blank" class="btn btn-info">Check demo site</a>
+	<a href="http://sample.contentviewspro.com/?utm_source=settings_page" target="_blank" class="btn btn-info">Check demo site</a>
 </p>
 
 <hr>

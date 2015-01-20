@@ -157,6 +157,21 @@
 	margin-bottom: 50px;
 }
 
+.pt-cv-pagination-wrapper {
+	clear: both;
+	position: relative;
+}
+
+.pt-cv-pagination.pagination {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	margin-left: 0;
+}
+
+.pt-cv-pagination li.active a {
+	border-color: rgba(66, 139, 202, 0.2) !important;
+}
+
 /* View type : Collapsible List */
 .pt-cv-collapsible .panel-heading {
 	padding: 0;

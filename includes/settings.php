@@ -166,18 +166,53 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),
 				),
-
-				// Pagination Style
+				
+				// Pagination Type
 				array(
 					'label'      => array(
-						'text' => __( 'Pagination style', PT_CV_DOMAIN ),
+						'text' => __( 'Pagination type', PT_CV_DOMAIN ),
 					),
 					'params'     => array(
 						array(
 							'type'    => 'radio',
-							'name'    => $prefix . 'style',
-							'options' => PT_CV_Values::pagination_styles(),
-							'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::pagination_styles() ),
+							'name'    => $prefix . 'type',
+							'options' => PT_CV_Values::pagination_types(),
+							'std'     => 'ajax',
+						),
+					),
+					'dependence' => array( 'enable-pagination', 'yes' ),
+				),
+
+				// Pagination Style
+				array(
+					'label'  => array(
+						'text' => '',
+					),
+					'extra_setting' => array(
+						'params' => array(
+							'width'      => 12,
+						),
+					),
+					'params' => array(
+						array(
+							'type'   => 'group',
+							'params' => array(
+								array(
+									'label'      => array(
+										'text' => __( 'Pagination style', PT_CV_DOMAIN ),
+									),
+									'params'     => array(
+										array(
+											'type'    => 'radio',
+											'name'    => $prefix . 'style',
+											'options' => PT_CV_Values::pagination_styles(),
+											'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::pagination_styles() ),
+											'desc'    => __( 'Output style for Ajax pagination', PT_CV_DOMAIN ),
+										),
+									),
+									'dependence' => array( $prefix . 'type', 'normal', '!=' ),
+								),
+							),
 						),
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),
@@ -249,7 +284,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				),
 
 				// Upgrade to Pro
-				apply_filters( PT_CV_PREFIX_ . 'upgrade_to_pro_text', array(
+				! get_option( 'pt_cv_version_pro' ) ? array(
 					'label'         => array(
 						'text' => '',
 					),
@@ -264,7 +299,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 							'content' => sprintf( '<p class="text-muted" style="margin-top: -10px; margin-bottom: 15px;">&rarr; %s</p>', __( 'Customize display order of above fields by a simple drag-and-drop ?', PT_CV_DOMAIN ) . sprintf( ' <a href="%s" target="_blank">%s</a>', esc_url( 'http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view' ), __( 'Please upgrade to Pro', PT_CV_DOMAIN ) ) ),
 						),
 					),
-				) ),
+				) : '',
 
 				// Title settings
 				apply_filters( PT_CV_PREFIX_ . 'settings_title_display', array(), $prefix, $prefix2 ),

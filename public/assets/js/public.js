@@ -50,7 +50,7 @@
 			var _prefix = PT_CV_PUBLIC._prefix;
 
 			// Bootstrap paginator
-			$('.' + _prefix + 'pagination').each(function () {
+			$('.' + _prefix + 'pagination.' + _prefix + 'ajax').each(function () {
 				var this_ = $(this);
 				var total_pages = $(this).attr('data-totalpages');
 				$(this).bootstrapPaginator({

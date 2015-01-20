@@ -197,6 +197,22 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		}
 
 		/**
+		 * Paging types
+		 *
+		 * @return array
+		 */
+		static function pagination_types() {
+			$result = array(				
+				'ajax'   => __( 'Ajax', PT_CV_DOMAIN ),
+				'normal' => __( 'Normal', PT_CV_DOMAIN ),
+			);
+
+			$result = apply_filters( PT_CV_PREFIX_ . 'pagination_types', $result );
+
+			return $result;
+		}
+		
+		/**
 		 * Paging styles
 		 *
 		 * @return array
