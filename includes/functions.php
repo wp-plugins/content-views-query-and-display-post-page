@@ -1207,6 +1207,26 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		}
 		
 		/**
+		 * Generate pagination button for each page
+		 * @param string $class     Class name
+		 * @param string $this_page Page number
+		 * @param string $label     Page label
+		 */
+		static function pagination_generate_link( $class, $this_page, $label = '' ) {
+			$data_page = '';
+
+			if ( ! $label ) {
+				$label = $this_page;
+				$data_page = sprintf( ' data-page="%s"', $this_page );
+			}
+
+			$html  = sprintf( '<a%s href="%s">%s</a>', $data_page, add_query_arg( 'vpage', $this_page ), $label );
+			$class = $class ? sprintf( ' class="%s"', esc_attr( $class ) ) : '';
+
+			return sprintf( '<li%s>%s</li>', $class, $html );
+		}
+
+		/**
 		 * Pagination output
 		 * 
 		 * @param int $total_pages   Total pages
@@ -1231,44 +1251,29 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$end   = ( ( $current_page + $pages_to_show ) < $total_pages ) ? $current_page + $pages_to_show : $total_pages;
 
 			$html  = '';
-			
-			// Generate pagination button for each page
-			$link_output = function( $class, $this_page, $label = '' ) {
-				$data_page = '';
-
-				if ( ! $label ) {
-					$label = $this_page;
-					$data_page = sprintf( ' data-page="%s"', $this_page );
-				}
-
-				$html  = sprintf( '<a%s href="%s">%s</a>', $data_page, add_query_arg( 'vpage', $this_page ), $label );
-				$class = $class ? sprintf( ' class="%s"', esc_attr( $class ) ) : '';
-				
-				return sprintf( '<li%s>%s</li>', $class, $html );
-			};
 
 			$compared_page = 1;
 			// First
 			if ( $start > $compared_page ) {
-				$html .= $link_output( '', $compared_page, $labels['first'] );				
+				$html .= self::pagination_generate_link( '', $compared_page, $labels['first'] );				
 			}
 			// Prev
 			if ( $current_page > $compared_page ) {
-				$html  .= $link_output( '', $current_page - 1, $labels['prev'] );
+				$html  .= self::pagination_generate_link( '', $current_page - 1, $labels['prev'] );
 			}
 			
 			for ( $i = $start ; $i <= $end; $i++ ) {
-				$html .= $link_output( ( $current_page == $i ) ? 'active' : '', $i );
+				$html .= self::pagination_generate_link( ( $current_page == $i ) ? 'active' : '', $i );
 			}
 
 			$compared_page = $total_pages;
 			// Next
 			if ( $current_page < $total_pages ) {
-				$html  .= $link_output( '', $current_page + 1, $labels['next'] );
+				$html  .= self::pagination_generate_link( '', $current_page + 1, $labels['next'] );
 			}
 			// Last
 			if ( $end < $compared_page ) {
-				$html .= $link_output( '', $compared_page, $labels['last'] );
+				$html .= self::pagination_generate_link( '', $compared_page, $labels['last'] );
 			}
 			
 			return $html;
