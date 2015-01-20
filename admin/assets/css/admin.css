@@ -12,6 +12,10 @@
 .update-nag {
 	display: none;
 }
+.pt-wrap a:focus {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
 
 /* Fix Bootstrap box-sizing "border-box" problem */
 .pt-wrap *,
@@ -89,6 +93,10 @@ html {
 
 .pt-cv-color {
 	width: 100px !important;
+}
+
+.pt-cv-full-fields .checkbox {
+	width: 100% !important;
 }
 
 /* Group type */

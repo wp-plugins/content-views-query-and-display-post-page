@@ -3,8 +3,8 @@ Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
-Tested up to: 4.0.1
-Stable tag: 1.4.4
+Tested up to: 4.1
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,25 @@ You can create Unlimited Views, in Unlimited websites
 
 
 == Changelog ==
+
+= 1.5.0 =
+* New feature: Able to use Normal pagination (without Ajax)
+* Update: Add filter allows to customize labels for pagination
+
+= 1.4.9 =
+* Update: Able to check/uncheck to allow HTML tags in excerpt (to preventing broken HTML output)
+
+= 1.4.8 =
+* Bug fixed: Some code appears in excerpt
+
+= 1.4.6 =
+* Improvement: Allow some HTML tags (a, br, strong, em, strike, i, ul, ol, li) in excerpt
+* Update: Exclude Views from front-end search results
+
+= 1.4.5 =
+* Test up to 4.1
+* Improvement: Add shortcode column to All Views page
+* Improvement: Add some css properties to prevent style overwrite problem
 
 = 1.4.4 =
 * Bug fixed: Length of excerpt is wrong if there is filter of other plugin or active theme

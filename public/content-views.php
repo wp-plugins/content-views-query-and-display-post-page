@@ -265,8 +265,7 @@ class PT_Content_Views {
 
 		$args = array(
 			'labels'             => $labels,
-			'public'             => true,
-			'publicly_queryable' => true,
+			'public'             => false,
 
 			// Hide in menu, but can see All Views page
 			'show_ui'            => false,

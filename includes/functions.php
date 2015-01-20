@@ -78,14 +78,11 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @param string $parent_slug Slug of parent menu
 		 * @param string $page_title  Title of page
 		 * @param string $menu_title  Title of menu
+		 * @param string $user_role   Required role to see this menu
 		 * @param string $sub_page    Slug of sub menu
 		 * @param string $class       Class name which contains function to output content of page created by this menu
 		 */
-		static function menu_add_sub( $parent_slug, $page_title, $menu_title, $sub_page, $class ) {
-			// Get user role settings option
-			$options   = get_option( PT_CV_OPTION_NAME );
-			$user_role = current_user_can( 'administrator' ) ? 'administrator' : ( isset( $options['access_role'] ) ? $options['access_role'] : 'edit_posts' );
-
+		static function menu_add_sub( $parent_slug, $page_title, $menu_title, $user_role, $sub_page, $class ) {
 			return add_submenu_page(
 				$parent_slug, $page_title, $menu_title, $user_role, $parent_slug . '-' . $sub_page, array( $class, 'display_sub_page_' . $sub_page )
 			);
@@ -180,8 +177,8 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		* @since 1.4.3
 		*/
 		static function wp_trim_words( $text, $num_words = 55 ) {
-			$result = wp_strip_all_tags( $text );
-			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );;
+			$result = self::pt_strip_tags( $text );
+			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );
 
 			//  Already short enough, return the whole thing
 			if ( count( $array ) > $num_words )
@@ -190,7 +187,28 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$result = implode( ' ', $array );
 			}
 
+			// Trim space, dot at the end of string
+			$result = rtrim( $result, '\s.' );
+
 			return $result;
+		}
+		
+		/**
+		 * Custom strip tags, allow some tags
+		 * 
+		 * @since 1.4.6
+		 * @param string $string
+		 * @return string
+		 */
+		static function pt_strip_tags( $string ) {
+			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
+
+			# allow some tags
+			global $dargs;
+			$allowed_tags = ! empty( $dargs['field-settings']['content']['allow_html'] ) ? '<a><br><strong><em><strike><i><ul><ol><li>' : '';
+			$string       = strip_tags( $string, $allowed_tags );
+
+			return trim( $string );
 		}
 
 		/**
@@ -417,7 +435,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function array_get_first_key( $args ) {
-			return current( array_keys( $args ) );
+			return current( array_keys( (array) $args ) );
 		}
 
 		/**
@@ -541,7 +559,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$pt_view_sid = $session_id = $id ? $id : PT_CV_Functions::string_random();
 
 				// Store settings
-				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 30 * MINUTE_IN_SECONDS );
+				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 7 * DAY_IN_SECONDS );
 			}
 
 			if ( empty( $args ) || empty( $dargs ) ) {
@@ -558,7 +576,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 					array(
 						'$args'  => $args,
 						'$dargs' => $dargs,
-					), 30 * MINUTE_IN_SECONDS
+					), 7 * DAY_IN_SECONDS
 				);
 			}
 
@@ -624,11 +642,12 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			/**
 			 * Output Pagination
 			 */
-			$current_page = ( isset( $pargs['page'] ) && $pargs['page'] > 1 ) ? $pargs['page'] : 1;
+			$current_page = self::get_current_page( $pargs );
 			$html         = PT_CV_Html::content_items_wrap( $content_items, $current_page, $args['posts_per_page'], $id );
 
 			// Append Pagination HTML if this is first page, or not Ajax calling
-			if ( $args['posts_per_page'] > 0 && $current_page === 1 ) {
+			$type  = isset( $dargs['pagination-settings']['type'] ) ? $dargs['pagination-settings']['type'] : 'ajax';
+			if ( $args['posts_per_page'] > 0 && ( ( $type == 'ajax' && $current_page === 1 ) || $type == 'normal' ) ) {
 				// Total post founds
 				$found_posts = apply_filters( PT_CV_PREFIX_ . 'found_posts', $pt_query->found_posts );
 
@@ -639,7 +658,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$max_num_pages = ceil( $total_items / $args['posts_per_page'] );
 
 				// Output pagination
-				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $session_id );
+				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $current_page, $session_id );
 			}
 
 			return $html;
@@ -969,13 +988,13 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$args['posts_per_page'] = $posts_per_page;
 
 				// Get offset
-				if ( isset( $pargs['page'] ) ) {
-					$offset = $posts_per_page * ( (int) $pargs['page'] - 1 );
+				$paged = self::get_current_page( $pargs );
+					
+				$offset = $posts_per_page * ( (int) $paged - 1 );
 
-					// Update posts_per_page
-					if ( intval( $args['posts_per_page'] ) > $limit - $offset ) {
-						$args['posts_per_page'] = $limit - $offset;
-					}
+				// Update posts_per_page
+				if ( intval( $args['posts_per_page'] ) > $limit - $offset ) {
+					$args['posts_per_page'] = $limit - $offset;
 				}
 			}
 
@@ -1185,6 +1204,91 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				</div>
 			<?php
 			}
+		}
+		
+		/**
+		 * Pagination output
+		 * 
+		 * @param int $total_pages   Total pages
+		 * @param int $current_page  Current page number
+		 * @param int $pages_to_show Number of page to show
+		 */
+		static function pagination( $total_pages, $current_page = 1, $pages_to_show = 4 ) {
+			if ( $total_pages == 1 )
+				return '';
+			
+			$pages_to_show = apply_filters( PT_CV_PREFIX_ . 'pages_to_show', $pages_to_show );
+			
+			// Define labels
+			$labels = apply_filters( PT_CV_PREFIX_ . 'pagination_label', array(
+				'prev'  => '&lsaquo;',
+				'next'  => '&rsaquo;',
+				'first' => '&laquo;',
+				'last'  => '&raquo;',
+			) );
+			
+			$start = ( ( $current_page - $pages_to_show ) > 0 ) ? $current_page - $pages_to_show : 1;
+			$end   = ( ( $current_page + $pages_to_show ) < $total_pages ) ? $current_page + $pages_to_show : $total_pages;
+
+			$html  = '';
+			
+			// Generate pagination button for each page
+			$link_output = function( $class, $this_page, $label = '' ) {
+				$data_page = '';
+
+				if ( ! $label ) {
+					$label = $this_page;
+					$data_page = sprintf( ' data-page="%s"', $this_page );
+				}
+
+				$html  = sprintf( '<a%s href="%s">%s</a>', $data_page, add_query_arg( 'vpage', $this_page ), $label );
+				$class = $class ? sprintf( ' class="%s"', esc_attr( $class ) ) : '';
+				
+				return sprintf( '<li%s>%s</li>', $class, $html );
+			};
+
+			$compared_page = 1;
+			// First
+			if ( $start > $compared_page ) {
+				$html .= $link_output( '', $compared_page, $labels['first'] );				
+			}
+			// Prev
+			if ( $current_page > $compared_page ) {
+				$html  .= $link_output( '', $current_page - 1, $labels['prev'] );
+			}
+			
+			for ( $i = $start ; $i <= $end; $i++ ) {
+				$html .= $link_output( ( $current_page == $i ) ? 'active' : '', $i );
+			}
+
+			$compared_page = $total_pages;
+			// Next
+			if ( $current_page < $total_pages ) {
+				$html  .= $link_output( '', $current_page + 1, $labels['next'] );
+			}
+			// Last
+			if ( $end < $compared_page ) {
+				$html .= $link_output( '', $compared_page, $labels['last'] );
+			}
+			
+			return $html;
+		}
+		
+		/**
+		 * Get current page number
+		 */
+		static function get_current_page( $pargs ) {
+			$paged = 1;
+			
+			if ( ! empty( $pargs['page'] ) ) {
+				$paged = intval( $pargs['page'] );
+			}
+			
+			if ( ! empty( $_GET['vpage'] ) ) {
+				$paged = intval( $_GET['vpage'] );
+			}
+			
+			return $paged;
 		}
 
 	}
