@@ -478,27 +478,35 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			switch ( $fargs['content']['show'] ) {
 				case 'excerpt':
 					$length       = (int) $fargs['content']['length'];
-					$readmore     = '';
-					$readmore_btn = apply_filters( PT_CV_PREFIX_ . 'field_excerpt_dots', 1, $fargs ) ? ' ...' : '';
+					$readmore_btn = '';
+					$dots         = ' ...';
+					$readmore_html = apply_filters( PT_CV_PREFIX_ . 'field_excerpt_dots', 1, $fargs ) ? $dots : '';
 
 					// Read more button
 					if ( apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_enable', 1, $fargs['content'] ) ) {
 						$text = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
-						$readmore .= self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore' . ' btn btn-success btn-sm' );
-						$readmore_btn .= '<br/>' . $readmore;
+						$btn_class = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_class', 'btn btn-success btn-sm', $fargs );
+						$readmore_btn .= self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore ' . $btn_class );
+						$readmore_html .= apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_seperated', '<br/>', $fargs ) . $readmore_btn;
 					}
 
-					// Filter content
-					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_result', get_the_content(), $fargs, $post );
+					// Get excerpt
+					if ( $length > 0 ) {
+						// Extract excerpt from content
+						$excerpt = PT_CV_Functions::wp_trim_words( get_the_content(), $length );
+						// Get manual excerpt
+						$excerpt = apply_filters( PT_CV_PREFIX_ . 'field_content_excerpt', $excerpt, $fargs, $post );
+						// Append readmore button
+						$content = $excerpt . $readmore_html;
+					} else {
+						// Display only readmore button if length <= 0
+						$content = $readmore_btn;
+					}
 
-					/*
-					 * Trim some words (in both case: auto generate & get manual excerpt), or show only button (if length = 0)
-					 * Don't set $readmore_btn as 3rd parameter for wp_trim_words(),
-					 * to show Read more button always (even if manual excerpt length < $length)
-					 */
-					$content = $length ? PT_CV_Functions::wp_trim_words( $content, $length ) . $readmore_btn : $readmore;
+					// Trim period which precedes dots
+					$content = str_replace( '.' . $dots, $dots, $content );
 
-					// Force balance tags
+					// Force balance tags & strip all shortcodes
 					$content = force_balance_tags( strip_shortcodes( $content ) );
 
 					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_final', $content, $post );
@@ -782,33 +790,39 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			}
 			$did_assets_of_view_types[$pt_view_sid] = 1;
 
-			$assets        = array( 'css', 'js' );
-			$assets_output = $assets_files = array();
+			// Get settings option
+			$options = get_option( PT_CV_OPTION_NAME );
 
-			// Get content of asset files in directory of view type
-			foreach ( self::$view_type_dir as $idx => $view_type_dir ) {
-				// Get selected style of current view type
-				$style = self::$style[$idx];
+			// Print inline view styles & scripts
+			if ( apply_filters( PT_CV_PREFIX_ . 'assets_verbose_loading', 1 ) ) {
+				$assets        = array( 'css', 'js' );
+				$assets_output = $assets_files = array();
 
-				// With each type of asset (css, js), looking for suit file of selected style
-				foreach ( $assets as $type ) {
-					$file_path = $view_type_dir . '/' . $type . '/' . $style . '.' . $type;
-					$content   = PT_CV_Functions::file_include_content( $file_path );
-					if ( $content ) {
-						$assets_output[$type][] = $content;
+				// Get content of asset files in directory of view type
+				foreach ( self::$view_type_dir as $idx => $view_type_dir ) {
+					// Get selected style of current view type
+					$style = self::$style[$idx];
+
+					// With each type of asset (css, js), looking for suit file of selected style
+					foreach ( $assets as $type ) {
+						$file_path = $view_type_dir . '/' . $type . '/' . $style . '.' . $type;
+						$content   = PT_CV_Functions::file_include_content( $file_path );
+						if ( $content ) {
+							$assets_output[$type][] = $content;
+						}
 					}
 				}
-			}
 
-			// Echo script, style inline
-			if ( $assets_output ) {
-				foreach ( $assets_output as $type => $contents ) {
-					$content = implode( "\n", $contents );
+				// Echo script, style inline
+				if ( $assets_output ) {
+					foreach ( $assets_output as $type => $contents ) {
+						$content = implode( "\n", $contents );
 
-					if ( $type == 'js' ) {
-						echo '' . self::inline_script( $content, false );
-					} else {
-						echo '' . self::inline_style( $content );
+						if ( $type == 'js' ) {
+							echo '' . self::inline_script( $content, false );
+						} else {
+							echo '' . self::inline_style( $content );
+						}
 					}
 				}
 			}
@@ -838,7 +852,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			}
 
 			// Output custom inline style for Views
-			do_action( PT_CV_PREFIX_ . 'print_view_style' );
+			if ( apply_filters( PT_CV_PREFIX_ . 'output_view_style', 1 ) ) {
+				do_action( PT_CV_PREFIX_ . 'print_view_style' );
+			}
 		}
 
 		/**
@@ -874,11 +890,12 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					'is_mobile' => wp_is_mobile(),
 					'_prefix'   => PT_CV_PREFIX,
 					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
-					'lang'      => PT_CV_Functions::get_language(),
 					'_nonce'    => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
+					'lang'      => PT_CV_Functions::get_language(), #Get current language of site
+					'move_bootstrap' => apply_filters( PT_CV_PREFIX_ . 'move_bootstrap', 1 ), #Should I move Bootstrap to top of all styles
 				)
 			);
-			
+
 			// Localize for Pagination script
 			PT_CV_Asset::localize_script(
 				'bootstrap-paginator', PT_CV_PREFIX_UPPER . 'PAGINATION', array(
@@ -970,9 +987,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 			ob_start();
 			?>
-			<style type="text/css" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-style-' . $random_id ); ?>">
-				<?php echo '' . $css; ?>
-			</style>
+			<style type="text/css" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-style-' . $random_id ); ?>"><?php echo '' . $css; ?></style>
 			<?php
 			return ob_get_clean();
 		}

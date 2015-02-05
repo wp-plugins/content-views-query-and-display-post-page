@@ -49,7 +49,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 								'name'     => $taxonomy_slug . '-terms[]',
 								'options'  => $terms,
 								'std'      => '',
-								'class'    => 'select2',
+								'class'    => apply_filters( PT_CV_PREFIX_ . 'select_term_class', 'select2' ),
 								'multiple' => '1',
 							),
 						),

@@ -166,7 +166,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function string_slug_to_text( $slug ) {
-			$slug = preg_replace( '/[^a-z]+/', ' ', $slug );
+			$slug = preg_replace( '/[^a-zA-Z]+/', ' ', $slug );
 
 			return ucwords( $slug );
 		}
@@ -187,15 +187,12 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$result = implode( ' ', $array );
 			}
 
-			// Trim space, dot at the end of string
-			$result = rtrim( $result, '\s.' );
-
 			return $result;
 		}
-		
+
 		/**
 		 * Custom strip tags, allow some tags
-		 * 
+		 *
 		 * @since 1.4.6
 		 * @param string $string
 		 * @return string
@@ -989,7 +986,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 				// Get offset
 				$paged = self::get_current_page( $pargs );
-					
+
 				$offset = $posts_per_page * ( (int) $paged - 1 );
 
 				// Update posts_per_page
@@ -1205,7 +1202,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			<?php
 			}
 		}
-		
+
 		/**
 		 * Generate pagination button for each page
 		 * @param string $class     Class name
@@ -1228,7 +1225,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 		/**
 		 * Pagination output
-		 * 
+		 *
 		 * @param int $total_pages   Total pages
 		 * @param int $current_page  Current page number
 		 * @param int $pages_to_show Number of page to show
@@ -1236,9 +1233,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		static function pagination( $total_pages, $current_page = 1, $pages_to_show = 4 ) {
 			if ( $total_pages == 1 )
 				return '';
-			
+
 			$pages_to_show = apply_filters( PT_CV_PREFIX_ . 'pages_to_show', $pages_to_show );
-			
+
 			// Define labels
 			$labels = apply_filters( PT_CV_PREFIX_ . 'pagination_label', array(
 				'prev'  => '&lsaquo;',
@@ -1246,7 +1243,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				'first' => '&laquo;',
 				'last'  => '&raquo;',
 			) );
-			
+
 			$start = ( ( $current_page - $pages_to_show ) > 0 ) ? $current_page - $pages_to_show : 1;
 			$end   = ( ( $current_page + $pages_to_show ) < $total_pages ) ? $current_page + $pages_to_show : $total_pages;
 
@@ -1255,13 +1252,13 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			$compared_page = 1;
 			// First
 			if ( $start > $compared_page ) {
-				$html .= self::pagination_generate_link( '', $compared_page, $labels['first'] );				
+				$html .= self::pagination_generate_link( '', $compared_page, $labels['first'] );
 			}
 			// Prev
 			if ( $current_page > $compared_page ) {
 				$html  .= self::pagination_generate_link( '', $current_page - 1, $labels['prev'] );
 			}
-			
+
 			for ( $i = $start ; $i <= $end; $i++ ) {
 				$html .= self::pagination_generate_link( ( $current_page == $i ) ? 'active' : '', $i );
 			}
@@ -1275,24 +1272,24 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			if ( $end < $compared_page ) {
 				$html .= self::pagination_generate_link( '', $compared_page, $labels['last'] );
 			}
-			
+
 			return $html;
 		}
-		
+
 		/**
 		 * Get current page number
 		 */
 		static function get_current_page( $pargs ) {
 			$paged = 1;
-			
+
 			if ( ! empty( $pargs['page'] ) ) {
 				$paged = intval( $pargs['page'] );
 			}
-			
+
 			if ( ! empty( $_GET['vpage'] ) ) {
 				$paged = intval( $_GET['vpage'] );
 			}
-			
+
 			return $paged;
 		}
 

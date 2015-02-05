@@ -213,7 +213,7 @@ $options = array(
 							),
 						),
 					),
-					
+
 					apply_filters( PT_CV_PREFIX_ . 'exclude_extra_settings', array() ),
 
 					// Parent page

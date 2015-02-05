@@ -248,6 +248,7 @@ class PT_Content_Views_Admin {
 			// Localize strings
 			PT_CV_Asset::localize_script(
 				'admin', PT_CV_PREFIX_UPPER . 'ADMIN', array(
+					'supported_version' => PT_CV_Functions::wp_version_compare( '3.5' ),
 					'text' => array(
 						'no_taxonomy'        => __( 'There is no taxonomy for selected content type', PT_CV_DOMAIN ),
 						'pagination_disable' => __( 'Pagination is disabled when Limit = -1', PT_CV_DOMAIN ),

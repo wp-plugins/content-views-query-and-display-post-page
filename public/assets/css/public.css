@@ -88,11 +88,11 @@
 }
 
 .pt-cv-thumbnail.pull-left {
-	margin-right: 10px;
+	margin-right: 20px;
 }
 
 .pt-cv-thumbnail.pull-right {
-	margin-left: 10px;
+	margin-left: 20px;
 }
 
 .pt-cv-no-image {
@@ -103,6 +103,7 @@
 /* Content */
 .pt-cv-content, .pt-cv-content * {
 	font-size:   14px;
+	font-weight: 400;
 	zoom:        1;
 	line-height: 1.6em;
 }
