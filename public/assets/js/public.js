@@ -33,6 +33,10 @@
 		 * @returns {undefined}
 		 */
 		move_bootstrap_to_top: function () {
+			if ( PT_CV_PUBLIC.move_bootstrap === 0 ) {
+				return;
+			}
+
 			var _prefix = PT_CV_PUBLIC._prefix;
 
 			var selector = _prefix + 'bootstrap-style-css';
@@ -50,7 +54,7 @@
 			var _prefix = PT_CV_PUBLIC._prefix;
 
 			// Bootstrap paginator
-			$('.' + _prefix + 'pagination').each(function () {
+			$('.' + _prefix + 'pagination.' + _prefix + 'ajax').each(function () {
 				var this_ = $(this);
 				var total_pages = $(this).attr('data-totalpages');
 				$(this).bootstrapPaginator({
@@ -156,11 +160,11 @@
 				data      : data,
 				beforeSend: function () {
 					// Show loading icon
-					spinner.toggleClass('active');
+					spinner.addClass('active');
 				}
 			}).done(function (response) {
 					// Hide loading icon
-					spinner.toggleClass('active');
+					spinner.removeClass('active');
 
 					// Update content of Preview box
 					pages_holder.append(response);

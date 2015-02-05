@@ -175,7 +175,7 @@
 				}
 					break;
 				default :
-					if (typeof expect_val !== 'array')
+					if (typeof expect_val !== 'object')
 						pass = eval("this_val " + operator + " expect_val");
 					break;
 
@@ -261,7 +261,7 @@
 				// Remove highlight color
 				setTimeout(function () {
 					$(toggle_id).removeClass(activate_group);
-				}, 3000);
+				}, 2000);
 
 			} else {
 				$('#' + id_prefix + $this.val()).addClass('hidden');
@@ -609,9 +609,6 @@
 
 			// Toggle panel of 'Advanced filters'
 			$self._toggle_panel('.' + _prefix + 'group .panel-heading');
-
-			// Color picker
-			$('.' + _prefix + 'color').wpColorPicker();
 
 			// 'Thumbnail settings' toggle
 			$self._thumbnail_settings();

@@ -3,8 +3,8 @@ Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
-Tested up to: 4.0.1
-Stable tag: 1.4.4
+Tested up to: 4.1
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,7 +108,7 @@ Just give a try (30 day money back guarantee), then you will know how it is awes
 
 = How can I start? =
 
-In left menu of your Admin dashboard, click Content View Settings > Add View
+In left menu of your Admin dashboard, click 'Content View Settings > Add View'
 
 = What is 'View'? =
 
@@ -116,20 +116,30 @@ In left menu of your Admin dashboard, click Content View Settings > Add View
 
 = How can I see all my Views? =
 
-In left menu of your Admin dashboard, click Content View Settings > All Views
+In left menu of your Admin dashboard, click 'Content View Settings > All Views'
 
 = How can I edit a View? =
 
 Firstly, you should go to "All Views" page (please check above question).
-If you have View ID or View title, paste it to the text field beside of "Search Views" button then click that button.
-Then click on Title of View you want to edit.
+If you have View ID or View title, paste it to text field beside "Search Views" button then click the button to search.
+After that, click on Title of View you want to edit.
 You will be forwarded to editing page of View.
 
 = How many Views I can create? =
 
 You can create Unlimited Views, in Unlimited websites
 
+= [BUG] When I minify CSS with W3TC plugin, Bootstrap style has "undefined" href. How to fix it? =
 
+Please add this code to file **functions.php** of your theme
+`
+// CV plugin - Fix Bootstrap undefined error
+add_filter( 'pt_cv_move_bootstrap', 'my_move_bootstrap' );
+function my_move_bootstrap( $args ) {
+	$args = 0;
+	return $args;
+}
+`
 
 == Screenshots ==
 
@@ -144,8 +154,31 @@ You can create Unlimited Views, in Unlimited websites
 
 == Changelog ==
 
+= 1.5.1 =
+* Bug fixed: Javascript error in WordPress version 3.4
+* Improvement: Code & description clearance
+
+= 1.5.0 =
+* New feature: Able to use Normal pagination (without Ajax)
+* Update: Add filter allows to customize labels for pagination
+
+= 1.4.9 =
+* Update: Able to check/uncheck to allow HTML tags in excerpt (to preventing broken HTML output)
+
+= 1.4.8 =
+* Bug fixed: Some code appears in excerpt
+
+= 1.4.6 =
+* Improvement: Allow some HTML tags (a, br, strong, em, strike, i, ul, ol, li) in excerpt
+* Update: Exclude Views from front-end search results
+
+= 1.4.5 =
+* Test up to 4.1
+* Improvement: Add shortcode column to All Views page
+* Improvement: Add some css properties to prevent style overwrite problem
+
 = 1.4.4 =
-* Bug fixed: Length of excerpt is wrong if there is filter of other plugin or active theme
+* Bug fixed: Length of excerpt is wrong if there is filter of other plugins or active theme
 * Improvement: GUI improvement in "Fields settings" group
 
 = 1.4.3 =

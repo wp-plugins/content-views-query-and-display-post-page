@@ -148,7 +148,7 @@ $options = array(
 	),
 
 	// Upgrade to Pro
-	apply_filters( PT_CV_PREFIX_ . 'upgrade_to_pro_text', array(
+	! get_option( 'pt_cv_version_pro' ) ? array(
 		'label'         => array(
 			'text' => '',
 		),
@@ -163,7 +163,7 @@ $options = array(
 				'content' => sprintf( '<p class="text-muted">&rarr; %s</p>', __( 'Filter custom content type (or post type) ?', PT_CV_DOMAIN ) . sprintf( ' <a href="%s" target="_blank">%s</a>', esc_url( 'http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view' ), __( 'Please upgrade to Pro', PT_CV_DOMAIN ) ) ),
 			),
 		),
-	) ),
+	) : '',
 
 	apply_filters( PT_CV_PREFIX_ . 'custom_filters', array() ),
 
@@ -214,6 +214,8 @@ $options = array(
 						),
 					),
 
+					apply_filters( PT_CV_PREFIX_ . 'exclude_extra_settings', array() ),
+
 					// Parent page
 					array(
 						'label'      => array(
@@ -244,7 +246,7 @@ $options = array(
 								'std'         => '10',
 								'min'         => '1',
 								'append_text' => '1 &rarr; 999',
-								'desc'        => __( 'The number of posts to show. Leaving it blank to show all found posts (which match all filter settings)', PT_CV_DOMAIN ),
+								'desc'        => __( 'The number of posts to show. Set empty to show all found posts (which match all filter settings)', PT_CV_DOMAIN ),
 							),
 						),
 					),
@@ -460,7 +462,7 @@ $options = array(
 										'type' => 'text',
 										'name' => 's',
 										'std'  => '',
-										'desc' => __( 'Enter the keyword to searching for posts', PT_CV_DOMAIN ),
+										'desc' => __( 'Enter the keyword to searching for posts', PT_CV_DOMAIN ) . apply_filters( PT_CV_PREFIX_ . 'searchby_keyword_desc', '' ),
 									),
 								),
 							),
