@@ -169,7 +169,7 @@ if ( ! class_exists( 'PT_CV_Plugin' ) ) {
 				$field_name,
 				'checkbox',
 				__( "Don't load <b>Bootstrap</b> style & script (in frontend of website)", PT_CV_DOMAIN ),
-				__( 'Only check this option if Bootstrap has been loaded by active theme or other plugin', PT_CV_DOMAIN )
+				__( 'Only check this option if Bootstrap has been loaded by active theme or other plugins', PT_CV_DOMAIN )
 			);
 		}
 

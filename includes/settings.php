@@ -49,7 +49,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 								'name'     => $taxonomy_slug . '-terms[]',
 								'options'  => $terms,
 								'std'      => '',
-								'class'    => 'select2',
+								'class'    => apply_filters( PT_CV_PREFIX_ . 'select_term_class', 'select2' ),
 								'multiple' => '1',
 							),
 						),
@@ -166,18 +166,53 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),
 				),
-
-				// Pagination Style
+				
+				// Pagination Type
 				array(
 					'label'      => array(
-						'text' => __( 'Pagination style', PT_CV_DOMAIN ),
+						'text' => __( 'Pagination type', PT_CV_DOMAIN ),
 					),
 					'params'     => array(
 						array(
 							'type'    => 'radio',
-							'name'    => $prefix . 'style',
-							'options' => PT_CV_Values::pagination_styles(),
-							'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::pagination_styles() ),
+							'name'    => $prefix . 'type',
+							'options' => PT_CV_Values::pagination_types(),
+							'std'     => 'ajax',
+						),
+					),
+					'dependence' => array( 'enable-pagination', 'yes' ),
+				),
+
+				// Pagination Style
+				array(
+					'label'  => array(
+						'text' => '',
+					),
+					'extra_setting' => array(
+						'params' => array(
+							'width'      => 12,
+						),
+					),
+					'params' => array(
+						array(
+							'type'   => 'group',
+							'params' => array(
+								array(
+									'label'      => array(
+										'text' => __( 'Pagination style', PT_CV_DOMAIN ),
+									),
+									'params'     => array(
+										array(
+											'type'    => 'radio',
+											'name'    => $prefix . 'style',
+											'options' => PT_CV_Values::pagination_styles(),
+											'std'     => PT_CV_Functions::array_get_first_key( PT_CV_Values::pagination_styles() ),
+											'desc'    => __( 'Output style for Ajax pagination', PT_CV_DOMAIN ),
+										),
+									),
+									'dependence' => array( $prefix . 'type', 'normal', '!=' ),
+								),
+							),
 						),
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),
@@ -249,7 +284,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 				),
 
 				// Upgrade to Pro
-				apply_filters( PT_CV_PREFIX_ . 'upgrade_to_pro_text', array(
+				! get_option( 'pt_cv_version_pro' ) ? array(
 					'label'         => array(
 						'text' => '',
 					),
@@ -264,7 +299,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 							'content' => sprintf( '<p class="text-muted" style="margin-top: -10px; margin-bottom: 15px;">&rarr; %s</p>', __( 'Customize display order of above fields by a simple drag-and-drop ?', PT_CV_DOMAIN ) . sprintf( ' <a href="%s" target="_blank">%s</a>', esc_url( 'http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view' ), __( 'Please upgrade to Pro', PT_CV_DOMAIN ) ) ),
 						),
 					),
-				) ),
+				) : '',
 
 				// Title settings
 				apply_filters( PT_CV_PREFIX_ . 'settings_title_display', array(), $prefix, $prefix2 ),
@@ -326,7 +361,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 									// Excerpt length
 									array(
 										'label'         => array(
-											'text' => __( 'Excerpt length', PT_CV_DOMAIN ),
+											'text' => __( 'Excerpt settings', PT_CV_DOMAIN ),
 										),
 										'extra_setting' => array(
 											'params' => array(
@@ -341,6 +376,28 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 												'placeholder' => 'e.g. 20',
 												'append_text' => 'words',
 												'desc'        => __( 'Generating excerpt by selecting the first X words of the content', PT_CV_DOMAIN ),
+											),
+										),
+									),
+									
+									// Allow HTML tags
+									array(
+										'label'         => array(
+											'text' => '',
+										),
+										'extra_setting' => array(
+											'params' => array(
+												'wrap-class' => PT_CV_PREFIX . 'full-fields',
+												'width'      => 9,
+											),
+										),
+										'params'        => array(
+											array(
+												'type'    => 'checkbox',
+												'name'    => $prefix . 'excerpt-allow_html',
+												'options' => PT_CV_Values::yes_no( 'yes', __( 'Allow HTML tags (a, br, strong, em, strike, i, ul, ol, li) in excerpt', PT_CV_DOMAIN ) ),
+												'std'     => '',
+												'desc'    => __( 'This option can cause broken HTML output. Please be careful when check it', PT_CV_DOMAIN ),
 											),
 										),
 									),

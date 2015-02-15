@@ -197,6 +197,22 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		}
 
 		/**
+		 * Paging types
+		 *
+		 * @return array
+		 */
+		static function pagination_types() {
+			$result = array(				
+				'ajax'   => __( 'Ajax', PT_CV_DOMAIN ),
+				'normal' => __( 'Normal', PT_CV_DOMAIN ),
+			);
+
+			$result = apply_filters( PT_CV_PREFIX_ . 'pagination_types', $result );
+
+			return $result;
+		}
+		
+		/**
 		 * Paging styles
 		 *
 		 * @return array
@@ -390,7 +406,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		/**
 		 * Get all thumbnail sizes
 		 */
-		static function field_thumbnail_sizes() {
+		static function field_thumbnail_sizes( $_size_name = '' ) {
 			// All available thumbnail sizes
 			global $_wp_additional_image_sizes;
 
@@ -420,6 +436,10 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 					}
 
 					$sizes_to_sort[$size_name] = ucfirst( preg_replace( '/[\-_]/', ' ', $size_name ) ) . ' (' . implode( ' &times; ', $this_size ) . ')';
+				}
+
+				if ( ! empty($_size_name) && $_size_name == $size_name ) {
+					return $this_size;
 				}
 			}
 			// Add full sizes

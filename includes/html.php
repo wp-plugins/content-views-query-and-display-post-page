@@ -261,14 +261,23 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * @return string Full HTML output for Content View
 		 */
 		static function content_items_wrap( $content_items, $current_page, $post_per_page, $id ) {
-			global $dargs;
+			global $dargs, $pt_cv_content_items;
 
 			if ( empty( $content_items ) ) {
 				return '';
 			}
 
-			$content = array();
+			// Assign as global variable
+			$pt_cv_content_items = $content_items;
 
+			$type    = isset( $dargs['pagination-settings']['type'] ) ? $dargs['pagination-settings']['type'] : 'ajax';
+			$display = ( $type == 'ajax' && $current_page === 1 ) || $type == 'normal';
+
+			// 1. Before output
+			$before_output = $display ? apply_filters( PT_CV_PREFIX_ . 'before_output_html', '' ) : '';
+
+			// 2. Output content
+			$content = array();
 			$view_type = $dargs['view-type'];
 
 			// Separate items by row, column
@@ -324,8 +333,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				$html = $content_list;
 			}
 
-			// If is first page, wrap content in 'view' wrapper
-			if ( $current_page === 1 ) {
+			if ( $display ) {
 				// Get wrapper class of a view
 				$view_class = apply_filters( PT_CV_PREFIX_ . 'view_class', array( PT_CV_PREFIX . 'view', PT_CV_PREFIX . $view_type ) );
 
@@ -338,8 +346,6 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			} else {
 				$output = $html;
 			}
-
-			$before_output = ( $current_page === 1 ) ? apply_filters( PT_CV_PREFIX_ . 'before_output_html', '' ) : '';
 
 			return balanceTags( $before_output ) . balanceTags( $output );
 		}
@@ -476,30 +482,33 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			switch ( $fargs['content']['show'] ) {
 				case 'excerpt':
 					$length       = (int) $fargs['content']['length'];
-					$readmore     = '';
-					$readmore_btn = apply_filters( PT_CV_PREFIX_ . 'field_excerpt_dots', 1, $fargs ) ? ' ...' : '';
+					$readmore_btn = '';
+					$dots         = ' ...';
+					$readmore_html = apply_filters( PT_CV_PREFIX_ . 'field_excerpt_dots', 1, $fargs ) ? $dots : '';
 
 					// Read more button
 					if ( apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_enable', 1, $fargs['content'] ) ) {
 						$text = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_text', __( 'Read More', PT_CV_DOMAIN ), $fargs['content'] );
-						$readmore .= self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore' . ' btn btn-success btn-sm' );
-						$readmore_btn .= '<br/>' . $readmore;
+						$btn_class = apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_class', 'btn btn-success btn-sm', $fargs );
+						$readmore_btn .= self::_field_href( $oargs, $post, $text, PT_CV_PREFIX . 'readmore ' . $btn_class );
+						$readmore_html .= apply_filters( PT_CV_PREFIX_ . 'field_content_readmore_seperated', '<br/>', $fargs ) . $readmore_btn;
 					}
 
-					// Filter content
-					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_result', get_the_content(), $fargs, $post );
+					// Get excerpt
+					if ( $length > 0 ) {
+						// Extract excerpt from content
+						$excerpt = PT_CV_Functions::wp_trim_words( get_the_content(), $length );
+						// Get manual excerpt
+						$excerpt = apply_filters( PT_CV_PREFIX_ . 'field_content_excerpt', $excerpt, $fargs, $post );
+						// Append readmore button
+						$content = $excerpt . $readmore_html;
+					} else {
+						// Display only readmore button if length <= 0
+						$content = $readmore_btn;
+					}
 
-					/*
-					 * Trim some words (in both case: auto generate & get manual excerpt), or show only button (if length = 0)
-					 * Don't set $readmore_btn as 3rd parameter for wp_trim_words(),
-					 * to show Read more button always (even if manual excerpt length < $length)
-					 */
-					$content = $length ? PT_CV_Functions::wp_trim_words( $content, $length ) . $readmore_btn : $readmore;
-
-					// Force balance tags
-					$content = force_balance_tags( strip_shortcodes( $content ) );
-
-					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_final', $content );
+					// Trim period which precedes dots
+					$content = str_replace( '.' . $dots, $dots, $content );
 
 					break;
 
@@ -511,9 +520,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					break;
 			}
 
+			$content = apply_filters( PT_CV_PREFIX_ . 'field_content_final', $content, $post );
+
 			$html = rtrim( $content, '.' ) ? sprintf(
 				'<%1$s class="%2$s">%3$s</%1$s>',
-				$tag, esc_attr( $content_class ), balanceTags( $content )
+				$tag, esc_attr( $content_class ), force_balance_tags( $content )
 			) : '';
 
 			return $html;
@@ -540,8 +551,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			// Don't wrap link
 			$no_link = apply_filters( PT_CV_PREFIX_ . 'field_href_no_link', 0, $open_in );
 
+			$href = apply_filters( PT_CV_PREFIX_ . 'field_href', get_permalink( $post->ID ) );
+
 			// Change href
-			$href = get_permalink( $post->ID );
 			if ( $no_link && strpos( $defined_class, 'readmore' ) === false ) {
 				$href = 'javascript:void(0)';
 			}
@@ -633,8 +645,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 						// Get date wrapper class
 						$date_class  = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'entry-date', 'date' );
 						$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'date' );
+						$date        = apply_filters( PT_CV_PREFIX_ . 'field_meta_date_final', get_the_date(), get_the_time( 'U' ) );
 
-						$html['date'] = sprintf( '<span class="%s">%s <time datetime="%s">%s</time></span>', esc_html( $date_class ), balanceTags( $prefix_text ), esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() ) );
+						$html['date'] = sprintf( '<span class="%s">%s <time datetime="%s">%s</time></span>', esc_html( $date_class ), balanceTags( $prefix_text ), esc_attr( get_the_date( 'c' ) ), esc_html( $date ) );
 						break;
 
 					case 'taxonomy':
@@ -731,11 +744,12 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * Output pagination
 		 *
 		 * @param type   $max_num_pages The total of pages
+		 * @param type   $current_page  The current pages
 		 * @param string $session_id    The session ID of current view
 		 *
 		 * @return type
 		 */
-		static function pagination_output( $max_num_pages, $session_id ) {
+		static function pagination_output( $max_num_pages, $current_page, $session_id ) {
 			global $dargs;
 
 			if ( ! $max_num_pages || (int) $max_num_pages === 1 ) {
@@ -745,15 +759,17 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			$pagination_btn = '';
 
 			$style = isset( $dargs['pagination-settings']['style'] ) ? $dargs['pagination-settings']['style'] : 'regular';
+			$type  = isset( $dargs['pagination-settings']['type'] ) ? $dargs['pagination-settings']['type'] : 'ajax';
 			if ( $style == 'regular' ) {
-				$pagination_btn = sprintf( '<ul class="%s" data-totalpages="%s" data-sid="%s"></ul>', PT_CV_PREFIX . 'pagination', esc_attr( $max_num_pages ), esc_attr( $session_id ) );
+				$pagination_btn = sprintf( '<ul class="%s" data-totalpages="%s" data-sid="%s">%s</ul>', PT_CV_PREFIX . 'pagination' . ' ' . PT_CV_PREFIX . $type . ' pagination', esc_attr( $max_num_pages ), esc_attr( $session_id ), PT_CV_Functions::pagination( $max_num_pages, $current_page ) );
 			} else {
 				$pagination_btn = apply_filters( PT_CV_PREFIX_ . 'btn_more_html', $pagination_btn, $max_num_pages, $session_id );
 			}
 			// Add loading icon
 			$pagination_btn .= self::html_loading_img( 12, PT_CV_PREFIX . 'spinner' );
 
-			$output = apply_filters( PT_CV_PREFIX_ . 'pagination_output', $pagination_btn );
+			$wrapper_class = apply_filters( PT_CV_PREFIX_ . 'pagination_class', '' );
+			$output = apply_filters( PT_CV_PREFIX_ . 'pagination_output', sprintf( '<div class="%s">%s</div>', $wrapper_class . ' ' . PT_CV_PREFIX . 'pagination-wrapper', $pagination_btn ) );
 
 			return $output;
 		}
@@ -763,45 +779,51 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * by merging css files to public/assets/css/public.css, js files to public/assets/js/public.js
 		 */
 		static function assets_of_view_types() {
-			global $did_assets_of_view_types, $pt_view_sid;
+			global $processed_view_assets, $pt_view_sid;
 
 			// If already processed | have no View on this page -> return
-			if ( ( $did_assets_of_view_types && isset( $did_assets_of_view_types[$pt_view_sid] ) ) || ! $pt_view_sid ) {
+			if ( ( $processed_view_assets && isset( $processed_view_assets[$pt_view_sid] ) ) || ! $pt_view_sid ) {
 				return;
 			}
 			// Mark as processed
-			if ( ! $did_assets_of_view_types ) {
-				$did_assets_of_view_types = array();
+			if ( ! $processed_view_assets ) {
+				$processed_view_assets = array();
 			}
-			$did_assets_of_view_types[$pt_view_sid] = 1;
+			$processed_view_assets[$pt_view_sid] = 1;
 
-			$assets        = array( 'css', 'js' );
-			$assets_output = $assets_files = array();
+			// Get settings option
+			$options = get_option( PT_CV_OPTION_NAME );
 
-			// Get content of asset files in directory of view type
-			foreach ( self::$view_type_dir as $idx => $view_type_dir ) {
-				// Get selected style of current view type
-				$style = self::$style[$idx];
+			// Print inline view styles & scripts
+			if ( apply_filters( PT_CV_PREFIX_ . 'assets_verbose_loading', 1 ) ) {
+				$assets        = array( 'css', 'js' );
+				$assets_output = $assets_files = array();
 
-				// With each type of asset (css, js), looking for suit file of selected style
-				foreach ( $assets as $type ) {
-					$file_path = $view_type_dir . '/' . $type . '/' . $style . '.' . $type;
-					$content   = PT_CV_Functions::file_include_content( $file_path );
-					if ( $content ) {
-						$assets_output[$type][] = $content;
+				// Get content of asset files in directory of view type
+				foreach ( self::$view_type_dir as $idx => $view_type_dir ) {
+					// Get selected style of current view type
+					$style = self::$style[$idx];
+
+					// With each type of asset (css, js), looking for suit file of selected style
+					foreach ( $assets as $type ) {
+						$file_path = $view_type_dir . '/' . $type . '/' . $style . '.' . $type;
+						$content   = PT_CV_Functions::file_include_content( $file_path );
+						if ( $content ) {
+							$assets_output[$type][] = $content;
+						}
 					}
 				}
-			}
 
-			// Echo script, style inline
-			if ( $assets_output ) {
-				foreach ( $assets_output as $type => $contents ) {
-					$content = implode( "\n", $contents );
+				// Echo script, style inline
+				if ( $assets_output ) {
+					foreach ( $assets_output as $type => $contents ) {
+						$content = implode( "\n", $contents );
 
-					if ( $type == 'js' ) {
-						echo '' . self::inline_script( $content, false );
-					} else {
-						echo '' . self::inline_style( $content );
+						if ( $type == 'js' ) {
+							echo '' . self::inline_script( $content, false );
+						} else {
+							echo '' . self::inline_style( $content );
+						}
 					}
 				}
 			}
@@ -831,7 +853,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			}
 
 			// Output custom inline style for Views
-			do_action( PT_CV_PREFIX_ . 'print_view_style' );
+			if ( apply_filters( PT_CV_PREFIX_ . 'output_view_style', 1 ) ) {
+				do_action( PT_CV_PREFIX_ . 'print_view_style' );
+			}
 		}
 
 		/**
@@ -867,8 +891,25 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					'is_mobile' => wp_is_mobile(),
 					'_prefix'   => PT_CV_PREFIX,
 					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
-					'lang'      => PT_CV_Functions::get_language(),
 					'_nonce'    => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
+					'lang'      => PT_CV_Functions::get_language(), #Get current language of site
+					'move_bootstrap' => apply_filters( PT_CV_PREFIX_ . 'move_bootstrap', 1 ), #Should I move Bootstrap to top of all styles
+				)
+			);
+
+			// Localize for Pagination script
+			PT_CV_Asset::localize_script(
+				'bootstrap-paginator', PT_CV_PREFIX_UPPER . 'PAGINATION', array(
+					'first'   => apply_filters( PT_CV_PREFIX_ . 'pagination_first', '&laquo;' ),
+					'prev'    => apply_filters( PT_CV_PREFIX_ . 'pagination_prev', '&lsaquo;' ),
+					'next'    => apply_filters( PT_CV_PREFIX_ . 'pagination_next', '&rsaquo;' ),
+					'last'    => apply_filters( PT_CV_PREFIX_ . 'pagination_last', '&raquo;' ),
+					'goto_first'   => apply_filters( PT_CV_PREFIX_ . 'goto_first', __( 'Go to first page', PT_CV_DOMAIN ) ),
+					'goto_prev'    => apply_filters( PT_CV_PREFIX_ . 'goto_prev', __( 'Go to previous page', PT_CV_DOMAIN ) ),
+					'goto_next'    => apply_filters( PT_CV_PREFIX_ . 'goto_next', __( 'Go to next page', PT_CV_DOMAIN ) ),
+					'goto_last'    => apply_filters( PT_CV_PREFIX_ . 'goto_last', __( 'Go to last page', PT_CV_DOMAIN ) ),
+					'current_page' => apply_filters( PT_CV_PREFIX_ . 'current_page', __( 'Current page is', PT_CV_DOMAIN ) ),
+					'goto_page'    => apply_filters( PT_CV_PREFIX_ . 'goto_page', __( 'Go to page', PT_CV_DOMAIN ) ),
 				)
 			);
 		}
@@ -947,9 +988,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 			ob_start();
 			?>
-			<style type="text/css" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-style-' . $random_id ); ?>">
-				<?php echo '' . $css; ?>
-			</style>
+			<style type="text/css" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-style-' . $random_id ); ?>"><?php echo '' . $css; ?></style>
 			<?php
 			return ob_get_clean();
 		}

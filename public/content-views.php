@@ -265,8 +265,7 @@ class PT_Content_Views {
 
 		$args = array(
 			'labels'             => $labels,
-			'public'             => true,
-			'publicly_queryable' => true,
+			'public'             => false,
 
 			// Hide in menu, but can see All Views page
 			'show_ui'            => false,
@@ -326,11 +325,11 @@ class PT_Content_Views {
 	/**
 	 * Init global variables
 	 *
-	 * @global type $did_assets_of_view_types
+	 * @global type $processed_view_assets
 	 */
 	public function init_global_variables() {
-		global $did_assets_of_view_types;
-		$did_assets_of_view_types = array();
+		global $processed_view_assets, $processed_views;
+		$processed_view_assets = $processed_views = array();
 	}
 
 }
