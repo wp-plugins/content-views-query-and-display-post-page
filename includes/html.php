@@ -261,14 +261,23 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * @return string Full HTML output for Content View
 		 */
 		static function content_items_wrap( $content_items, $current_page, $post_per_page, $id ) {
-			global $dargs;
+			global $dargs, $pt_cv_content_items;
 
 			if ( empty( $content_items ) ) {
 				return '';
 			}
 
-			$content = array();
+			// Assign as global variable
+			$pt_cv_content_items = $content_items;
 
+			$type    = isset( $dargs['pagination-settings']['type'] ) ? $dargs['pagination-settings']['type'] : 'ajax';
+			$display = ( $type == 'ajax' && $current_page === 1 ) || $type == 'normal';
+
+			// 1. Before output
+			$before_output = $display ? apply_filters( PT_CV_PREFIX_ . 'before_output_html', '' ) : '';
+
+			// 2. Output content
+			$content = array();
 			$view_type = $dargs['view-type'];
 
 			// Separate items by row, column
@@ -324,9 +333,6 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 				$html = $content_list;
 			}
 
-			$type    = isset( $dargs['pagination-settings']['type'] ) ? $dargs['pagination-settings']['type'] : 'ajax';
-			$display = ( $type == 'ajax' && $current_page === 1 ) || $type == 'normal';
-
 			if ( $display ) {
 				// Get wrapper class of a view
 				$view_class = apply_filters( PT_CV_PREFIX_ . 'view_class', array( PT_CV_PREFIX . 'view', PT_CV_PREFIX . $view_type ) );
@@ -340,8 +346,6 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			} else {
 				$output = $html;
 			}
-
-			$before_output = $display ? apply_filters( PT_CV_PREFIX_ . 'before_output_html', '' ) : '';
 
 			return balanceTags( $before_output ) . balanceTags( $output );
 		}
@@ -506,11 +510,6 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					// Trim period which precedes dots
 					$content = str_replace( '.' . $dots, $dots, $content );
 
-					// Force balance tags & strip all shortcodes
-					$content = force_balance_tags( strip_shortcodes( $content ) );
-
-					$content = apply_filters( PT_CV_PREFIX_ . 'field_content_final', $content, $post );
-
 					break;
 
 				case 'full':
@@ -521,9 +520,11 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					break;
 			}
 
+			$content = apply_filters( PT_CV_PREFIX_ . 'field_content_final', $content, $post );
+
 			$html = rtrim( $content, '.' ) ? sprintf(
 				'<%1$s class="%2$s">%3$s</%1$s>',
-				$tag, esc_attr( $content_class ), balanceTags( $content )
+				$tag, esc_attr( $content_class ), force_balance_tags( $content )
 			) : '';
 
 			return $html;
@@ -778,17 +779,17 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 		 * by merging css files to public/assets/css/public.css, js files to public/assets/js/public.js
 		 */
 		static function assets_of_view_types() {
-			global $did_assets_of_view_types, $pt_view_sid;
+			global $processed_view_assets, $pt_view_sid;
 
 			// If already processed | have no View on this page -> return
-			if ( ( $did_assets_of_view_types && isset( $did_assets_of_view_types[$pt_view_sid] ) ) || ! $pt_view_sid ) {
+			if ( ( $processed_view_assets && isset( $processed_view_assets[$pt_view_sid] ) ) || ! $pt_view_sid ) {
 				return;
 			}
 			// Mark as processed
-			if ( ! $did_assets_of_view_types ) {
-				$did_assets_of_view_types = array();
+			if ( ! $processed_view_assets ) {
+				$processed_view_assets = array();
 			}
-			$did_assets_of_view_types[$pt_view_sid] = 1;
+			$processed_view_assets[$pt_view_sid] = 1;
 
 			// Get settings option
 			$options = get_option( PT_CV_OPTION_NAME );

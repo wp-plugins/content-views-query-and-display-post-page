@@ -23,7 +23,6 @@
 /* Common */
 .pt-cv-view {
 	position: relative;
-	/*margin-bottom: 30px;*/
 	clear:    both;
 }
 
@@ -35,14 +34,14 @@
 	clear: left;
 }
 
+.pt-cv-view strong, .pt-cv-view strong * {
+	font-weight: 600 !important;
+}
+
 /* Link */
 .pt-cv-view a {
 	text-decoration: none !important;
 	outline: 0 !important;
-}
-
-.pt-cv-view a:hover, .pt-cv-view .panel-heading:hover a {
-	/*color: #ff3c1f;*/
 }
 
 /* Read more */
@@ -71,7 +70,7 @@
 /* Title */
 .pt-cv-title {
 	margin-top: 0 !important;
-	font-size:  20px;
+	font-size:  18px;
 }
 
 .pt-cv-title a {

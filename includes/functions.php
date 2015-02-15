@@ -172,14 +172,19 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		}
 
 		/**
-		* Trims text to a certain number of words.
-		*
-		* @since 1.4.3
-		*/
-		static function wp_trim_words( $text, $num_words = 55 ) {
+		 * Trims text to a certain number of words.
+		 * @since 1.4.3
+		 * @param string $text
+		 * @param int $num_words
+		 * @return string
+		 */
+		static function wp_trim_words( $text, $num_words = 500 ) {
+			// Strip all shortcodes
+			$text   = strip_shortcodes( $text );
+			// Strip HTML tags
 			$result = self::pt_strip_tags( $text );
+			// Split words
 			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );
-
 			//  Already short enough, return the whole thing
 			if ( count( $array ) > $num_words )
 			{
@@ -202,7 +207,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			# allow some tags
 			global $dargs;
-			$allowed_tags = ! empty( $dargs['field-settings']['content']['allow_html'] ) ? '<a><br><strong><em><strike><i><ul><ol><li>' : '';
+			# predefined allowable HTML tags
+			$allowable_tags = (array) apply_filters( PT_CV_PREFIX_ . 'allowable_tags', array( '<a>', '<br>', '<strong>', '<em>', '<strike>', '<i>', '<ul>', '<ol>', '<li>' ) );
+			$allowed_tags = ! empty( $dargs['field-settings']['content']['allow_html'] ) ? implode( '', $allowable_tags ) : '';
 			$string       = strip_tags( $string, $allowed_tags );
 
 			return trim( $string );
@@ -519,6 +526,16 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			if ( empty( $settings ) ) {
 				return __( 'Empty settings', PT_CV_DOMAIN );
 			}
+
+			/**
+			 * Check if this view is processed in this page
+			 * @since 1.5.2
+			 */
+			global $processed_views;
+			if ( ! empty( $processed_views[$id] ) ) {
+				return '';
+			}
+			$processed_views[$id] = 1;
 
 			// Escaped value appropriate for use in a SQL query
 			global $pt_view_settings;

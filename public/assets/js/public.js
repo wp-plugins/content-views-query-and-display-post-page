@@ -33,7 +33,7 @@
 		 * @returns {undefined}
 		 */
 		move_bootstrap_to_top: function () {
-			if ( PT_CV_PUBLIC.move_bootstrap === 0 ) {
+			if ( PT_CV_PUBLIC.move_bootstrap === '0' ) {
 				return;
 			}
 

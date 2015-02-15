@@ -199,6 +199,8 @@ $options = array(
 						),
 					),
 
+					apply_filters( PT_CV_PREFIX_ . 'include_extra_settings', array() ),
+
 					// Excludes
 					array(
 						'label'  => array(

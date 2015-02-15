@@ -1,10 +1,10 @@
 === Query posts by category... and display posts on page in grid layout without coding - Content Views ===
 Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
-Tags: post, posts, page, pages, query, queries, search, display, show, grid, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
+Tags: post, posts, page, pages, query, queries, search, display, show, grid, column, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,7 @@ Do you want to display posts by category on WordPress homepage, in responsive gr
 
 Or:
 
+* display posts in grid of 2 columns, 3 columns
 * display posts in grid layout in a specific page
 * display posts in grid layout in a widget of sidebar
 * display posts by a specific tag
@@ -25,6 +26,8 @@ Or:
 * display thumbnail in different size than 150x150 or 300x300
 
 With **Content Views** plugin, you can do above things in minutes, without any line of code!
+
+[youtube https://www.youtube.com/watch?v=drxqtCiaw4I]
 
 With [Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Get Content Views Pro"), you can do even more than you expect!
 
@@ -48,7 +51,8 @@ With [Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&ut
 
 **in Step 2:**
 
-* Select a responsive layout to display posts: Grid, List(Collapsible/Slider).
+* Select a responsive layout to display posts: Grid, List(Collapsible/Slider)
+* Select number of columns in Grid layout
 * Display fields (thumbnail, title, content, meta fields) in vertical direction. Or display thumbnail in left/right side of other fields
 * Select what fields (thumbnail, title, content, meta fields) to display
 * Select thumbnail sizes
@@ -129,7 +133,12 @@ You will be forwarded to editing page of View.
 
 You can create Unlimited Views, in Unlimited websites
 
-= [BUG] When I minify CSS with W3TC plugin, Bootstrap style has "undefined" href. How to fix it? =
+= How can I add View to home page? =
+
+If you are using a static page as home page, you should add View shortcode to editor of that page.
+If you are using a dynamic page (you created a custom site front page template, such as front-page.php), you should paste this code `<?php echo do_shortcode('[pt_view id="VIEW_ID"]'); ?>` to appropriate line in that file.
+
+= [BUG] When I use Cache plugin (W3TC, WP-Super-Cache...), the grid columns does not work. How to fix it? =
 
 Please add this code to file **functions.php** of your theme
 `
@@ -140,6 +149,8 @@ function my_move_bootstrap( $args ) {
 	return $args;
 }
 `
+
+
 
 == Screenshots ==
 
@@ -153,6 +164,10 @@ function my_move_bootstrap( $args ) {
 
 
 == Changelog ==
+
+= 1.5.2 =
+* Bug fixed: Scrollable list does not show navigation and indicator
+* Bug fixed: Prevent duplicated content caused by other plugins (translation plugins...)
 
 = 1.5.1 =
 * Bug fixed: Javascript error in WordPress version 3.4
@@ -191,7 +206,7 @@ function my_move_bootstrap( $args ) {
 
 = 1.4.1 =
 * Bug fixed: Excerpt show stranger character if content of post contains nothing but a url
-* Bug fixed: Height of thumbnail doesn't match the thumbnail size setting if current WordPress theme set CSS 'min-width' property for images
+* Bug fixed: Height of thumbnail does not match the thumbnail size setting if current WordPress theme set CSS 'min-width' property for images
 
 = 1.4.0 =
 * Bug fixed: Grid only shows 1 column
@@ -281,12 +296,12 @@ function my_move_bootstrap( $args ) {
 * Improvement: Assets loading improvement
 
 = 1.2.6 =
-* Fix bug: javascript error of missing function
+* Fix bug: Javascript error of missing function
 * Update description for some options
 * Update styles
 
 = 1.2.5 =
-* Fix bug: doesn't save Layout format value when select '2 columns' option
+* Fix bug: does not save Layout format value when select '2 columns' option
 * Fix notice about constant value
 
 = 1.2.4 =
@@ -319,10 +334,10 @@ function my_move_bootstrap( $args ) {
 * Fix pagination bug (return 0)
 
 = 1.1.4 =
-* Fix pagination bug when don't load Bootstrap in frontend
+* Fix pagination bug when don't load Bootstrap in front-end
 
 = 1.1.3 =
-* Add option to Settings page to enable/disable load Bootstrap in frontend
+* Add option to Settings page to enable/disable load Bootstrap in front-end
 * Enable to search by View ID in "All Views" page
 * Fix bug Scrollable List (when slide count = 1)
 * Update settings page

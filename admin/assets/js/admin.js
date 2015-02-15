@@ -472,7 +472,6 @@
 			 * @param this_val Layout format value
 			 * @returns void
 			 */
-
 			var fn_thumbnail_setting = function (this_val) {
 
 				var $thumbnail_wrapper = $('.' + _prefix + 'thumbnail-setting').parent();
@@ -499,9 +498,8 @@
 			});
 
 			/**
-			 * Toggle 'Thumbnail settings' when change 'View type'
+			 * Toggle 'Layout format' when change 'View type'
 			 */
-
 			var fn_layout_format = function (this_val, layout_format) {
 				var expect_val = [ 'scrollable' ];
 
@@ -625,8 +623,8 @@
 			$('.' + _prefix + 'bg-none').parent().css({'background-color': '#fff', 'padding-bottom': '10px'});
 			$('.' + _prefix + 'bg-none').parent().addClass('unsortable');
 
-			// Prevent click on Links but title
-			$('#pt-cv-preview-box').on('click', 'a', function (e) {
+			// Prevent click on links
+			$('#' + _prefix + 'preview-box').on('click', 'a', function (e) {
 				e.preventDefault();
 			});
 
