@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, column, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,9 +133,9 @@ You will be forwarded to editing page of View.
 
 You can create Unlimited Views, in Unlimited websites
 
-= How can I add View to home page? =
+= How can I add View to homepage? =
 
-If you are using a static page as home page, you should add View shortcode to editor of that page.
+If you are using a static page as homepage, you should add View shortcode to editor of that page.
 If you are using a dynamic page (you created a custom site front page template, such as front-page.php), you should paste this code `<?php echo do_shortcode('[pt_view id="VIEW_ID"]'); ?>` to appropriate line in that file.
 
 = [BUG] When I use Cache plugin (W3TC, WP-Super-Cache...), the grid columns does not work. How to fix it? =
@@ -164,6 +164,9 @@ function my_move_bootstrap( $args ) {
 
 
 == Changelog ==
+
+= 1.5.3 =
+* Update: Supports qTranslate family plugin (qTranslate, mqTranslate, qTranslate-X)
 
 = 1.5.2 =
 * Bug fixed: Scrollable list does not show navigation and indicator

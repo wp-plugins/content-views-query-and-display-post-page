@@ -166,7 +166,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),
 				),
-				
+
 				// Pagination Type
 				array(
 					'label'      => array(
@@ -311,7 +311,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'extra_setting' => array(
 						'params' => array(
-							'wrap-class' => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'thumbnail-setting',
+							'wrap-class' => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'thumbnail-setting' . ' ' . PT_CV_PREFIX . 'w50',
 						),
 					),
 					'params'        => array(
@@ -379,7 +379,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 											),
 										),
 									),
-									
+
 									// Allow HTML tags
 									array(
 										'label'         => array(
@@ -489,8 +489,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'extra_setting' => array(
 						'params' => array(
-							'width'      => 9,
-							'wrap-class' => PT_CV_PREFIX . 'bg-none',
+							'wrap-class' => PT_CV_PREFIX . 'bg-none' . ' ' . PT_CV_PREFIX . 'w50',
 						),
 					),
 					'params'        => array(

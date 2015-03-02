@@ -55,7 +55,42 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$language = $sitepress->get_current_language();
 			}
 
+			/**
+			 * qTranslate family (qTranslate, mqTranslate, qTranslate-X)
+			 * @since 1.5.3
+			 */
+			global $q_config;
+			if ( $q_config && ! empty( $q_config['language'] )) {
+				$language = $q_config['language'];
+			}
+
 			return $language;
+		}
+
+		/**
+		 * Switch language
+		 *
+		 * @global type $sitepress
+		 * @param string $language Current language
+		 */
+		static function switch_language( $language ) {
+			if( ! $language )
+				return ;
+
+			// WPML
+			global $sitepress;
+			if ( $sitepress && $language ) {
+				$sitepress->switch_lang( $language, true );
+			}
+
+			/**
+			 * qTranslate family (qTranslate, mqTranslate, qTranslate-X)
+			 * @since 1.5.3
+			 */
+			global $q_config;
+			if ( $q_config ) {
+				$q_config['language'] = $language;
+			}
 		}
 
 		/**
@@ -613,7 +648,52 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			/**
 			 * Output Items
 			 */
+			$pt_query = array();
+			// What kind of content to display
+			global $pt_display_what;
 
+			$pt_display_what = apply_filters( PT_CV_PREFIX_ . 'display_what', 'post' );
+			if ( $pt_display_what === 'post' ) {
+				// Get $content_items & $pt_query
+				extract( self::get_posts_list( $args, $view_type ) );
+			} else {
+				$content_items = apply_filters( PT_CV_PREFIX_ . 'view_content', array() );
+			}
+
+			/**
+			 * Output Pagination
+			 */
+			$current_page = self::get_current_page( $pargs );
+			$html         = PT_CV_Html::content_items_wrap( $content_items, $current_page, $args['posts_per_page'], $id );
+
+			// Append Pagination HTML if this is first page, or not Ajax calling
+			$type  = isset( $dargs['pagination-settings']['type'] ) ? $dargs['pagination-settings']['type'] : 'ajax';
+			if ( $pt_query && $args['posts_per_page'] > 0 && ( ( $type == 'ajax' && $current_page === 1 ) || $type == 'normal' ) ) {
+				// Total post founds
+				$found_posts = apply_filters( PT_CV_PREFIX_ . 'found_posts', $pt_query->found_posts );
+
+				// Total number of items
+				$total_items = ( $args['limit'] > 0 && $found_posts > $args['limit'] ) ? $args['limit'] : $found_posts;
+
+				// Total number of pages
+				$max_num_pages = ceil( $total_items / $args['posts_per_page'] );
+
+				// Output pagination
+				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $current_page, $session_id );
+			}
+
+			return $html;
+		}
+
+		/**
+		 * Query posts
+		 *
+		 * @global mixed $post
+		 * @param array $args
+		 * @param string $view_type
+		 * @return array
+		 */
+		static function get_posts_list( $args, $view_type ) {
 			// Store HTML output of each item
 			$content_items = array();
 
@@ -653,29 +733,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Filter array of items
 			$content_items = apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items );
 
-			/**
-			 * Output Pagination
-			 */
-			$current_page = self::get_current_page( $pargs );
-			$html         = PT_CV_Html::content_items_wrap( $content_items, $current_page, $args['posts_per_page'], $id );
-
-			// Append Pagination HTML if this is first page, or not Ajax calling
-			$type  = isset( $dargs['pagination-settings']['type'] ) ? $dargs['pagination-settings']['type'] : 'ajax';
-			if ( $args['posts_per_page'] > 0 && ( ( $type == 'ajax' && $current_page === 1 ) || $type == 'normal' ) ) {
-				// Total post founds
-				$found_posts = apply_filters( PT_CV_PREFIX_ . 'found_posts', $pt_query->found_posts );
-
-				// Total number of items
-				$total_items = ( $args['limit'] > 0 && $found_posts > $args['limit'] ) ? $args['limit'] : $found_posts;
-
-				// Total number of pages
-				$max_num_pages = ceil( $total_items / $args['posts_per_page'] );
-
-				// Output pagination
-				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $current_page, $session_id );
-			}
-
-			return $html;
+			return array( 'content_items' => $content_items, 'pt_query' => $pt_query );
 		}
 
 		/**
@@ -1189,13 +1247,9 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Pagination settings
 			$pargs = array( 'session_id' => $session_id, 'page' => (int) esc_sql( $_POST['page'] ) );
 
-			// Language
+			// Switch language
 			$language = empty( $_POST['lang'] ) ? '' : esc_sql( $_POST['lang'] );
-			// WPML
-			global $sitepress;
-			if ( $sitepress && $language ) {
-				$sitepress->switch_lang( $language, true );
-			}
+			self::switch_language( $language );
 
 			// Show View output
 			echo balanceTags( PT_CV_Functions::view_process_settings( null, $settings, $pargs ) );

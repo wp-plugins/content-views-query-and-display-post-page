@@ -99,6 +99,12 @@ html {
 	width: 100% !important;
 }
 
+.pt-cv-w50 select,
+.pt-cv-w50 radio {
+	width: 50%;
+	float: left;
+}
+
 /* Group type */
 .panel-group .pt-cv-group {
 	margin-top: 10px;
@@ -116,8 +122,7 @@ html {
 	font-weight: 400;
 }
 
-.pt-cv-group .checkbox,
-.pt-cv-w50 .pt-form-group {
+.pt-cv-group .checkbox {
 	width: 50%;
 	float: left;
 }
@@ -197,6 +202,13 @@ html {
 /* Field dislay */
 .pt-cv-bg-none {
 	background: #fff;
+}
+.pt-cv-field-display .unsortable {
+	margin-left: -30px !important;
+
+}
+.pt-cv-field-display .unsortable label {
+	font-weight: bold !important;
 }
 
 /* Sortable */

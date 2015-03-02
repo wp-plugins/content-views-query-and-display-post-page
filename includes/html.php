@@ -247,7 +247,7 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 			$result = sprintf( '<div class="%s" %s>%s</div>', esc_attr( implode( ' ', $item_class ) ), $item_filter, balanceTags( $html_item ) );
 
-			return $result;
+			return apply_filters( PT_CV_PREFIX_ . 'before_item', '', $post_id ) . $result . apply_filters( PT_CV_PREFIX_ . 'after_item', '', $post_id );
 		}
 
 		/**

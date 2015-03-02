@@ -202,7 +202,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		 * @return array
 		 */
 		static function pagination_types() {
-			$result = array(				
+			$result = array(
 				'ajax'   => __( 'Ajax', PT_CV_DOMAIN ),
 				'normal' => __( 'Normal', PT_CV_DOMAIN ),
 			);
@@ -211,7 +211,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 
 			return $result;
 		}
-		
+
 		/**
 		 * Paging styles
 		 *
