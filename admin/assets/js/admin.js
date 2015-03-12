@@ -80,7 +80,7 @@
 			var _prefix = $self.options._prefix;
 
 			// If there is no taxonomies
-			if ($wrap_taxonomies.find('.pt-params .checkbox').filter(function () {
+			if ($wrap_taxonomies.find('.' + _prefix + 'taxonomies .checkbox').filter(function () {
 				return !$(this).hasClass('hidden') && $(this).find('input:checked').length;
 			}).length > 1) {
 				$taxonomy_relation.removeClass('hidden');
@@ -175,7 +175,7 @@
 				}
 					break;
 				default :
-					if (typeof expect_val !== 'array')
+					if (typeof expect_val !== 'object')
 						pass = eval("this_val " + operator + " expect_val");
 					break;
 
@@ -261,7 +261,7 @@
 				// Remove highlight color
 				setTimeout(function () {
 					$(toggle_id).removeClass(activate_group);
-				}, 3000);
+				}, 2000);
 
 			} else {
 				$('#' + id_prefix + $this.val()).addClass('hidden');
@@ -472,7 +472,6 @@
 			 * @param this_val Layout format value
 			 * @returns void
 			 */
-
 			var fn_thumbnail_setting = function (this_val) {
 
 				var $thumbnail_wrapper = $('.' + _prefix + 'thumbnail-setting').parent();
@@ -499,9 +498,8 @@
 			});
 
 			/**
-			 * Toggle 'Thumbnail settings' when change 'View type'
+			 * Toggle 'Layout format' when change 'View type'
 			 */
-
 			var fn_layout_format = function (this_val, layout_format) {
 				var expect_val = [ 'scrollable' ];
 
@@ -610,9 +608,6 @@
 			// Toggle panel of 'Advanced filters'
 			$self._toggle_panel('.' + _prefix + 'group .panel-heading');
 
-			// Color picker
-			$('.' + _prefix + 'color').wpColorPicker();
-
 			// 'Thumbnail settings' toggle
 			$self._thumbnail_settings();
 
@@ -628,8 +623,8 @@
 			$('.' + _prefix + 'bg-none').parent().css({'background-color': '#fff', 'padding-bottom': '10px'});
 			$('.' + _prefix + 'bg-none').parent().addClass('unsortable');
 
-			// Prevent click on Links but title
-			$('#pt-cv-preview-box').on('click', 'a', function (e) {
+			// Prevent click on links
+			$('#' + _prefix + 'preview-box').on('click', 'a', function (e) {
 				e.preventDefault();
 			});
 

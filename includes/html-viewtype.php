@@ -158,16 +158,19 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 			$scrollable_html[] = PT_CV_Html::inline_script( $js );
 
+			// Default value off setting options
+			$enable = apply_filters( PT_CV_PREFIX_ . 'scrollable_fields_enable', 1 );
+
 			// Indicator html
-			$show_indicator    = isset( $dargs['view-type-settings']['indicator'] ) ? $dargs['view-type-settings']['indicator'] : 'no';
-			$scrollable_html[] = self::scrollable_indicator( $show_indicator == 'yes', $wrapper_id, $count_slides );
+			$show_indicator    = isset( $dargs['view-type-settings']['indicator'] ) ? $dargs['view-type-settings']['indicator'] : $enable;
+			$scrollable_html[] = self::scrollable_indicator( $show_indicator, $wrapper_id, $count_slides );
 
 			// Content html
 			$scrollable_html[] = $scrollable_content;
 
 			// Control html
-			$show_navigation   = isset( $dargs['view-type-settings']['navigation'] ) ? $dargs['view-type-settings']['navigation'] : 'no';
-			$scrollable_html[] = self::scrollable_control( $show_navigation == 'yes', $wrapper_id, $count_slides );
+			$show_navigation   = isset( $dargs['view-type-settings']['navigation'] ) ? $dargs['view-type-settings']['navigation'] : $enable;
+			$scrollable_html[] = self::scrollable_control( $show_navigation, $wrapper_id, $count_slides );
 
 			// Get wrapper class scrollable
 			$scrollable_class = apply_filters( PT_CV_PREFIX_ . 'scrollable_class', 'carousel slide' );
@@ -212,7 +215,9 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 						$_span_width = ( $idx == count( $items_per_row ) - 1 ) ? $span_width_last : $span_width;
 
 						// Wrap content of item
-						$row_html[] = PT_CV_Html::content_item_wrap( $content_item, $span_class . $_span_width );
+						$item_classes = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width ), $_span_width );
+						$item_class   = implode( ' ', array_filter( $item_classes ) );
+						$row_html[] = PT_CV_Html::content_item_wrap( $content_item, $item_class );
 					}
 
 					$slide_html[] = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), implode( "\n", $row_html ) );
