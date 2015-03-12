@@ -215,7 +215,9 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 						$_span_width = ( $idx == count( $items_per_row ) - 1 ) ? $span_width_last : $span_width;
 
 						// Wrap content of item
-						$row_html[] = PT_CV_Html::content_item_wrap( $content_item, $span_class . $_span_width );
+						$item_classes = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width ), $_span_width );
+						$item_class   = implode( ' ', array_filter( $item_classes ) );
+						$row_html[] = PT_CV_Html::content_item_wrap( $content_item, $item_class );
 					}
 
 					$slide_html[] = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), implode( "\n", $row_html ) );

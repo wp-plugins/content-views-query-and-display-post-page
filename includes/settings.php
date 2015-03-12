@@ -65,7 +65,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 						),
 						'params' => array(
 							array(
-								'type'    => 'radio',
+								'type'    => 'select',
 								'name'    => $taxonomy_slug . '-operator',
 								'options' => PT_CV_Values::taxonomy_operators(),
 								'std'     => 'IN',
@@ -489,7 +489,7 @@ if ( ! class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'extra_setting' => array(
 						'params' => array(
-							'wrap-class' => PT_CV_PREFIX . 'bg-none' . ' ' . PT_CV_PREFIX . 'w50',
+							'wrap-class' => PT_CV_PREFIX . 'bg-none' . ' ' . PT_CV_PREFIX . 'w200',
 						),
 					),
 					'params'        => array(

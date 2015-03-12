@@ -105,6 +105,16 @@ html {
 	float: left;
 }
 
+.pt-cv-w200 select,
+.pt-cv-w200 radio {
+	width: 200px;
+	float: left;
+}
+
+.pt-wrap .updated {
+	display: none;
+}
+
 /* Group type */
 .panel-group .pt-cv-group {
 	margin-top: 10px;
@@ -202,13 +212,6 @@ html {
 /* Field dislay */
 .pt-cv-bg-none {
 	background: #fff;
-}
-.pt-cv-field-display .unsortable {
-	margin-left: -30px !important;
-
-}
-.pt-cv-field-display .unsortable label {
-	font-weight: bold !important;
 }
 
 /* Sortable */

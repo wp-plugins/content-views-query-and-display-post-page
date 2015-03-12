@@ -80,7 +80,7 @@
 			var _prefix = $self.options._prefix;
 
 			// If there is no taxonomies
-			if ($wrap_taxonomies.find('.pt-params .checkbox').filter(function () {
+			if ($wrap_taxonomies.find('.' + _prefix + 'taxonomies .checkbox').filter(function () {
 				return !$(this).hasClass('hidden') && $(this).find('input:checked').length;
 			}).length > 1) {
 				$taxonomy_relation.removeClass('hidden');

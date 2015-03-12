@@ -323,6 +323,11 @@ $options = array(
 								'label'  => array(
 									'text' => __( 'Taxonomies', PT_CV_DOMAIN ),
 								),
+								'extra_setting' => array(
+									'params' => array(
+										'wrap-class' => PT_CV_PREFIX . 'taxonomies',
+									),
+								),
 								'params' => array(
 									array(
 										'type'    => 'checkbox',
@@ -373,6 +378,8 @@ $options = array(
 									),
 								),
 							),
+
+							apply_filters( PT_CV_PREFIX_ . 'taxonomies_custom_settings', array() ),
 						), // End Taxonomies Settings
 
 						// Order by Settings

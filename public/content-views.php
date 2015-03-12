@@ -268,7 +268,7 @@ class PT_Content_Views {
 			'public'             => false,
 
 			// Hide in menu, but can see All Views page
-			'show_ui'            => false,
+			'show_ui'            => true, // set "true" to fix "Invalid post type" error
 			'show_in_menu'       => false,
 
 			'query_var'          => true,

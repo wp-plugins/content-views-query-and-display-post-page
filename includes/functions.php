@@ -214,12 +214,21 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function wp_trim_words( $text, $num_words = 500 ) {
+			// Add shortcode which was not added to global $shortcode_tags manually
+			do_action( PT_CV_PREFIX_ . 'before_strip_shortcodes' );
+
 			// Strip all shortcodes
 			$text   = strip_shortcodes( $text );
+
+			// Recovery global $shortcode_tags
+			do_action( PT_CV_PREFIX_ . 'after_strip_shortcodes' );
+
 			// Strip HTML tags
 			$result = self::pt_strip_tags( $text );
+
 			// Split words
 			$array  = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );
+
 			//  Already short enough, return the whole thing
 			if ( count( $array ) > $num_words )
 			{
@@ -244,7 +253,16 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			global $dargs;
 			# predefined allowable HTML tags
 			$allowable_tags = (array) apply_filters( PT_CV_PREFIX_ . 'allowable_tags', array( '<a>', '<br>', '<strong>', '<em>', '<strike>', '<i>', '<ul>', '<ol>', '<li>' ) );
-			$allowed_tags = ! empty( $dargs['field-settings']['content']['allow_html'] ) ? implode( '', $allowable_tags ) : '';
+			$allowed_tags = '';
+			if ( ! empty( $dargs['field-settings']['content']['allow_html'] ) ) {
+				$allowed_tags = implode( '', $allowable_tags );
+
+				// Changes double line-breaks in the text into HTML paragraphs (<p>, <br>)
+				if ( apply_filters( PT_CV_PREFIX_ . 'wpautop', 0 ) ) {
+					$string = wpautop( $string );
+				}
+			}
+
 			$string       = strip_tags( $string, $allowed_tags );
 
 			return trim( $string );
