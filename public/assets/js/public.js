@@ -33,6 +33,10 @@
 		 * @returns {undefined}
 		 */
 		move_bootstrap_to_top: function () {
+			if ( PT_CV_PUBLIC.move_bootstrap === '0' ) {
+				return;
+			}
+
 			var _prefix = PT_CV_PUBLIC._prefix;
 
 			var selector = _prefix + 'bootstrap-style-css';
@@ -50,7 +54,7 @@
 			var _prefix = PT_CV_PUBLIC._prefix;
 
 			// Bootstrap paginator
-			$('.' + _prefix + 'pagination').each(function () {
+			$('.' + _prefix + 'pagination.' + _prefix + 'ajax').each(function () {
 				var this_ = $(this);
 				var total_pages = $(this).attr('data-totalpages');
 				$(this).bootstrapPaginator({
@@ -74,7 +78,7 @@
 						var selected_page = page;
 
 						$self._setup_pagination(this_, selected_page, function () {
-							$self.doing = 0;
+							PT_CV_PUBLIC.paging = 0;
 						});
 					}
 				});
@@ -93,11 +97,12 @@
 			var $self = this;
 			var _prefix = PT_CV_PUBLIC._prefix;
 
+			PT_CV_PUBLIC.paging = PT_CV_PUBLIC.paging || 0;
 			// Prevent duplicate processing
-			if ($self.doing) {
+			if (PT_CV_PUBLIC.paging) {
 				return;
 			} else {
-				$self.doing = 1;
+				PT_CV_PUBLIC.paging = 1;
 			}
 
 			var session_id = this_.attr('data-sid');
@@ -133,9 +138,9 @@
 		_get_page: function (session_id, selected_page, spinner, pages_holder, callback) {
 
 			var $self = this;
-
+			// Show content of page if it existed
 			var page_existed = $self._active_page(selected_page, pages_holder, callback);
-
+			// If page is loaded, exit
 			if (page_existed) {
 				return;
 			}
@@ -156,11 +161,11 @@
 				data      : data,
 				beforeSend: function () {
 					// Show loading icon
-					spinner.toggleClass('active');
+					spinner.addClass('active');
 				}
 			}).done(function (response) {
 					// Hide loading icon
-					spinner.toggleClass('active');
+					spinner.removeClass('active');
 
 					// Update content of Preview box
 					pages_holder.append(response);
