@@ -406,7 +406,7 @@ $options = array(
 						), // End Order by Settings
 
 						// Author Settings
-						'author'   => array(
+						'author'   => apply_filters( PT_CV_PREFIX_ . 'author_settings', array(
 							array(
 								'label'  => array(
 									'text' => __( 'Written by', PT_CV_DOMAIN ),
@@ -438,7 +438,7 @@ $options = array(
 										),
 									),
 								) : array(),
-						), // End Author Settings
+						) ), // End Author Settings
 
 						// Status Settings
 						'status'   => array(

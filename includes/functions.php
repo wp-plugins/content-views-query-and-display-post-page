@@ -201,7 +201,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function string_slug_to_text( $slug ) {
-			$slug = preg_replace( '/[^a-zA-Z]+/', ' ', $slug );
+			$slug = preg_replace( '/[_\-]+/', ' ', $slug );
 
 			return ucwords( $slug );
 		}
@@ -582,13 +582,16 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 
 			/**
 			 * Check if this view is processed in this page
+			 * if processed => hide it
 			 * @since 1.5.2
 			 */
-			global $processed_views;
-			if ( ! empty( $processed_views[$id] ) ) {
+			global $processed_views, $pt_cv_shortcode_params;
+			// Same View but has different shortcode parameters => consider as 2 different Views
+			$vid = $id . '-' . md5( serialize( $pt_cv_shortcode_params ) );
+			if ( ! empty( $processed_views[$vid] ) ) {
 				return '';
 			}
-			$processed_views[$id] = 1;
+			$processed_views[$vid] = 1;
 
 			// Escaped value appropriate for use in a SQL query
 			global $pt_view_settings;

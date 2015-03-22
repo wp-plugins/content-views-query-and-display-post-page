@@ -8,10 +8,10 @@
  * @copyright 2014 PT Guy
  */
 
-( function ($) {
+(function ($) {
 	"use strict";
 
-	$.PT_CV_Admin = $.PT_CV_Admin || { };
+	$.PT_CV_Admin = $.PT_CV_Admin || {};
 
 	$.PT_CV_Admin = function (options) {
 		this.options = options;
@@ -21,14 +21,13 @@
 	};
 
 	$.PT_CV_Admin.prototype = {
-
 		/**
 		 * Toggle panel when click Show/Hide icon on Heading
 		 *
 		 * @param {type} $selector
 		 * @returns {undefined}
 		 */
-		_toggle_panel               : function ($selector) {
+		_toggle_panel: function ($selector) {
 			$('body').on('click', $selector, function (e) {
 				var $heading = $(this);
 				var $span = $heading.find('span.clickable');
@@ -50,7 +49,7 @@
 		 *
 		 * @returns void
 		 */
-		_toggle_taxonomy_relation   : function () {
+		_toggle_taxonomy_relation: function () {
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
@@ -96,7 +95,7 @@
 		 * @param {type} el     : string to selector
 		 * @returns {undefined}
 		 */
-		_get_field_val              : function (el) {
+		_get_field_val: function (el) {
 			var $this = $(el);
 			var value = $(el).val();
 
@@ -112,7 +111,7 @@
 		 * @param {type} $toggle_data_js_
 		 * @returns {undefined}
 		 */
-		dependence_do_all           : function ($toggle_data_js_) {
+		dependence_do_all: function ($toggle_data_js_) {
 			var $self = this;
 			var _prefix = $self.options._prefix;
 			var $toggle_data_js = $.parseJSON($toggle_data_js_);
@@ -140,7 +139,7 @@
 		 * @param {type} obj_sub    : an object contains (dependence_id, expect_val, operator)
 		 * @returns {undefined}
 		 */
-		_dependence_group           : function (this_val, obj_sub) {
+		_dependence_group: function (this_val, obj_sub) {
 			var $self = this;
 			$.each(obj_sub, function (key, data) {
 				$self._dependence_element(data[0], this_val, data[2], data[1]);
@@ -155,24 +154,24 @@
 		 * @param {type} expect_val : expect value of B to show A group
 		 * @returns {undefined}
 		 */
-		_dependence_element         : function (dependence_id, this_val, operator, expect_val) {
+		_dependence_element: function (dependence_id, this_val, operator, expect_val) {
 
 			var dependence_el = $("#" + dependence_id);
 			var pass = 0;
 			switch (operator) {
 				case "=":
-				{
-					if (typeof expect_val === 'string')
-						expect_val = [expect_val];
-					pass = ( $.inArray(this_val, expect_val) >= 0 );
-				}
+					{
+						if (typeof expect_val === 'string')
+							expect_val = [expect_val];
+						pass = ($.inArray(this_val, expect_val) >= 0);
+					}
 					break;
 				case "!=":
-				{
-					if (typeof expect_val === 'string')
-						expect_val = [expect_val];
-					pass = ( $.inArray(this_val, expect_val) < 0 );
-				}
+					{
+						if (typeof expect_val === 'string')
+							expect_val = [expect_val];
+						pass = ($.inArray(this_val, expect_val) < 0);
+					}
 					break;
 				default :
 					if (typeof expect_val !== 'object')
@@ -205,7 +204,7 @@
 		 * @param {type} id_prefix
 		 * @returns {undefined}
 		 */
-		toggle_group                : function (selector, id_prefix) {
+		toggle_group: function (selector, id_prefix) {
 			var $self = this;
 			// Run on page load
 			$(selector).each(function () {
@@ -214,7 +213,10 @@
 			// Run on change
 			$(selector).each(function () {
 				$(this).change(function () {
-					$self._toggle_each_group($(this), id_prefix);
+					var this_ = $(this);
+					setTimeout(function () {
+						$self._toggle_each_group(this_, id_prefix);
+					}, 200);
 				});
 			});
 		},
@@ -225,10 +227,10 @@
 		 * @param {type} id_prefix
 		 * @returns {undefined}
 		 */
-		_toggle_each_group          : function ($this, id_prefix) {
+		_toggle_each_group: function ($this, id_prefix) {
 			var $self = this;
 			var _prefix = $self.options._prefix;
-			if ($this.is('select') || ( ( $this.is(':checkbox') || $this.is(':radio') ) && $this.is(':checked') )) {
+			if ($this.is('select') || (($this.is(':checkbox') || $this.is(':radio')) && $this.is(':checked'))) {
 				// Get id of element A which needs to toggle
 				var toggle_id = '#' + id_prefix + $this.val();
 
@@ -272,7 +274,7 @@
 		 *
 		 * @returns {undefined}
 		 */
-		_content_type               : function () {
+		_content_type: function () {
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
@@ -353,7 +355,7 @@
 		 * @param string _nonce
 		 * @returns {undefined}
 		 */
-		preview                     : function (_nonce) {
+		preview: function (_nonce) {
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
@@ -423,46 +425,46 @@
 		 * @param object $this_btn The Show/Hide preview button
 		 * @returns void
 		 */
-		_preview_request            : function (preview_box, _data, _nonce, $this_btn) {
+		_preview_request: function (preview_box, _data, _nonce, $this_btn) {
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
 			// Setup data
 			var data = {
-				action    : 'preview_request',
-				data      : _data,
+				action: 'preview_request',
+				data: _data,
 				ajax_nonce: _nonce
 			};
 
 			// Sent POST request
 			$.ajax({
 				type: "POST",
-				url : ajaxurl,
+				url: ajaxurl,
 				data: data,
 			}).done(function (response) {
-					preview_box.css('opacity', '1');
-					// Hide loading icon
-					preview_box.next().addClass('hidden');
+				preview_box.css('opacity', '1');
+				// Hide loading icon
+				preview_box.next().addClass('hidden');
 
-					// Update content of Preview box
-					preview_box.html(response);
+				// Update content of Preview box
+				preview_box.html(response);
 
-					// Toggle text of this button
-					$this_btn.html(PT_CV_ADMIN.btn.preview.hide);
+				// Toggle text of this button
+				$this_btn.html(PT_CV_ADMIN.btn.preview.hide);
 
-					// Disable preview
-					$self.options.can_preview = 0;
+				// Disable preview
+				$self.options.can_preview = 0;
 
-					// Trigger action, to recall function such as pagination, pinterest render layout...
-					$('body').trigger(_prefix + 'custom-trigger');
-				});
+				// Trigger action, to recall function such as pagination, pinterest render layout...
+				$('body').trigger(_prefix + 'custom-trigger');
+			});
 		},
 		/**
 		 * Toggle 'Thumbnail settings'
 		 *
 		 * @returns {undefined}
 		 */
-		_thumbnail_settings         : function () {
+		_thumbnail_settings: function () {
 			var _prefix = this.options._prefix;
 			var _thumbnail_setting_state = 1;
 
@@ -501,7 +503,7 @@
 			 * Toggle 'Layout format' when change 'View type'
 			 */
 			var fn_layout_format = function (this_val, layout_format) {
-				var expect_val = [ 'scrollable' ];
+				var expect_val = ['scrollable'];
 
 				// Add more layouts
 				$('.pt-wrap').trigger('toggle-layout-format', [expect_val]);
@@ -531,7 +533,7 @@
 		 * Toggle text of Preview button
 		 * @returns {undefined}
 		 */
-		_preview_btn_toggle         : function () {
+		_preview_btn_toggle: function () {
 
 			var $self = this;
 			var _prefix = $self.options._prefix;
@@ -556,7 +558,6 @@
 				_fn();
 			});
 		},
-
 		/**
 		 * Do handy toggle for Excerpt settings
 		 *
@@ -587,7 +588,6 @@
 			// Handy do other toggle
 			$('.pt-wrap').trigger(_prefix + 'multi-level-toggle');
 		},
-
 		/**
 		 * Custom js for elements
 		 * @returns {undefined}
@@ -635,4 +635,4 @@
 			});
 		},
 	};
-}(jQuery) );
+}(jQuery));
