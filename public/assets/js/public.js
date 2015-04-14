@@ -41,8 +41,10 @@
 
 			var selector = _prefix + 'bootstrap-style-css';
 			var bootstrap_css = $('#' + selector);
-			bootstrap_css.remove();
-			$('title').after("<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr('href') + "' type='text/css' media='all' />");
+			if (bootstrap_css.length > 0) {
+				bootstrap_css.remove();
+				$('title').after("<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr('href') + "' type='text/css' media='all' />");
+			}
 		},
 
 		/**

@@ -197,6 +197,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 					$fields_html[$field_name] = self::field_item_html( $field_name, $post, $fargs );
 				}
 
+				$fields_html = apply_filters( PT_CV_PREFIX_ . 'fields_html', $fields_html, $post );
+
 				// Get HTML content of view type, with specific style
 				$file_path = $view_type_dir . '/' . 'html' . '/' . $style . '.' . 'php';
 
@@ -496,8 +498,9 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 					// Get excerpt
 					if ( $length > 0 ) {
+						$content_to_extract = apply_filters( PT_CV_PREFIX_ . 'field_content_to_extract', get_the_content(), $post );
 						// Extract excerpt from content
-						$excerpt = PT_CV_Functions::wp_trim_words( get_the_content(), $length );
+						$excerpt = PT_CV_Functions::wp_trim_words( $content_to_extract, $length );
 						// Get manual excerpt
 						$excerpt = apply_filters( PT_CV_PREFIX_ . 'field_content_excerpt', $excerpt, $fargs, $post );
 						// Append readmore button
@@ -608,7 +611,8 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 			$has_thumbnail = get_the_post_thumbnail( $post_id );
 			if ( ! empty( $has_thumbnail ) ) {
 				$thumbnail_size = count( $dimensions ) > 1 ? $dimensions : $dimensions[0];
-				$html           = get_the_post_thumbnail( $post_id, $thumbnail_size, $gargs );
+				$html = get_the_post_thumbnail( $post_id, $thumbnail_size, $gargs );
+				$html = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_image', $html, $post_id, $dimensions, $fargs );
 			} else {
 				$html = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_not_found', $html, $post, $dimensions, $gargs );
 			}
@@ -758,9 +762,10 @@ if ( ! class_exists( 'PT_CV_Html' ) ) {
 
 			$pagination_btn = '';
 
-			$style = isset( $dargs['pagination-settings']['style'] ) ? $dargs['pagination-settings']['style'] : 'regular';
 			$type  = isset( $dargs['pagination-settings']['type'] ) ? $dargs['pagination-settings']['type'] : 'ajax';
-			if ( $style == 'regular' ) {
+			$style = isset( $dargs['pagination-settings']['style'] ) ? $dargs['pagination-settings']['style'] : 'regular';
+
+			if ( $type == 'normal' || $style == 'regular' ) {
 				$pagination_btn = sprintf( '<ul class="%s" data-totalpages="%s" data-sid="%s">%s</ul>', PT_CV_PREFIX . 'pagination' . ' ' . PT_CV_PREFIX . $type . ' pagination', esc_attr( $max_num_pages ), esc_attr( $session_id ), PT_CV_Functions::pagination( $max_num_pages, $current_page ) );
 			} else {
 				$pagination_btn = apply_filters( PT_CV_PREFIX_ . 'btn_more_html', $pagination_btn, $max_num_pages, $session_id );

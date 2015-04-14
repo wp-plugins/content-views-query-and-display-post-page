@@ -604,18 +604,23 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			// Get content type
 			global $pt_content_type;
 			$pt_content_type = $content_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'content-type', $pt_view_settings );
+			$content_type = apply_filters( PT_CV_PREFIX_ . 'content_type', $content_type, $id );
 
 			// Get view type
 			global $pt_view_type;
 			$pt_view_type = $view_type = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'view-type', $pt_view_settings );
 
 			// Store display settings
-			global $dargs, $pt_query_args;
+			global $dargs, $pt_query_args, $pt_view_sid;
 
 			$session_id = ( $pargs && isset( $pargs['session_id'] ) ) ? $pargs['session_id'] : 0;
 
 			// If is pagination request
 			if ( $session_id ) {
+				if ( empty( $pt_view_sid ) ) {
+					$pt_view_sid = $session_id;
+				}
+
 				$session_data = array_merge(
 					array( '$args' => '', '$dargs' => '' ),
 					( false === ( $saved_settings = get_transient( PT_CV_PREFIX . 'view-data-' . $session_id ) ) ) ? array() : $saved_settings
@@ -624,7 +629,6 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 				$args  = $session_data['$args'];
 				$dargs = $session_data['$dargs'];
 			} else {
-				global $pt_view_sid;
 				// If id is passed, assign it to session id, otherwise, generate random number
 				$pt_view_sid = $session_id = $id ? $id : PT_CV_Functions::string_random();
 
@@ -929,6 +933,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 										'field'    => 'slug',
 										'terms'    => (array) PT_CV_Functions::setting_value( PT_CV_PREFIX . $taxonomy . '-terms', $pt_view_settings ),
 										'operator' => $operator,
+										'include_children' => apply_filters( PT_CV_PREFIX_ . 'include_children', true )
 									);
 								}
 							}
@@ -982,7 +987,7 @@ if ( ! class_exists( 'PT_CV_Functions' ) ) {
 			/**
 			 * Columns count & Rows count
 			 */
-			$dargs['number-columns'] = PT_CV_Functions::setting_value( PT_CV_PREFIX . $view_type . '-' . 'number-columns', $pt_view_settings, 1 );
+			$dargs['number-columns'] = apply_filters( PT_CV_PREFIX_ . 'item_per_row', PT_CV_Functions::setting_value( PT_CV_PREFIX . $view_type . '-' . 'number-columns', $pt_view_settings, 1 ) );
 			$dargs['number-rows']    = PT_CV_Functions::setting_value( PT_CV_PREFIX . $view_type . '-' . 'number-rows', $pt_view_settings, 1 );
 
 			/**

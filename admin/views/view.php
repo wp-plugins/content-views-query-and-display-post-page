@@ -525,6 +525,8 @@ echo balanceTags( PT_Options_Framework::do_settings( $options, $settings ) );
 			),
 		),
 
+		apply_filters( PT_CV_PREFIX_ . 'responsive_settings', array() ),
+
 		// Layout format of output item
 		array(
 			'label'  => array(

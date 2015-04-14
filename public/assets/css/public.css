@@ -87,7 +87,7 @@
 }
 
 .pt-cv-thumbnail.pull-left {
-	margin-right: 20px;
+	margin-right: 20px !important;
 }
 
 .pt-cv-thumbnail.pull-right {
