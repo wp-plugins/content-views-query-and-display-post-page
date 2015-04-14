@@ -101,9 +101,9 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		 */
 		static function taxonomy_operators() {
 			return array(
-				'IN'     => '<strong>' . __( 'IN', PT_CV_DOMAIN ) . '</strong> &#8212; ' . __( 'A post is displayed only if it associated with at least one value in terms list', PT_CV_DOMAIN ),
-				'NOT IN' => '<strong>' . __( 'NOT IN', PT_CV_DOMAIN ) . '</strong> &#8212; ' . __( 'A post is displayed only if it did NOT associated with any values in terms list', PT_CV_DOMAIN ),
-				'AND'    => '<strong>' . __( 'AND', PT_CV_DOMAIN ) . '</strong> &#8212; ' . __( 'A post is displayed only if it associated with all values in terms list', PT_CV_DOMAIN ),
+				'IN'     => __( 'IN', PT_CV_DOMAIN ) . ' &#8212; ' . __( 'A post is displayed only if it associated with at least one value in terms list', PT_CV_DOMAIN ),
+				'NOT IN' => __( 'NOT IN', PT_CV_DOMAIN ) . ' &#8212; ' . __( 'A post is displayed only if it did NOT associated with any values in terms list', PT_CV_DOMAIN ),
+				'AND'    => __( 'AND', PT_CV_DOMAIN ) . ' &#8212; ' . __( 'A post is displayed only if it associated with all values in terms list', PT_CV_DOMAIN ),
 			);
 		}
 
@@ -194,6 +194,22 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 				'show' => __( 'Show', PT_CV_DOMAIN ),
 				'hide' => __( 'Hide', PT_CV_DOMAIN ),
 			);
+		}
+
+		/**
+		 * Paging types
+		 *
+		 * @return array
+		 */
+		static function pagination_types() {
+			$result = array(
+				'ajax'   => __( 'Ajax', PT_CV_DOMAIN ),
+				'normal' => __( 'Normal', PT_CV_DOMAIN ),
+			);
+
+			$result = apply_filters( PT_CV_PREFIX_ . 'pagination_types', $result );
+
+			return $result;
 		}
 
 		/**
@@ -377,9 +393,8 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		static function open_in() {
 
 			$open_in = array(
-				'_blank' => __( 'New tab', PT_CV_DOMAIN ),
 				'_self'  => __( 'Current tab', PT_CV_DOMAIN ),
-
+				'_blank' => __( 'New tab', PT_CV_DOMAIN ),
 			);
 
 			$result = apply_filters( PT_CV_PREFIX_ . 'open_in', $open_in );
@@ -390,7 +405,7 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 		/**
 		 * Get all thumbnail sizes
 		 */
-		static function field_thumbnail_sizes() {
+		static function field_thumbnail_sizes( $_size_name = '' ) {
 			// All available thumbnail sizes
 			global $_wp_additional_image_sizes;
 
@@ -420,6 +435,10 @@ if ( ! class_exists( 'PT_CV_Values' ) ) {
 					}
 
 					$sizes_to_sort[$size_name] = ucfirst( preg_replace( '/[\-_]/', ' ', $size_name ) ) . ' (' . implode( ' &times; ', $this_size ) . ')';
+				}
+
+				if ( ! empty($_size_name) && $_size_name == $size_name ) {
+					return $this_size;
 				}
 			}
 			// Add full sizes
