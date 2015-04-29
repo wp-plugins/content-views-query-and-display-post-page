@@ -635,8 +635,12 @@
 			} );
 
 			// Prevent missing changes
+			var checked = 0;
+			$( '#' + _prefix + 'form-view input[type="submit"]' + ',' + 'a[href*="action=duplicate"]' ).click( function () {
+				checked = 1;
+			} );
 			window.onbeforeunload = function ( event ) {
-				if ( !$self.options.onload ) {
+				if ( !$self.options.onload && !checked ) {
 					var message = 'The changes you made will be lost if you navigate away from this page.';
 					if ( typeof event === 'undefined' ) {
 						event = window.event;
