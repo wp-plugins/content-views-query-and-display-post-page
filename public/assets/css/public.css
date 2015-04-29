@@ -15,15 +15,14 @@
 .pt-cv-view *,
 .pt-cv-view *:before,
 .pt-cv-view *:after {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing:    border-box;
-	box-sizing:         border-box;
+	-webkit-box-sizing: border-box !important;
+	-moz-box-sizing:    border-box !important;
+	box-sizing:         border-box !important;
 }
 
 /* Common */
 .pt-cv-view {
 	position: relative;
-	/*margin-bottom: 30px;*/
 	clear:    both;
 }
 
@@ -35,14 +34,14 @@
 	clear: left;
 }
 
-/* Link */
-.pt-cv-view a {
-	/*color:           #000;*/
-	text-decoration: none !important;
+.pt-cv-view strong, .pt-cv-view strong * {
+	font-weight: 600 !important;
 }
 
-.pt-cv-view a:hover, .pt-cv-view .panel-heading:hover a {
-	/*color: #ff3c1f;*/
+/* Link */
+.pt-cv-view a {
+	text-decoration: none !important;
+	outline: 0 !important;
 }
 
 /* Read more */
@@ -60,7 +59,7 @@
 
 /* Add default margin-bottom */
 .pt-cv-content-item > * {
-	margin-bottom: 10px;
+	margin-bottom: 10px !important;
 }
 
 /* For the output which shows only Title */
@@ -71,7 +70,7 @@
 /* Title */
 .pt-cv-title {
 	margin-top: 0 !important;
-	font-size:  20px;
+	font-size:  18px;
 }
 
 .pt-cv-title a {
@@ -82,16 +81,17 @@
 .pt-cv-thumbnail {
 	height:        auto;
 	max-width:     100% !important;
+	margin-top:    0 !important;
 	margin-bottom: 15px !important;
 	min-width:     inherit !important;
 }
 
 .pt-cv-thumbnail.pull-left {
-	margin-right: 10px;
+	margin-right: 20px !important;
 }
 
 .pt-cv-thumbnail.pull-right {
-	margin-left: 10px;
+	margin-left: 20px;
 }
 
 .pt-cv-no-image {
@@ -102,6 +102,7 @@
 /* Content */
 .pt-cv-content, .pt-cv-content * {
 	font-size:   14px;
+	font-weight: 400;
 	zoom:        1;
 	line-height: 1.6em;
 }
@@ -123,22 +124,23 @@
 	margin: 0 auto !important;
 }
 
-.pagination > li {
+.pt-cv-view + .pagination > li {
 	background: none !important;
 }
 
-.pagination > li > a {
+.pt-cv-view + .pagination > li > a {
 	cursor: pointer;
 }
 
 .pt-cv-spinner {
+	position: absolute;
+	top:      66px;
+	margin:   0 auto !important;
+
 	display:            inline-block;
 	opacity:            0;
 	filter:             alpha(opacity=0);
 	color:              #0470ec;
-
-	margin-top:         12px;
-	margin-left:        10px;
 
 	-webkit-transition: opacity 0.25s, width 0.25s;
 	-moz-transition:    opacity 0.25s, width 0.25s;
@@ -155,6 +157,25 @@
 	margin-bottom: 50px;
 }
 
+.pt-cv-pagination-wrapper {
+	clear: both;
+	position: relative;
+}
+
+.pt-cv-pagination.pagination {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	margin-left: 0;
+}
+
+.pt-cv-pagination a {
+	cursor: pointer;
+}
+
+.pt-cv-pagination li.active a {
+	border-color: rgba(66, 139, 202, 0.2) !important;
+}
+
 /* View type : Collapsible List */
 .pt-cv-collapsible .panel-heading {
 	padding: 0;
@@ -165,6 +186,21 @@
 	padding: 10px 15px;
 }
 
+.pt-cv-collapsible .panel-body {
+	margin: 10px;
+}
+
+.pt-cv-view .collapse {
+	display:    none;
+	visibility: hidden;
+}
+
+.pt-cv-view .collapse.in {
+	display:    block;
+	visibility: visible;
+	overflow:   auto;
+}
+
 /* View type : Scrollable List */
 
 /* Caption */
@@ -172,7 +208,7 @@
 	text-align: left;
 	left:       0;
 	right:      15px;
-	bottom:     14px;
+	bottom:     1.8em;
 }
 
 .pt-cv-view .carousel-caption * {
@@ -218,6 +254,7 @@
 	width:            40px;
 	bottom:           0;
 	top:              auto;
+	color:            #00A100;
 }
 
 /* Indicator */
@@ -240,17 +277,6 @@
 /* Layout */
 .pt-cv-2-col .pt-cv-title {
 	clear: none !important;
-}
-
-/* Collapsible layout */
-.pt-cv-view .collapse {
-	display:    none;
-	visibility: hidden;
-}
-
-.pt-cv-view .collapse.in {
-	display:    block;
-	visibility: visible;
 }
 
 /* @Panels-minified */
