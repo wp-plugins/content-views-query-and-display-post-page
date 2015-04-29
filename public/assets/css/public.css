@@ -168,6 +168,10 @@
 	margin-left: 0;
 }
 
+.pt-cv-pagination a {
+	cursor: pointer;
+}
+
 .pt-cv-pagination li.active a {
 	border-color: rgba(66, 139, 202, 0.2) !important;
 }
@@ -182,6 +186,21 @@
 	padding: 10px 15px;
 }
 
+.pt-cv-collapsible .panel-body {
+	margin: 10px;
+}
+
+.pt-cv-view .collapse {
+	display:    none;
+	visibility: hidden;
+}
+
+.pt-cv-view .collapse.in {
+	display:    block;
+	visibility: visible;
+	overflow:   auto;
+}
+
 /* View type : Scrollable List */
 
 /* Caption */
@@ -189,7 +208,7 @@
 	text-align: left;
 	left:       0;
 	right:      15px;
-	bottom:     14px;
+	bottom:     1.8em;
 }
 
 .pt-cv-view .carousel-caption * {
@@ -235,6 +254,7 @@
 	width:            40px;
 	bottom:           0;
 	top:              auto;
+	color:            #00A100;
 }
 
 /* Indicator */
@@ -257,17 +277,6 @@
 /* Layout */
 .pt-cv-2-col .pt-cv-title {
 	clear: none !important;
-}
-
-/* Collapsible layout */
-.pt-cv-view .collapse {
-	display:    none;
-	visibility: hidden;
-}
-
-.pt-cv-view .collapse.in {
-	display:    block;
-	visibility: visible;
 }
 
 /* @Panels-minified */

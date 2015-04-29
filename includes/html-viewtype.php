@@ -1,4 +1,5 @@
 <?php
+
 /**
  * HTML output for specific View types
  *
@@ -8,8 +9,7 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
-if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
+if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 	/**
 	 * @name PT_CV_Html_ViewType
@@ -31,12 +31,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 			// -- Get column span
 
-			$columns = (int) $dargs['number-columns'];
-			if ( ! $columns ) {
+			$columns = (int) $dargs[ 'number-columns' ];
+			if ( !$columns ) {
 				$columns = 1;
 			}
 
-			$span_width_last = $span_width = (int) ( 12 / $columns );
+			$span_width_last = $span_width		 = (int) ( 12 / $columns );
 
 			// Get span for the last column on row
 			if ( 12 % $columns ) {
@@ -47,10 +47,9 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			$span_class = apply_filters( PT_CV_PREFIX_ . 'span_class', 'col-md-' );
 
 			// -- Row output
-
 			// Get wrapper class of a row
 			$row_classes = apply_filters( PT_CV_PREFIX_ . 'row_class', array( 'row', PT_CV_PREFIX . 'row' ) );
-			$row_class   = implode( ' ', array_filter( $row_classes ) );
+			$row_class	 = implode( ' ', array_filter( $row_classes ) );
 
 			return array( $columns, $span_width_last, $span_width, $span_class, $row_class );
 		}
@@ -80,9 +79,9 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 					$_span_width = ( $idx == count( $items_per_row ) - 1 ) ? $span_width_last : $span_width;
 
 					// Wrap content of item
-					$item_classes = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width ), $_span_width );
-					$item_class   = implode( ' ', array_filter( $item_classes ) );
-					$row_html[]   = PT_CV_Html::content_item_wrap( $content_item, $item_class, $post_id );
+					$item_classes	 = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width ), $_span_width );
+					$item_class		 = implode( ' ', array_filter( $item_classes ) );
+					$row_html[]		 = PT_CV_Html::content_item_wrap( $content_item, $item_class, $post_id );
 
 					$idx ++;
 				}
@@ -113,8 +112,8 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			$collapsible_list = array();
 			foreach ( $content_items as $idx => $content_item ) {
 				// Replace class in body of collapsible item, to show one (now is the first item)
-				$class        = ( $idx == 0 ) ? 'in' : '';
-				$content_item = str_replace( PT_CV_PREFIX_UPPER . 'CLASS', $class, $content_item );
+				$class			 = ( $idx == 0 ) ? 'in' : '';
+				$content_item	 = str_replace( PT_CV_PREFIX_UPPER . 'CLASS', $class, $content_item );
 
 				// Replace id in {data-parent="#ID"} of each item by generated id
 				$collapsible_list[] = str_replace( PT_CV_PREFIX_UPPER . 'ID', $random_id, $content_item );
@@ -149,12 +148,12 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			$scrollable_html = array();
 
 			$scrollable_content_data = self::scrollable_content( $content_items );
-			$count_slides            = $scrollable_content_data['count_slides'];
-			$scrollable_content      = $scrollable_content_data['scrollable_content'];
+			$count_slides			 = $scrollable_content_data[ 'count_slides' ];
+			$scrollable_content		 = $scrollable_content_data[ 'scrollable_content' ];
 
 			// Js code
-			$interval = apply_filters( PT_CV_PREFIX_ . 'scrollable_interval', 'false' );
-			$js       = "$('#$wrapper_id').carousel({ interval : $interval })";
+			$interval	 = apply_filters( PT_CV_PREFIX_ . 'scrollable_interval', 'false' );
+			$js			 = "$('#$wrapper_id').carousel({ interval : $interval })";
 
 			$scrollable_html[] = PT_CV_Html::inline_script( $js );
 
@@ -162,19 +161,19 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			$enable = apply_filters( PT_CV_PREFIX_ . 'scrollable_fields_enable', 1 );
 
 			// Indicator html
-			$show_indicator    = isset( $dargs['view-type-settings']['indicator'] ) ? $dargs['view-type-settings']['indicator'] : $enable;
-			$scrollable_html[] = self::scrollable_indicator( $show_indicator, $wrapper_id, $count_slides );
+			$show_indicator		 = isset( $dargs[ 'view-type-settings' ][ 'indicator' ] ) ? $dargs[ 'view-type-settings' ][ 'indicator' ] : $enable;
+			$scrollable_html[]	 = self::scrollable_indicator( $show_indicator, $wrapper_id, $count_slides );
 
 			// Content html
 			$scrollable_html[] = $scrollable_content;
 
 			// Control html
-			$show_navigation   = isset( $dargs['view-type-settings']['navigation'] ) ? $dargs['view-type-settings']['navigation'] : $enable;
-			$scrollable_html[] = self::scrollable_control( $show_navigation, $wrapper_id, $count_slides );
+			$show_navigation	 = isset( $dargs[ 'view-type-settings' ][ 'navigation' ] ) ? $dargs[ 'view-type-settings' ][ 'navigation' ] : $enable;
+			$scrollable_html[]	 = self::scrollable_control( $show_navigation, $wrapper_id, $count_slides );
 
 			// Get wrapper class scrollable
-			$scrollable_class = apply_filters( PT_CV_PREFIX_ . 'scrollable_class', 'carousel slide' );
-			$content[]        = sprintf( '<div id="%s" class="%s" data-ride="carousel">%s</div>', esc_attr( $wrapper_id ), esc_attr( $scrollable_class ), implode( "\n", $scrollable_html ) );
+			$scrollable_class	 = apply_filters( PT_CV_PREFIX_ . 'scrollable_class', 'carousel slide' );
+			$content[]			 = sprintf( '<div id="%s" class="%s" data-ride="carousel">%s</div>', esc_attr( $wrapper_id ), esc_attr( $scrollable_class ), implode( "\n", $scrollable_html ) );
 		}
 
 		/**
@@ -190,7 +189,7 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			// Store content of a Scrollable list
 			$scrollable_content = array();
 
-			$rows = ( $dargs['number-rows'] ) ? (int) $dargs['number-rows'] : 1;
+			$rows = ( $dargs[ 'number-rows' ] ) ? (int) $dargs[ 'number-rows' ] : 1;
 
 			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width( $content_items );
 
@@ -215,26 +214,26 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 						$_span_width = ( $idx == count( $items_per_row ) - 1 ) ? $span_width_last : $span_width;
 
 						// Wrap content of item
-						$item_classes = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width ), $_span_width );
-						$item_class   = implode( ' ', array_filter( $item_classes ) );
-						$row_html[] = PT_CV_Html::content_item_wrap( $content_item, $item_class );
+						$item_classes	 = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width ), $_span_width );
+						$item_class		 = implode( ' ', array_filter( $item_classes ) );
+						$row_html[]		 = PT_CV_Html::content_item_wrap( $content_item, $item_class );
 					}
 
 					$slide_html[] = sprintf( '<div class="%1$s">%2$s</div>', esc_attr( $row_class ), implode( "\n", $row_html ) );
 				}
 
 				// Show first slide
-				$this_class           = $slide_class . ( ( $s_idx == 0 ) ? ' active' : '' );
-				$scrollable_content[] = sprintf( '<div class="%s">%s</div>', esc_attr( $this_class ), implode( "\n", $slide_html ) );
+				$this_class				 = $slide_class . ( ( $s_idx == 0 ) ? ' active' : '' );
+				$scrollable_content[]	 = sprintf( '<div class="%s">%s</div>', esc_attr( $this_class ), implode( "\n", $slide_html ) );
 			}
 
 			// Get class of wrapper of content of scrollable list
-			$content_class = apply_filters( PT_CV_PREFIX_ . 'scrollable_content_class', 'carousel-inner' );
-			$content       = sprintf( '<div class="%s">%s</div>', esc_attr( $content_class ), implode( "\n", $scrollable_content ) );
+			$content_class	 = apply_filters( PT_CV_PREFIX_ . 'scrollable_content_class', 'carousel-inner' );
+			$content		 = sprintf( '<div class="%s">%s</div>', esc_attr( $content_class ), implode( "\n", $scrollable_content ) );
 
 			return array(
 				'scrollable_content' => $content,
-				'count_slides'       => count( $slides_item ),
+				'count_slides'		 => count( $slides_item ),
 			);
 		}
 
@@ -246,7 +245,7 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * @param int    $count_slides The amount of items
 		 */
 		static function scrollable_indicator( $show, $wrapper_id, $count_slides ) {
-			if ( ! $show ) {
+			if ( !$show ) {
 				return '';
 			}
 
@@ -254,8 +253,8 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 			if ( $count_slides > 1 ) {
 				$li = array();
 				for ( $index = 0; $index < $count_slides; $index ++ ) {
-					$class = ( $index == 0 ) ? 'active' : '';
-					$li[]  = sprintf( '<li data-target="#%s" data-slide-to="%s" class="%s"></li>', esc_attr( $wrapper_id ), esc_attr( $index ), $class );
+					$class	 = ( $index == 0 ) ? 'active' : '';
+					$li[]	 = sprintf( '<li data-target="#%s" data-slide-to="%s" class="%s"></li>', esc_attr( $wrapper_id ), esc_attr( $index ), $class );
 				}
 
 				$output = '<ol class="carousel-indicators">' . implode( "\n", $li ) . '</ol>';
@@ -272,24 +271,24 @@ if ( ! class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * @param int    $count_slides The amount of items
 		 */
 		static function scrollable_control( $show, $wrapper_id, $count_slides ) {
-			if ( ! $show ) {
+			if ( !$show ) {
 				return '';
 			}
 			$output = '';
 			if ( $count_slides > 1 ) {
 				$output = sprintf(
-					'<a class="left carousel-control" href="#%1$s" data-slide="prev">
+				'<a class="left carousel-control" href="#%1$s" data-slide="prev">
 						<span class="glyphicon glyphicon-chevron-left"></span>
 					</a>
 					<a class="right carousel-control" href="#%1$s" data-slide="next">
 						<span class="glyphicon glyphicon-chevron-right"></span>
-					</a>',
-					esc_attr( $wrapper_id )
+					</a>', esc_attr( $wrapper_id )
 				);
 			}
 
 			return $output;
 		}
+
 	}
 
 }

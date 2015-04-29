@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Content Views for Public
  *
@@ -8,7 +9,6 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
 class PT_Content_Views {
 
 	/**
@@ -230,8 +230,8 @@ class PT_Content_Views {
 	 */
 	public function load_plugin_textdomain() {
 
-		$domain = $this->plugin_slug;
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+		$domain	 = $this->plugin_slug;
+		$locale	 = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		// Load translation file in wp-content/languages/content-views/
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
@@ -247,37 +247,35 @@ class PT_Content_Views {
 		 * Register custom post type : View
 		 */
 		$labels = array(
-			'name'               => _x( 'Views', 'post type general name', PT_CV_DOMAIN ),
-			'singular_name'      => _x( 'View', 'post type singular name', PT_CV_DOMAIN ),
-			'menu_name'          => _x( 'Views', 'admin menu', PT_CV_DOMAIN ),
-			'name_admin_bar'     => _x( 'View', 'add new on admin bar', PT_CV_DOMAIN ),
-			'add_new'            => _x( 'Add New', PT_CV_POST_TYPE, PT_CV_DOMAIN ),
-			'add_new_item'       => __( 'Add New View', PT_CV_DOMAIN ),
-			'new_item'           => __( 'New View', PT_CV_DOMAIN ),
-			'edit_item'          => __( 'Edit View', PT_CV_DOMAIN ),
-			'view_item'          => __( 'View View', PT_CV_DOMAIN ),
-			'all_items'          => __( 'All Views', PT_CV_DOMAIN ),
-			'search_items'       => __( 'Search Views', PT_CV_DOMAIN ),
-			'parent_item_colon'  => __( 'Parent Views:', PT_CV_DOMAIN ),
-			'not_found'          => __( 'No views found.', PT_CV_DOMAIN ),
+			'name'				 => _x( 'Views', 'post type general name', PT_CV_DOMAIN ),
+			'singular_name'		 => _x( 'View', 'post type singular name', PT_CV_DOMAIN ),
+			'menu_name'			 => _x( 'Views', 'admin menu', PT_CV_DOMAIN ),
+			'name_admin_bar'	 => _x( 'View', 'add new on admin bar', PT_CV_DOMAIN ),
+			'add_new'			 => _x( 'Add New', PT_CV_POST_TYPE, PT_CV_DOMAIN ),
+			'add_new_item'		 => __( 'Add New View', PT_CV_DOMAIN ),
+			'new_item'			 => __( 'New View', PT_CV_DOMAIN ),
+			'edit_item'			 => __( 'Edit View', PT_CV_DOMAIN ),
+			'view_item'			 => __( 'View View', PT_CV_DOMAIN ),
+			'all_items'			 => __( 'All Views', PT_CV_DOMAIN ),
+			'search_items'		 => __( 'Search Views', PT_CV_DOMAIN ),
+			'parent_item_colon'	 => __( 'Parent Views:', PT_CV_DOMAIN ),
+			'not_found'			 => __( 'No views found.', PT_CV_DOMAIN ),
 			'not_found_in_trash' => __( 'No views found in Trash.', PT_CV_DOMAIN ),
 		);
 
 		$args = array(
-			'labels'             => $labels,
-			'public'             => false,
-
+			'labels'			 => $labels,
+			'public'			 => false,
 			// Hide in menu, but can see All Views page
-			'show_ui'            => true, // set "true" to fix "Invalid post type" error
-			'show_in_menu'       => false,
-
-			'query_var'          => true,
-			'rewrite'            => array( 'slug' => PT_CV_POST_TYPE ),
-			'capability_type'    => 'post',
-			'has_archive'        => true,
-			'hierarchical'       => false,
-			'menu_position'      => null,
-			'supports'           => array( 'title', 'author', 'custom-fields' ),
+			'show_ui'			 => true, // set "true" to fix "Invalid post type" error
+			'show_in_menu'		 => false,
+			'query_var'			 => true,
+			'rewrite'			 => array( 'slug' => PT_CV_POST_TYPE ),
+			'capability_type'	 => 'post',
+			'has_archive'		 => true,
+			'hierarchical'		 => false,
+			'menu_position'		 => null,
+			'supports'			 => array( 'title', 'author', 'custom-fields' ),
 		);
 
 		register_post_type( PT_CV_POST_TYPE, $args );
@@ -314,7 +312,7 @@ class PT_Content_Views {
 	 */
 	public function update_view_count() {
 		global $post;
-		if ( ! isset( $post ) || ! is_object( $post ) ) {
+		if ( !isset( $post ) || !is_object( $post ) ) {
 			return;
 		}
 		if ( is_single( $post->ID ) ) {
@@ -329,7 +327,7 @@ class PT_Content_Views {
 	 */
 	public function init_global_variables() {
 		global $processed_view_assets, $processed_views;
-		$processed_view_assets = $processed_views = array();
+		$processed_view_assets	 = $processed_views		 = array();
 	}
 
 }

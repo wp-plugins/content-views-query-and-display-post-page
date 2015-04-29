@@ -8,7 +8,6 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
 ?>
 
 <div class="wrap">
