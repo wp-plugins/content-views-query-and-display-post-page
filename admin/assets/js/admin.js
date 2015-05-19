@@ -12,6 +12,8 @@
 	"use strict";
 
 	$.PT_CV_Admin = $.PT_CV_Admin || { };
+	PT_CV_ADMIN = PT_CV_ADMIN || { };
+	ajaxurl = ajaxurl || { };
 
 	$.PT_CV_Admin = function ( options ) {
 		this.options = options;
@@ -72,7 +74,9 @@
 		/**
 		 * Toggle Taxonomy Relation setting by number of selected taxonomies
 		 *
-		 * @returns void
+		 * @param {type} $taxonomy_relation
+		 * @param {type} $wrap_taxonomies
+		 * @returns {undefined}
 		 */
 		_do_toggle_taxonomy_relation: function ( $taxonomy_relation, $wrap_taxonomies ) {
 			var $self = this;
@@ -352,7 +356,7 @@
 		/**
 		 * Preview handle
 		 *
-		 * @param string _nonce
+		 * @param {string} _nonce
 		 * @returns {undefined}
 		 */
 		preview: function ( _nonce ) {
@@ -419,10 +423,10 @@
 		/**
 		 * Send preview Ajax request
 		 *
-		 * @param object preview_box The jqurey object
-		 * @param string _data
-		 * @param string _nonce The generated nonce
-		 * @param object $this_btn The Show/Hide preview button
+		 * @param {object} preview_box The jqurey object
+		 * @param {string} _data
+		 * @param {string} _nonce The generated nonce
+		 * @param {object} $this_btn The Show/Hide preview button
 		 * @returns void
 		 */
 		_preview_request: function ( preview_box, _data, _nonce, $this_btn ) {
@@ -440,8 +444,12 @@
 			$.ajax( {
 				type: "POST",
 				url: ajaxurl,
-				data: data,
+				data: data
 			} ).done( function ( response ) {
+				if ( response == -1 ) {
+					location.reload();
+				}
+
 				preview_box.css( 'opacity', '1' );
 				// Hide loading icon
 				preview_box.next().addClass( 'hidden' );
@@ -456,7 +464,7 @@
 				$self.options.can_preview = 0;
 
 				// Trigger action, to recall function such as pagination, pinterest render layout...
-				$( 'body' ).trigger( _prefix + 'custom-trigger' );
+				$( 'body' ).trigger( _prefix + 'admin-preview' );
 			} );
 		},
 		/**
@@ -501,6 +509,10 @@
 
 			/**
 			 * Toggle 'Layout format' when change 'View type'
+			 *
+			 * @param {type} this_val
+			 * @param {type} layout_format
+			 * @returns {undefined}
 			 */
 			var fn_layout_format = function ( this_val, layout_format ) {
 				var expect_val = [ 'scrollable' ];
@@ -629,9 +641,8 @@
 			} );
 
 			// Handle Pagination actions
-			$( 'body' ).bind( _prefix + 'custom-trigger', function () {
-				var $pt_cv_public_js = new $.PT_CV_Public( { _prefix: _prefix, _autoload: 0 } );
-				$pt_cv_public_js.pagination();
+			$( 'body' ).bind( _prefix + 'admin-preview', function () {
+				new $.PT_CV_Public( { _prefix: _prefix } );
 			} );
 
 			// Prevent missing changes
@@ -650,7 +661,7 @@
 					}
 					return message;
 				}
-			}
-		},
+			};
+		}
 	};
 }( jQuery ) );

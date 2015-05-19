@@ -33,7 +33,8 @@ if ( !class_exists( 'PT_CV_Hooks' ) ) {
 		 * @param array  $args  The Query parameters array
 		 */
 		public static function filter_validate_settings( $errors, $args ) {
-			global $dargs;
+			
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			//			echo "<pre>";
 			//			var_dump( 'query args', $args );
@@ -41,7 +42,7 @@ if ( !class_exists( 'PT_CV_Hooks' ) ) {
 			//			echo "<pre>";
 			//			var_dump( 'display args', $dargs );
 			//			echo "</pre>";
-			// Prefix string for error message
+
 			$messages = array(
 				'field'	 => array(
 					'select' => __( 'Please select an option in : ', PT_CV_DOMAIN ),

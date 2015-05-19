@@ -110,7 +110,7 @@ PT_CV_Functions::view_submit();
 
 		<!-- Save -->
 		<input type="submit" class="btn btn-primary pull-right <?php echo esc_attr( PT_CV_PREFIX ); ?>save-view" value="<?php _e( 'Save', PT_CV_DOMAIN ); ?>">
-<?php do_action( PT_CV_PREFIX_ . 'admin_more_buttons' ); ?>
+		<?php do_action( PT_CV_PREFIX_ . 'admin_more_buttons' ); ?>
 
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">

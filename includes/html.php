@@ -168,7 +168,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @param string $style     The style of view type (main, style2...)
 		 */
 		static function view_type_output( $view_type, $post, $style = 'main' ) {
-			global $dargs;
+			
+			$dargs	 = PT_CV_Functions::get_global_variable( 'dargs' );
 			$content = NULL;
 
 			if ( empty( $view_type ) ) {
@@ -224,7 +225,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return string Full HTML output of a item
 		 */
 		static function content_item_wrap( $html_item, $class = '', $post_id = 0 ) {
-			global $dargs;
+			
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( empty( $html_item ) ) {
 				return '';
@@ -265,17 +267,17 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 */
 		static function content_items_wrap( $content_items, $current_page,
 									  $post_per_page, $id ) {
-			global $dargs, $pt_cv_content_items;
+			global $pt_cv_glb, $pt_cv_id;
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( empty( $content_items ) ) {
 				return '';
 			}
 
 			// Assign as global variable
-			$pt_cv_content_items = $content_items;
+			$pt_cv_glb[ $pt_cv_id ][ 'content_items' ] = $content_items;
 
-			$type	 = isset( $dargs[ 'pagination-settings' ][ 'type' ] ) ? $dargs[ 'pagination-settings' ][ 'type' ] : 'ajax';
-			$display = ( $type == 'ajax' && $current_page === 1 ) || $type == 'normal';
+			$display = PT_CV_Functions::is_pagination( $dargs, $current_page );
 
 			// 1. Before output
 			$before_output = $display ? apply_filters( PT_CV_PREFIX_ . 'before_output_html', '' ) : '';
@@ -364,7 +366,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return string
 		 */
 		static function field_item_html( $field_name, $post, $fargs ) {
-			global $dargs;
+			
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( empty( $field_name ) ) {
 				return '';
@@ -463,7 +466,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return string
 		 */
 		static function _field_content( $post, $fargs ) {
-			global $dargs;
+			
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			// Get other settings
 			$oargs = isset( $dargs[ 'other-settings' ] ) ? $dargs[ 'other-settings' ] : array();
@@ -578,7 +582,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return string
 		 */
 		static function _field_thumbnail( $post, $fargs ) {
-			global $dargs;
+			
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			// Get layout format
 			$layout_format = $fargs[ 'layout-format' ];
@@ -607,10 +612,10 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			$dimensions	 = (array) apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_dimension_output', $dimensions, $fargs );
 
 			// Check if has thumbnail ( has_post_thumbnail doesn't works )
-			$has_thumbnail = get_the_post_thumbnail( $post_id );
-			if ( !empty( $has_thumbnail ) ) {
+			$thumbnail_id = get_post_thumbnail_id( $post_id );
+			if ( !empty( $thumbnail_id ) ) {
 				$thumbnail_size	 = count( $dimensions ) > 1 ? $dimensions : $dimensions[ 0 ];
-				$html			 = get_the_post_thumbnail( $post_id, $thumbnail_size, $gargs );
+				$html			 = wp_get_attachment_image( (int) $thumbnail_id, $thumbnail_size, false, $gargs );
 				$html			 = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_image', $html, $post_id, $dimensions, $fargs );
 			} else {
 				$html = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_not_found', $html, $post, $dimensions, $gargs );
@@ -752,7 +757,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return type
 		 */
 		static function pagination_output( $max_num_pages, $current_page, $session_id ) {
-			global $dargs;
+			
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( !$max_num_pages || (int) $max_num_pages === 1 ) {
 				return '';
@@ -782,17 +788,14 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * by merging css files to public/assets/css/public.css, js files to public/assets/js/public.js
 		 */
 		static function assets_of_view_types() {
-			global $processed_view_assets, $pt_view_sid;
+			global $pt_cv_glb, $pt_cv_id;
 
 			// If already processed | have no View on this page -> return
-			if ( ( $processed_view_assets && isset( $processed_view_assets[ $pt_view_sid ] ) ) || !$pt_view_sid ) {
+			if ( !empty( $pt_cv_glb[ $pt_cv_id ][ 'applied_assets' ] ) || !$pt_cv_id ) {
 				return;
 			}
 			// Mark as processed
-			if ( !$processed_view_assets ) {
-				$processed_view_assets = array();
-			}
-			$processed_view_assets[ $pt_view_sid ] = 1;
+			$pt_cv_glb[ $pt_cv_id ][ 'applied_assets' ] = 1;
 
 			// Get settings option
 			$options = get_option( PT_CV_OPTION_NAME );

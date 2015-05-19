@@ -3,8 +3,8 @@ Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, column, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
-Tested up to: 4.2.1
-Stable tag: 1.5.7.1
+Tested up to: 4.2.2
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +164,13 @@ function my_move_bootstrap( $args ) {
 
 
 == Changelog ==
+
+= 1.6.0 =
+* Tested up to: 4.2.2
+* Bug fixed: Fix WordPress bug which can't get valid thumbnail if meta field "_thumbnail_id" is string value instead of integer value
+* Update: Add class for taxonomies in View output
+* Bug fixed: Multiple paginations don't work in same page
+* Update: Restructure plugin's core functions
 
 = 1.5.7.1 =
 * Update: Show confirm message before close a View page to prevent missing changes

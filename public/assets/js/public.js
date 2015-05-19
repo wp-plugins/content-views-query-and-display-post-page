@@ -13,16 +13,12 @@
 
 	$.PT_CV_Public = $.PT_CV_Public || { };
 
-	$.PT_CV_Public = function ( options ) {
-		this.options = $.extend( {
-			_autoload: 1
-		}, options );
+	PT_CV_PUBLIC = PT_CV_PUBLIC || { };
 
-		// Autoload all registered functions
-		if ( this.options._autoload !== 0 ) {
-			this.move_bootstrap_to_top();
-			this.pagination();
-		}
+	$.PT_CV_Public = function ( options ) {
+		this.options = $.extend( { }, options );
+		this.move_bootstrap_to_top();
+		this.pagination();
 	};
 
 	$.PT_CV_Public.prototype = {
@@ -53,12 +49,18 @@
 			var $self = this;
 			var _prefix = PT_CV_PUBLIC._prefix;
 
+			// Get current page
+			var query_string = window.location.search;
+			var vpage = query_string.split( /vpage=/ );
+			var current_page = ( vpage[1] !== null && vpage[1] !== undefined ) ? parseInt( vpage[1] ) : 1;
+
 			// Bootstrap paginator
 			$( '.' + _prefix + 'pagination.' + _prefix + 'ajax' ).each( function () {
 				var this_ = $( this );
 				var total_pages = $( this ).attr( 'data-totalpages' );
 				$( this ).bootstrapPaginator( {
 					bootstrapMajorVersion: 3,
+					currentPage: current_page,
 					totalPages: total_pages,
 					shouldShowPage: function ( type, page, current ) {
 						if ( total_pages && total_pages < 10 ) {
@@ -87,9 +89,9 @@
 		/**
 		 * Get parameters to process pagination
 		 *
-		 * @param object this_
-		 * @param int selected_page
-		 * @param function callback
+		 * @param {object} this_
+		 * @param {int} selected_page
+		 * @param {function} callback
 		 * @returns {undefined}
 		 */
 		_setup_pagination: function ( this_, selected_page, callback ) {
@@ -126,11 +128,11 @@
 		/**
 		 * Get wrapper of selected page
 		 *
-		 * @param string session_id The session id of view
-		 * @param int selected_page The page to show
-		 * @param object spinner The jquery object of loading element
-		 * @param string pages_holder The selector expression of wrapper of pages
-		 * @param null|function callback The callback function
+		 * @param {string} session_id The session id of view
+		 * @param {int} selected_page The page to show
+		 * @param {object} spinner The jquery object of loading element
+		 * @param {string} pages_holder The selector expression of wrapper of pages
+		 * @param {function} callback The callback function
 		 * @returns void
 		 */
 		_get_page: function ( session_id, selected_page, spinner, pages_holder, callback ) {
@@ -175,9 +177,9 @@
 		/**
 		 * Show content of selected page
 		 *
-		 * @param int selected_page The page to show
-		 * @param string pages_holder The selector expression of wrapper of pages
-		 * @param null|function callback The callback function
+		 * @param {int} selected_page The page to show
+		 * @param {string} pages_holder The selector expression of wrapper of pages
+		 * @param {function} callback The callback function
 		 * @returns bool
 		 */
 		_active_page: function ( selected_page, pages_holder, callback ) {
@@ -205,12 +207,6 @@
 			}
 
 			// Trigger to make Pinterest layout works when do pagination
-			if ( $( '.' + _prefix + 'pinterest' ).length || $( '.' + _prefix + 'same-height' ).length ) {
-				$( 'body' ).trigger( _prefix + 'custom-trigger' );
-				$( window ).trigger( _prefix + 'resize' );
-			}
-
-			// Trigger action after pagination finished
 			$( 'body' ).trigger( _prefix + 'pagination-finished' );
 
 			return page_existed;
@@ -218,7 +214,6 @@
 	};
 
 	$( function () {
-
 		var _prefix = PT_CV_PUBLIC._prefix;
 
 		// Run at page load

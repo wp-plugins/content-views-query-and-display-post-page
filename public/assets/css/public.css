@@ -166,6 +166,7 @@
 	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
 	margin-left: 0;
+	border: 0;
 }
 
 .pt-cv-pagination a {

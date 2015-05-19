@@ -9,6 +9,8 @@
  */
 
 /* Overwrite WP */
+.wrap .updated,
+.wrap .error,
 .update-nag {
 	display: none;
 }
@@ -106,6 +108,7 @@ html {
 }
 
 .pt-cv-w200 select,
+.pt-cv-w200 input,
 .pt-cv-w200 radio {
 	width: 200px;
 	float: left;
