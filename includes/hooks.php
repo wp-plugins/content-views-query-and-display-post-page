@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Custom filters/actions
  *
@@ -8,8 +9,7 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
-if ( ! class_exists( 'PT_CV_Hooks' ) ) {
+if ( !class_exists( 'PT_CV_Hooks' ) ) {
 
 	/**
 	 * @name PT_CV_Hooks
@@ -33,71 +33,68 @@ if ( ! class_exists( 'PT_CV_Hooks' ) ) {
 		 * @param array  $args  The Query parameters array
 		 */
 		public static function filter_validate_settings( $errors, $args ) {
-			global $dargs;
+			
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			//			echo "<pre>";
 			//			var_dump( 'query args', $args );
 			//			echo "</pre>";
-
 			//			echo "<pre>";
 			//			var_dump( 'display args', $dargs );
 			//			echo "</pre>";
 
-			// Prefix string for error message
 			$messages = array(
-				'field' => array(
+				'field'	 => array(
 					'select' => __( 'Please select an option in : ', PT_CV_DOMAIN ),
-					'text'   => __( 'Please set value in : ', PT_CV_DOMAIN ),
+					'text'	 => __( 'Please set value in : ', PT_CV_DOMAIN ),
 				),
-				'tab'   => array(
-					'filter'  => __( 'Filter Settings', PT_CV_DOMAIN ),
-					'display' => __( 'Display Settings', PT_CV_DOMAIN ),
+				'tab'	 => array(
+					'filter'	 => __( 'Filter Settings', PT_CV_DOMAIN ),
+					'display'	 => __( 'Display Settings', PT_CV_DOMAIN ),
 				),
 			);
 
 			/**
 			 * Validate Query parameters
 			 */
-
 			// Post type
-			if ( empty( $args['post_type'] ) ) {
-				$errors[] = $messages['field']['select'] . $messages['tab']['filter'] . ' > ' . __( 'Content type', PT_CV_DOMAIN );
+			if ( empty( $args[ 'post_type' ] ) ) {
+				$errors[] = $messages[ 'field' ][ 'select' ] . $messages[ 'tab' ][ 'filter' ] . ' > ' . __( 'Content type', PT_CV_DOMAIN );
 			}
 
 			/**
 			 * Validate common Display parameters
 			 */
-
 			// View type
-			if ( empty( $dargs['view-type'] ) ) {
-				$errors[] = $messages['field']['select'] . $messages['tab']['display'] . ' > ' . __( 'View type', PT_CV_DOMAIN );
+			if ( empty( $dargs[ 'view-type' ] ) ) {
+				$errors[] = $messages[ 'field' ][ 'select' ] . $messages[ 'tab' ][ 'display' ] . ' > ' . __( 'View type', PT_CV_DOMAIN );
 			}
 
 			// Layout format
-			if ( empty( $dargs['layout-format'] ) ) {
-				$errors[] = $messages['field']['select'] . $messages['tab']['display'] . ' > ' . __( 'Layout format', PT_CV_DOMAIN );
+			if ( empty( $dargs[ 'layout-format' ] ) ) {
+				$errors[] = $messages[ 'field' ][ 'select' ] . $messages[ 'tab' ][ 'display' ] . ' > ' . __( 'Layout format', PT_CV_DOMAIN );
 			}
 
 			// Field settings
-			if ( ! isset( $dargs['fields'] ) ) {
-				$errors[] = $messages['field']['select'] . $messages['tab']['display'] . ' > ' . __( 'Fields settings', PT_CV_DOMAIN ) . ' > ' . __( 'Fields display', PT_CV_DOMAIN );
+			if ( !isset( $dargs[ 'fields' ] ) ) {
+				$errors[] = $messages[ 'field' ][ 'select' ] . $messages[ 'tab' ][ 'display' ] . ' > ' . __( 'Fields settings', PT_CV_DOMAIN ) . ' > ' . __( 'Fields display', PT_CV_DOMAIN );
 			}
 
 			// Item per page
-			if ( isset( $dargs['pagination-settings'] ) ) {
-				if ( empty( $dargs['pagination-settings']['items-per-page'] ) ) {
-					$errors[] = $messages['field']['text'] . $messages['tab']['display'] . ' > ' . __( 'Pagination settings', PT_CV_DOMAIN ) . ' > ' . __( 'Items per page', PT_CV_DOMAIN );
+			if ( isset( $dargs[ 'pagination-settings' ] ) ) {
+				if ( empty( $dargs[ 'pagination-settings' ][ 'items-per-page' ] ) ) {
+					$errors[] = $messages[ 'field' ][ 'text' ] . $messages[ 'tab' ][ 'display' ] . ' > ' . __( 'Pagination settings', PT_CV_DOMAIN ) . ' > ' . __( 'Items per page', PT_CV_DOMAIN );
 				}
 			}
 
 			/**
 			 * Validate Display parameters of view types
 			 */
-			if ( ! empty( $dargs['view-type'] ) ) {
-				switch ( $dargs['view-type'] ) {
+			if ( !empty( $dargs[ 'view-type' ] ) ) {
+				switch ( $dargs[ 'view-type' ] ) {
 					case 'grid':
-						if ( empty( $dargs['number-columns'] ) ) {
-							$errors[] = $messages['field']['text'] . $messages['tab']['display'] . ' > ' . __( 'View type settings', PT_CV_DOMAIN ) . ' > ' . __( 'Items per row', PT_CV_DOMAIN );
+						if ( empty( $dargs[ 'number-columns' ] ) ) {
+							$errors[] = $messages[ 'field' ][ 'text' ] . $messages[ 'tab' ][ 'display' ] . ' > ' . __( 'View type settings', PT_CV_DOMAIN ) . ' > ' . __( 'Items per row', PT_CV_DOMAIN );
 						}
 						break;
 				}
