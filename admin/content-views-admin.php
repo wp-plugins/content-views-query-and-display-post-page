@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Content Views Admin
  *
@@ -8,7 +9,6 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
 class PT_Content_Views_Admin {
 
 	/**
@@ -27,8 +27,7 @@ class PT_Content_Views_Admin {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_screen_hook_suffix = null;
-
+	protected $plugin_screen_hook_suffix	 = null;
 	// Slugs for sub menu pages
 	protected $plugin_sub_screen_hook_suffix = null;
 
@@ -46,14 +45,14 @@ class PT_Content_Views_Admin {
 		 * - Uncomment following lines if the admin class should only be available for super admins
 		 */
 		/* if( ! is_super_admin() ) {
-			return;
-		} */
+		  return;
+		  } */
 
 		/*
 		 * Call $plugin_slug from public plugin class.
 		 */
-		$plugin            = PT_Content_Views::get_instance();
-		$this->plugin_slug = $plugin->get_plugin_slug();
+		$plugin				 = PT_Content_Views::get_instance();
+		$this->plugin_slug	 = $plugin->get_plugin_slug();
 
 		// Fix redirect error
 		add_action( 'init', array( $this, 'do_output_buffer' ) );
@@ -84,6 +83,10 @@ class PT_Content_Views_Admin {
 		// Filter link of actions in All Views page
 		add_filter( 'post_row_actions', array( $this, 'filter_view_row_actions' ), 10, 2 );
 
+		// Add Shortcode column
+		add_filter( 'manage_pt_view_posts_columns', array( $this, 'filter_view_custom_column_header' ) );
+		add_action( 'manage_pt_view_posts_custom_column', array( $this, 'action_view_custom_column_content' ), 10, 2 );
+
 		// Filter link of Title in All Views page
 		add_filter( 'get_edit_post_link', array( $this, 'filter_get_edit_post_link' ), 10, 3 );
 
@@ -112,8 +115,8 @@ class PT_Content_Views_Admin {
 		 * - Uncomment following lines if the admin class should only be available for super admins
 		 */
 		/* if( ! is_super_admin() ) {
-			return;
-		} */
+		  return;
+		  } */
 
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
@@ -136,7 +139,7 @@ class PT_Content_Views_Admin {
 	public function redirect_add_new() {
 		global $pagenow;
 		if ( $pagenow === 'post-new.php' ) {
-			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+			$post_type = isset( $_GET[ 'post_type' ] ) ? $_GET[ 'post_type' ] : '';
 			if ( $post_type === PT_CV_POST_TYPE ) {
 				wp_redirect( admin_url( 'admin.php?page=' . $this->plugin_slug . '-add' ), 301 );
 				exit;
@@ -153,15 +156,15 @@ class PT_Content_Views_Admin {
 	 */
 	public function enqueue_admin_styles() {
 
-		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+		if ( !isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
 
 		// Load every Admin pages
 		PT_CV_Asset::enqueue(
-			'admin-menu', 'style', array(
-				'src' => plugins_url( 'assets/css/menu.css', __FILE__ ),
-			)
+		'admin-menu', 'style', array(
+			'src' => plugins_url( 'assets/css/menu.css', __FILE__ ),
+		)
 		);
 
 		$screen = get_current_screen();
@@ -174,34 +177,34 @@ class PT_Content_Views_Admin {
 
 			// Main admin style
 			PT_CV_Asset::enqueue(
-				'admin', 'style', array(
-					'src' => plugins_url( 'assets/css/admin.css', __FILE__ ),
-				)
+			'admin', 'style', array(
+				'src' => plugins_url( 'assets/css/admin.css', __FILE__ ),
+			)
 			);
 
 			// Fix style of WP
 			global $wp_version;
 			if ( version_compare( $wp_version, '3.8.0' ) >= 0 ) {
 				PT_CV_Asset::enqueue(
-					'admin-fix', 'style', array(
-						'src' => plugins_url( 'assets/css/wp38.css', __FILE__ ),
-						'ver' => $wp_version,
-					)
+				'admin-fix', 'style', array(
+					'src'	 => plugins_url( 'assets/css/wp38.css', __FILE__ ),
+					'ver'	 => $wp_version,
+				)
 				);
 			} else {
 				PT_CV_Asset::enqueue(
-					'admin-fix', 'style', array(
-						'src' => plugins_url( 'assets/css/wp.css', __FILE__ ),
-						'ver' => $wp_version,
-					)
+				'admin-fix', 'style', array(
+					'src'	 => plugins_url( 'assets/css/wp.css', __FILE__ ),
+					'ver'	 => $wp_version,
+				)
 				);
 			}
 
 			// Bootstrap for Admin
 			PT_CV_Asset::enqueue(
-				'bootstrap-admin', 'style', array(
-					'src' => plugins_url( 'assets/bootstrap/css/bootstrap.full.min.css', PT_CV_FILE ),
-				)
+			'bootstrap-admin', 'style', array(
+				'src' => plugins_url( 'assets/bootstrap/css/bootstrap.admin.css', PT_CV_FILE ),
+			)
 			);
 
 			// For Preview
@@ -222,7 +225,7 @@ class PT_Content_Views_Admin {
 	 */
 	public function enqueue_admin_scripts() {
 
-		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+		if ( !isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
 
@@ -235,31 +238,32 @@ class PT_Content_Views_Admin {
 
 			// Main admin script
 			PT_CV_Asset::enqueue(
-				'admin', 'script', array(
-					'src'  => plugins_url( 'assets/js/admin.js', __FILE__ ),
-					'deps' => array( 'jquery' ),
-				)
+			'admin', 'script', array(
+				'src'	 => plugins_url( 'assets/js/admin.js', __FILE__ ),
+				'deps'	 => array( 'jquery' ),
+			)
 			);
 
 			// Localize strings
 			PT_CV_Asset::localize_script(
-				'admin', PT_CV_PREFIX_UPPER . 'ADMIN', array(
-					'text' => array(
-						'no_taxonomy'        => __( 'There is no taxonomy for selected content type', PT_CV_DOMAIN ),
-						'pagination_disable' => __( 'Pagination is disabled when Limit = -1', PT_CV_DOMAIN ),
-						'prevent_click'      => __( 'Opening a link is prevented in preview box', PT_CV_DOMAIN ),
+			'admin', PT_CV_PREFIX_UPPER . 'ADMIN', array(
+				'supported_version'	 => PT_CV_Functions::wp_version_compare( '3.5' ),
+				'text'				 => array(
+					'no_taxonomy'		 => __( 'There is no taxonomy for selected content type', PT_CV_DOMAIN ),
+					'pagination_disable' => __( 'Pagination is disabled when Limit = -1', PT_CV_DOMAIN ),
+					'prevent_click'		 => __( 'Opening a link is prevented in preview box', PT_CV_DOMAIN ),
+				),
+				'btn'				 => array(
+					'preview' => array(
+						'show'	 => __( 'Show Preview', PT_CV_DOMAIN ),
+						'hide'	 => __( 'Hide Preview', PT_CV_DOMAIN ),
+						'update' => __( 'Update Preview', PT_CV_DOMAIN ),
 					),
-					'btn'  => array(
-						'preview' => array(
-							'show'   => __( 'Show Preview', PT_CV_DOMAIN ),
-							'hide'   => __( 'Hide Preview', PT_CV_DOMAIN ),
-							'update' => __( 'Update Preview', PT_CV_DOMAIN ),
-						),
-					),
-					'data' => array(
-						'post_types_vs_taxonomies' => PT_CV_Values::post_types_vs_taxonomies(),
-					),
-				)
+				),
+				'data'				 => array(
+					'post_types_vs_taxonomies' => PT_CV_Values::post_types_vs_taxonomies(),
+				),
+			)
 			);
 
 			// For Preview
@@ -273,7 +277,7 @@ class PT_Content_Views_Admin {
 	 * Print script at footer of WP admin
 	 */
 	public function print_footer_scripts() {
-		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+		if ( !isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
 
@@ -292,32 +296,36 @@ class PT_Content_Views_Admin {
 		/*
 		 * Add a settings page for this plugin to the Settings menu.
 		 */
+		// Get user role settings option
+		$options	 = get_option( PT_CV_OPTION_NAME );
+		$user_role	 = current_user_can( 'administrator' ) ? 'administrator' : ( isset( $options[ 'access_role' ] ) ? $options[ 'access_role' ] : 'edit_posts' );
+
 		$this->plugin_screen_hook_suffix = add_menu_page(
-			__( 'Content View Settings', $this->plugin_slug ),
-			__( 'Content View Settings', $this->plugin_slug ),
-			'edit_posts',
-			$this->plugin_slug,
-			array( $this, 'display_plugin_admin_page' ),
-			'',
-			'45.6'
+		__( 'Content View Settings', $this->plugin_slug ), __( 'Content View Settings', $this->plugin_slug ), $user_role, $this->plugin_slug, array( $this, 'display_plugin_admin_page' ), '', '45.6'
 		);
 
 		$this->plugin_sub_screen_hook_suffix[] = PT_CV_Functions::menu_add_sub(
-			$this->plugin_slug,
-			__( 'All Content Views', $this->plugin_slug ),
-			__( 'All Views', $this->plugin_slug ),
-			'list',
-			__CLASS__
+		$this->plugin_slug, __( 'All Content Views', $this->plugin_slug ), __( 'All Views', $this->plugin_slug ), $user_role, 'list', __CLASS__
 		);
 
 		$this->plugin_sub_screen_hook_suffix[] = PT_CV_Functions::menu_add_sub(
-			$this->plugin_slug,
-			__( 'Add New View', $this->plugin_slug ),
-			__( 'Add New', $this->plugin_slug ),
-			'add',
-			__CLASS__
+		$this->plugin_slug, __( 'Add New View', $this->plugin_slug ), __( 'Add New', $this->plugin_slug ), $user_role, 'add', __CLASS__
 		);
+	}
 
+	/**
+	 * Admin custom column content
+	 *
+	 * @param type $column_name
+	 * @param type $post_id
+	 */
+	public function action_view_custom_column_content( $column_name, $post_id ) {
+		if ( $column_name == 'shortcode' ) {
+			// Get View id
+			$view_id = get_post_meta( $post_id, PT_CV_META_ID, true );
+
+			printf( '<input style="width: 250px; background: #ADFFAD;" type="text" value="[pt_view id=&quot;%s&quot;]" onclick="this.select()" readonly="">', $view_id );
+		}
 	}
 
 	/**
@@ -325,21 +333,21 @@ class PT_Content_Views_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function display_plugin_admin_page() {
+	public static function display_plugin_admin_page() {
 		include_once( 'views/admin.php' );
 	}
 
 	/**
 	 * List all Views page
 	 */
-	public function display_sub_page_list() {
+	public static function display_sub_page_list() {
 		include_once( 'views/list.php' );
 	}
 
 	/**
 	 * Add/Edit View page
 	 */
-	public function display_sub_page_add() {
+	public static function display_sub_page_add() {
 		include_once( 'views/view.php' );
 	}
 
@@ -351,11 +359,10 @@ class PT_Content_Views_Admin {
 	public function filter_add_action_links( $links ) {
 
 		return array_merge(
-			array(
-				'settings' => '<a href="' . admin_url( 'admin.php?page=' . $this->plugin_slug ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>',
-				'add'      => '<a href="' . admin_url( 'admin.php?page=' . $this->plugin_slug . '-add' ) . '">' . __( 'Add View', $this->plugin_slug ) . '</a>',
-			),
-			$links
+		array(
+			'settings'	 => '<a href="' . admin_url( 'admin.php?page=' . $this->plugin_slug ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>',
+			'add'		 => '<a href="' . admin_url( 'admin.php?page=' . $this->plugin_slug . '-add' ) . '">' . __( 'Add View', $this->plugin_slug ) . '</a>',
+		), $links
 		);
 	}
 
@@ -377,25 +384,40 @@ class PT_Content_Views_Admin {
 		}
 
 		// Remove Quick edit link
-		unset( $actions['inline hide-if-no-js'] );
+		unset( $actions[ 'inline hide-if-no-js' ] );
 
 		// Remove View link
-		unset( $actions['view'] );
+		unset( $actions[ 'view' ] );
 
 		// Update Edit link
-
 		// Get View id
 		$view_id = get_post_meta( $post->ID, PT_CV_META_ID, true );
 
-		if ( ! empty( $view_id ) ) {
-			$edit_link       = PT_CV_Functions::view_link( $view_id );
-			$actions['edit'] = '<a href="' . esc_url( $edit_link ) . '" title="' . esc_attr( __( 'Edit this item' ) ) . '">' . __( 'Edit' ) . '</a>';
+		if ( !empty( $view_id ) ) {
+			$edit_link			 = PT_CV_Functions::view_link( $view_id );
+			$actions[ 'edit' ]	 = '<a href="' . esc_url( $edit_link ) . '" title="' . esc_attr( __( 'Edit this item' ) ) . '">' . __( 'Edit' ) . '</a>';
 		}
 
 		// Filter actions
 		$actions = apply_filters( PT_CV_PREFIX_ . 'view_row_actions', $actions, $view_id );
 
 		return $actions;
+	}
+
+	/**
+	 * Modify column in View list page (Admin)
+	 *
+	 * @param type $defaults
+	 */
+	public function filter_view_custom_column_header( $defaults ) {
+		unset( $defaults[ 'author' ] );
+		unset( $defaults[ 'date' ] );
+
+		$defaults[ 'shortcode' ] = __( 'Shortcode' );
+		$defaults[ 'author' ]	 = __( 'Author' );
+		$defaults[ 'date' ]		 = __( 'Date' );
+
+		return $defaults;
 	}
 
 	/**
@@ -427,14 +449,14 @@ class PT_Content_Views_Admin {
 	public function filter_admin_title( $admin_title, $title ) {
 		$screen = get_current_screen();
 
-		if ( ! $this || ! isset ( $this->plugin_sub_screen_hook_suffix ) ) {
+		if ( !$this || !isset( $this->plugin_sub_screen_hook_suffix ) ) {
 			return $admin_title;
 		}
 
 		// If is View page
 		if ( $this->plugin_screen_hook_suffix == $screen->id || in_array( $screen->id, $this->plugin_sub_screen_hook_suffix ) ) {
 			// If View id is passed in url
-			if ( ! empty ( $_GET['id'] ) ) {
+			if ( !empty( $_GET[ 'id' ] ) ) {
 				$admin_title = str_replace( 'Add New', 'Edit', $admin_title );
 			}
 		}
