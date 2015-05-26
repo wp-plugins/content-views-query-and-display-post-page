@@ -364,8 +364,11 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function post_terms( $post ) {
-			global $pt_cv_item_terms;
+			global $pt_cv_glb;
 
+			if ( !isset( $pt_cv_glb[ 'item_terms' ] ) ) {
+				$pt_cv_glb[ 'item_terms' ] = array();
+			}
 
 			// List of HTML link to terms
 			$links = array();
@@ -386,10 +389,10 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				'<a href="%1$s" title="%2$s %3$s" class="%4$s">%3$s</a>', esc_url( get_term_link( $term, $term->taxonomy ) ), __( 'View all posts in', PT_CV_DOMAIN ), $term->name, PT_CV_PREFIX . 'tax-' . $term->slug
 				);
 
-				if ( !isset( $pt_cv_item_terms[ $post_id ] ) ) {
-					$pt_cv_item_terms[ $post_id ] = array();
+				if ( !isset( $pt_cv_glb[ 'item_terms' ][ $post_id ] ) ) {
+					$pt_cv_glb[ 'item_terms' ][ $post_id ] = array();
 				}
-				$pt_cv_item_terms[ $post_id ][ $term->slug ] = $term->name;
+				$pt_cv_glb[ 'item_terms' ][ $post_id ][ $term->slug ] = $term->name;
 			}
 
 			return implode( ', ', $links );
@@ -579,31 +582,27 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				return __( 'Empty settings', PT_CV_DOMAIN );
 			}
 
-			/**
-			 * Check if this view is processed in this page
-			 * if processed => hide it
-			 * @since 1.5.2
-			 */
-			global $pt_cv_processed_view, $pt_cv_glb, $pt_cv_id;
-
-			// Init global array
-			if ( !isset( $pt_cv_glb ) ) {
-				$pt_cv_glb = array();
-			}
+			global $pt_cv_glb, $pt_cv_id;
 
 			$view_id = !empty( $id ) ? $id : PT_CV_Functions::string_random();
+
+			// Init arrays
 			if ( !isset( $pt_cv_glb[ $view_id ] ) ) {
 				$pt_cv_glb[ $view_id ] = array();
 			}
+			if ( !isset( $pt_cv_glb[ 'processed_view' ] ) ) {
+				$pt_cv_glb[ 'processed_view' ] = array();
+			}
 
+			// If processed this View => return
+			// (Same View ID but different shortcode parameters => consider as 2 different Views)
 			if ( empty( $pargs ) ) {
-				// Same View but has different shortcode parameters => consider as 2 different Views
 				$sc_params	 = isset( $pt_cv_glb[ $view_id ][ 'shortcode_params' ] ) ? $pt_cv_glb[ $view_id ][ 'shortcode_params' ] : PT_CV_Functions::string_random();
 				$vid		 = $view_id . '-' . md5( serialize( $sc_params ) );
-				if ( !empty( $pt_cv_processed_view[ $vid ] ) ) {
+				if ( !empty( $pt_cv_glb[ 'processed_view' ][ $vid ] ) ) {
 					return '';
 				}
-				$pt_cv_processed_view[ $vid ] = 1;
+				$pt_cv_glb[ 'processed_view' ][ $vid ] = 1;
 			}
 
 			/**

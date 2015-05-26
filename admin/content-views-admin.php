@@ -333,21 +333,21 @@ class PT_Content_Views_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function display_plugin_admin_page() {
+	public static function display_plugin_admin_page() {
 		include_once( 'views/admin.php' );
 	}
 
 	/**
 	 * List all Views page
 	 */
-	public function display_sub_page_list() {
+	public static function display_sub_page_list() {
 		include_once( 'views/list.php' );
 	}
 
 	/**
 	 * Add/Edit View page
 	 */
-	public function display_sub_page_add() {
+	public static function display_sub_page_add() {
 		include_once( 'views/view.php' );
 	}
 

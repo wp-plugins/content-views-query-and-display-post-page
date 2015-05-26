@@ -27,7 +27,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * @return array
 		 */
 		static function process_column_width( $content_items ) {
-			
+
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			// -- Get column span
@@ -64,7 +64,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * @return array Array of rows, each row contains columns
 		 */
 		static function grid_wrapper( $content_items, &$content ) {
-			
+
 			$enable_filter = PT_CV_Functions::get_global_variable( 'enable_filter' );
 
 			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width( $content_items );
@@ -141,7 +141,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * @return array Array of rows, each row contains columns
 		 */
 		static function scrollable_wrapper( $content_items, &$content ) {
-			
+
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			// ID for the wrapper of scrollable list
@@ -187,7 +187,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 * @return array
 		 */
 		static function scrollable_content( $content_items ) {
-			
+
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			// Store content of a Scrollable list

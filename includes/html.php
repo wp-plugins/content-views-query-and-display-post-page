@@ -168,7 +168,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @param string $style     The style of view type (main, style2...)
 		 */
 		static function view_type_output( $view_type, $post, $style = 'main' ) {
-			
+
 			$dargs	 = PT_CV_Functions::get_global_variable( 'dargs' );
 			$content = NULL;
 
@@ -225,7 +225,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return string Full HTML output of a item
 		 */
 		static function content_item_wrap( $html_item, $class = '', $post_id = 0 ) {
-			
+
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( empty( $html_item ) ) {
@@ -366,7 +366,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return string
 		 */
 		static function field_item_html( $field_name, $post, $fargs ) {
-			
+
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( empty( $field_name ) ) {
@@ -466,7 +466,6 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return string
 		 */
 		static function _field_content( $post, $fargs ) {
-			
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			// Get other settings
@@ -582,7 +581,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return string
 		 */
 		static function _field_thumbnail( $post, $fargs ) {
-			
+
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			// Get layout format
@@ -757,7 +756,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @return type
 		 */
 		static function pagination_output( $max_num_pages, $current_page, $session_id ) {
-			
+
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( !$max_num_pages || (int) $max_num_pages === 1 ) {
@@ -893,11 +892,11 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			// Localize for Public script
 			PT_CV_Asset::localize_script(
 			'public', PT_CV_PREFIX_UPPER . 'PUBLIC', array(
+				'_prefix'		 => PT_CV_PREFIX,
+				'_nonce'		 => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
 				'is_admin'		 => is_admin(),
 				'is_mobile'		 => wp_is_mobile(),
-				'_prefix'		 => PT_CV_PREFIX,
 				'ajaxurl'		 => admin_url( 'admin-ajax.php' ),
-				'_nonce'		 => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
 				'lang'			 => PT_CV_Functions::get_language(), #Get current language of site
 				'move_bootstrap' => apply_filters( PT_CV_PREFIX_ . 'move_bootstrap', 1 ), #Should I move Bootstrap to top of all styles
 			)

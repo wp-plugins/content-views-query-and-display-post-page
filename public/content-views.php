@@ -40,7 +40,7 @@ class PT_Content_Views {
 	private function __construct() {
 
 		// Load plugin text domain
-		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 11 );
 
 		// Register content
 		add_action( 'init', array( $this, 'content_register' ) );
@@ -53,7 +53,7 @@ class PT_Content_Views {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// Update view count of post
-		add_action( 'wp_head', array( &$this, 'update_view_count' ) );
+		add_action( 'wp_head', array( &$this, 'head_actions' ) );
 
 		// Output assets content at footer of page
 		add_action( 'wp_footer', array( 'PT_CV_Html', 'assets_of_view_types' ), 100 );
@@ -227,12 +227,9 @@ class PT_Content_Views {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-
-		$domain	 = $this->plugin_slug;
-		$locale	 = apply_filters( 'plugin_locale', get_locale(), $domain );
+		$domain = $this->plugin_slug;
 
 		// Load translation file in wp-content/languages/content-views/
-		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( PT_CV_FILE ) ) . '/languages/' );
 	}
 
@@ -308,7 +305,7 @@ class PT_Content_Views {
 	 * @global type $post
 	 * @return void
 	 */
-	public function update_view_count() {
+	public static function _update_view_count() {
 		global $post;
 		if ( !isset( $post ) || !is_object( $post ) ) {
 			return;
@@ -316,6 +313,19 @@ class PT_Content_Views {
 		if ( is_single( $post->ID ) ) {
 			PT_CV_Functions::post_update_view_count( $post->ID );
 		}
+	}
+
+	/**
+	 * Custom actions at head
+	 */
+	public function head_actions() {
+		// Update View count
+		self::_update_view_count();
+
+		// Initialize global variables
+		global $pt_cv_glb, $pt_cv_id;
+		$pt_cv_glb	 = array();
+		$pt_cv_id	 = 0;
 	}
 
 }

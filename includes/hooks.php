@@ -33,7 +33,7 @@ if ( !class_exists( 'PT_CV_Hooks' ) ) {
 		 * @param array  $args  The Query parameters array
 		 */
 		public static function filter_validate_settings( $errors, $args ) {
-			
+
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			//			echo "<pre>";
