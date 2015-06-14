@@ -1,4 +1,5 @@
 <?php
+
 /**
  * List all Content Views
  *
@@ -8,7 +9,6 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
 // Redirect to edit.php page of Content Views post type
 wp_redirect( admin_url( 'edit.php?post_type=' . PT_CV_POST_TYPE ) );
 exit;

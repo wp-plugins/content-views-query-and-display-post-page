@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Content Views for Public
  *
@@ -8,7 +9,6 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
 class PT_Content_Views {
 
 	/**
@@ -40,7 +40,7 @@ class PT_Content_Views {
 	private function __construct() {
 
 		// Load plugin text domain
-		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 11 );
 
 		// Register content
 		add_action( 'init', array( $this, 'content_register' ) );
@@ -53,9 +53,7 @@ class PT_Content_Views {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// Update view count of post
-		add_action( 'wp_head', array( &$this, 'update_view_count' ) );
-
-		add_action( 'wp_head', array( &$this, 'init_global_variables' ) );
+		add_action( 'wp_head', array( &$this, 'head_actions' ) );
 
 		// Output assets content at footer of page
 		add_action( 'wp_footer', array( 'PT_CV_Html', 'assets_of_view_types' ), 100 );
@@ -229,12 +227,9 @@ class PT_Content_Views {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-
 		$domain = $this->plugin_slug;
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		// Load translation file in wp-content/languages/content-views/
-		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( PT_CV_FILE ) ) . '/languages/' );
 	}
 
@@ -247,38 +242,35 @@ class PT_Content_Views {
 		 * Register custom post type : View
 		 */
 		$labels = array(
-			'name'               => _x( 'Views', 'post type general name', PT_CV_DOMAIN ),
-			'singular_name'      => _x( 'View', 'post type singular name', PT_CV_DOMAIN ),
-			'menu_name'          => _x( 'Views', 'admin menu', PT_CV_DOMAIN ),
-			'name_admin_bar'     => _x( 'View', 'add new on admin bar', PT_CV_DOMAIN ),
-			'add_new'            => _x( 'Add New', PT_CV_POST_TYPE, PT_CV_DOMAIN ),
-			'add_new_item'       => __( 'Add New View', PT_CV_DOMAIN ),
-			'new_item'           => __( 'New View', PT_CV_DOMAIN ),
-			'edit_item'          => __( 'Edit View', PT_CV_DOMAIN ),
-			'view_item'          => __( 'View View', PT_CV_DOMAIN ),
-			'all_items'          => __( 'All Views', PT_CV_DOMAIN ),
-			'search_items'       => __( 'Search Views', PT_CV_DOMAIN ),
-			'parent_item_colon'  => __( 'Parent Views:', PT_CV_DOMAIN ),
-			'not_found'          => __( 'No views found.', PT_CV_DOMAIN ),
+			'name'				 => _x( 'Views', 'post type general name', PT_CV_DOMAIN ),
+			'singular_name'		 => _x( 'View', 'post type singular name', PT_CV_DOMAIN ),
+			'menu_name'			 => _x( 'Views', 'admin menu', PT_CV_DOMAIN ),
+			'name_admin_bar'	 => _x( 'View', 'add new on admin bar', PT_CV_DOMAIN ),
+			'add_new'			 => _x( 'Add New', PT_CV_POST_TYPE, PT_CV_DOMAIN ),
+			'add_new_item'		 => __( 'Add New View', PT_CV_DOMAIN ),
+			'new_item'			 => __( 'New View', PT_CV_DOMAIN ),
+			'edit_item'			 => __( 'Edit View', PT_CV_DOMAIN ),
+			'view_item'			 => __( 'View View', PT_CV_DOMAIN ),
+			'all_items'			 => __( 'All Views', PT_CV_DOMAIN ),
+			'search_items'		 => __( 'Search Views', PT_CV_DOMAIN ),
+			'parent_item_colon'	 => __( 'Parent Views:', PT_CV_DOMAIN ),
+			'not_found'			 => __( 'No views found.', PT_CV_DOMAIN ),
 			'not_found_in_trash' => __( 'No views found in Trash.', PT_CV_DOMAIN ),
 		);
 
 		$args = array(
-			'labels'             => $labels,
-			'public'             => true,
-			'publicly_queryable' => true,
-
+			'labels'			 => $labels,
+			'public'			 => false,
 			// Hide in menu, but can see All Views page
-			'show_ui'            => false,
-			'show_in_menu'       => false,
-
-			'query_var'          => true,
-			'rewrite'            => array( 'slug' => PT_CV_POST_TYPE ),
-			'capability_type'    => 'post',
-			'has_archive'        => true,
-			'hierarchical'       => false,
-			'menu_position'      => null,
-			'supports'           => array( 'title', 'author', 'custom-fields' ),
+			'show_ui'			 => true, // set "true" to fix "Invalid post type" error
+			'show_in_menu'		 => false,
+			'query_var'			 => true,
+			'rewrite'			 => array( 'slug' => PT_CV_POST_TYPE ),
+			'capability_type'	 => 'post',
+			'has_archive'		 => true,
+			'hierarchical'		 => false,
+			'menu_position'		 => null,
+			'supports'			 => array( 'title', 'author', 'custom-fields' ),
 		);
 
 		register_post_type( PT_CV_POST_TYPE, $args );
@@ -313,9 +305,9 @@ class PT_Content_Views {
 	 * @global type $post
 	 * @return void
 	 */
-	public function update_view_count() {
+	public static function _update_view_count() {
 		global $post;
-		if ( ! isset( $post ) || ! is_object( $post ) ) {
+		if ( !isset( $post ) || !is_object( $post ) ) {
 			return;
 		}
 		if ( is_single( $post->ID ) ) {
@@ -324,13 +316,16 @@ class PT_Content_Views {
 	}
 
 	/**
-	 * Init global variables
-	 *
-	 * @global type $did_assets_of_view_types
+	 * Custom actions at head
 	 */
-	public function init_global_variables() {
-		global $did_assets_of_view_types;
-		$did_assets_of_view_types = array();
+	public function head_actions() {
+		// Update View count
+		self::_update_view_count();
+
+		// Initialize global variables
+		global $pt_cv_glb, $pt_cv_id;
+		$pt_cv_glb	 = array();
+		$pt_cv_id	 = 0;
 	}
 
 }
