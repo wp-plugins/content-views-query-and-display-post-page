@@ -38,7 +38,11 @@
 			var bootstrap_css = $( '#' + selector );
 			if ( bootstrap_css.length > 0 ) {
 				bootstrap_css.remove();
-				$( 'title' ).after( "<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr( 'href' ) + "' type='text/css' media='all' />" );
+
+				var title = $( 'title' );
+				var title_content = title.html();
+				title.after( "<!-- Manually move Bootstrap to top of all styles --><link rel='stylesheet' id='" + selector + "' href='" + bootstrap_css.attr( 'href' ) + "' type='text/css' media='all' />" );
+				title.html( title_content );
 			}
 		},
 		/**

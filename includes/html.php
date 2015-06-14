@@ -557,7 +557,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			// Don't wrap link
 			$no_link = apply_filters( PT_CV_PREFIX_ . 'field_href_no_link', 0, $open_in );
 
-			$href = apply_filters( PT_CV_PREFIX_ . 'field_href', get_permalink( $post->ID ) );
+			$href = apply_filters( PT_CV_PREFIX_ . 'field_href', get_permalink( $post->ID ), $post );
 
 			// Change href
 			if ( $no_link && strpos( $defined_class, 'readmore' ) === false ) {
@@ -611,8 +611,10 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			$dimensions	 = (array) apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_dimension_output', $dimensions, $fargs );
 
 			// Check if has thumbnail ( has_post_thumbnail doesn't works )
-			$thumbnail_id = get_post_thumbnail_id( $post_id );
-			if ( !empty( $thumbnail_id ) ) {
+			$thumbnail_id	 = get_post_thumbnail_id( $post_id );
+			// Check if user doesn't want to load thumbnail: field_thumbnail_load = 0
+			$load_thumbnail	 = !empty( $thumbnail_id ) && apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_load', 1 );
+			if ( $load_thumbnail ) {
 				$thumbnail_size	 = count( $dimensions ) > 1 ? $dimensions : $dimensions[ 0 ];
 				$html			 = wp_get_attachment_image( (int) $thumbnail_id, $thumbnail_size, false, $gargs );
 				$html			 = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_image', $html, $post_id, $dimensions, $fargs );

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, column, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.2.2
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +164,12 @@ function my_move_bootstrap( $args ) {
 
 
 == Changelog ==
+
+= 1.6.2 =
+* Security: Fix XSS Vulnerability problem
+* Bug fixed: Plugin does not rendering anything sometimes
+* Bug fixed: Title is missing when move Bootstrap to top of all styles
+* Improvement: Optimize CSS properties
 
 = 1.6.1 =
 * Update: Update translation function & re-generate .po file

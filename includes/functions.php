@@ -594,17 +594,6 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$pt_cv_glb[ 'processed_view' ] = array();
 			}
 
-			// If processed this View => return
-			// (Same View ID but different shortcode parameters => consider as 2 different Views)
-			if ( empty( $pargs ) ) {
-				$sc_params	 = isset( $pt_cv_glb[ $view_id ][ 'shortcode_params' ] ) ? $pt_cv_glb[ $view_id ][ 'shortcode_params' ] : PT_CV_Functions::string_random();
-				$vid		 = $view_id . '-' . md5( serialize( $sc_params ) );
-				if ( !empty( $pt_cv_glb[ 'processed_view' ][ $vid ] ) ) {
-					return '';
-				}
-				$pt_cv_glb[ 'processed_view' ][ $vid ] = 1;
-			}
-
 			/**
 			 * 1. Get View settings
 			 */
@@ -613,6 +602,18 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$view_settings[ $key ] = esc_sql( $value );
 			}
 			$pt_cv_glb[ $view_id ][ 'view_settings' ] = $view_settings;
+
+			// Check duplicated View
+			// (Same View ID but different shortcode parameters => consider as 2 different Views)
+			if ( empty( $pargs ) && apply_filters( PT_CV_PREFIX_ . 'check_duplicate', 0, $view_id, $view_settings ) ) {
+				$sc_params	 = isset( $pt_cv_glb[ $view_id ][ 'shortcode_params' ] ) ? $pt_cv_glb[ $view_id ][ 'shortcode_params' ] : PT_CV_Functions::string_random();
+				$vid		 = $view_id . '-' . md5( serialize( $sc_params ) );
+				if ( !empty( $pt_cv_glb[ 'processed_view' ][ $vid ] ) ) {
+					return '';
+				} else {
+					$pt_cv_glb[ 'processed_view' ][ $vid ] = 1;
+				}
+			}
 
 			// Get content type
 			$content_type							 = apply_filters( PT_CV_PREFIX_ . 'content_type', PT_CV_Functions::setting_value( PT_CV_PREFIX . 'content-type', $view_settings ), $id );
@@ -1257,7 +1258,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			$edit_link = admin_url( 'admin.php?page=' . PT_CV_DOMAIN . '-add' );
 			if ( !empty( $view_id ) ) {
 				$query_args	 = array( 'id' => $view_id ) + $action;
-				$edit_link	 = add_query_arg( $query_args, $edit_link );
+				$edit_link	 = esc_url( add_query_arg( $query_args, $edit_link ) );
 			}
 
 			return $edit_link;
@@ -1351,7 +1352,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$data_page	 = sprintf( ' data-page="%s"', $this_page );
 			}
 
-			$html	 = sprintf( '<a%s href="%s">%s</a>', $data_page, add_query_arg( 'vpage', $this_page ), $label );
+			$html	 = sprintf( '<a%s href="%s">%s</a>', $data_page, esc_url( add_query_arg( 'vpage', $this_page ) ), $label );
 			$class	 = $class ? sprintf( ' class="%s"', esc_attr( $class ) ) : '';
 
 			return sprintf( '<li%s>%s</li>', $class, $html );

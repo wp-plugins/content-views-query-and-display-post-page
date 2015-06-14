@@ -20,19 +20,16 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 		/**
 		 * Generate class for columns
 		 *
-		 * @global array $dargs
-		 *
-		 * @param array  $content_items
+		 * @param int $_columns
 		 *
 		 * @return array
 		 */
-		static function process_column_width( $content_items ) {
-
+		static function process_column_width( $_columns = 0 ) {
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			// -- Get column span
 
-			$columns = (int) $dargs[ 'number-columns' ];
+			$columns = $_columns ? $_columns : (int) $dargs[ 'number-columns' ];
 			if ( !$columns ) {
 				$columns = 1;
 			}
@@ -67,7 +64,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 			$enable_filter = PT_CV_Functions::get_global_variable( 'enable_filter' );
 
-			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width( $content_items );
+			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width();
 
 			// Split items to rows
 			$columns_item = array_chunk( $content_items, $columns, true );
@@ -195,7 +192,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 
 			$rows = ( $dargs[ 'number-rows' ] ) ? (int) $dargs[ 'number-rows' ] : 1;
 
-			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width( $content_items );
+			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width();
 
 			// Get wrapper class of a scrollable slide
 			$slide_class = apply_filters( PT_CV_PREFIX_ . 'scrollable_slide_class', 'item' );
