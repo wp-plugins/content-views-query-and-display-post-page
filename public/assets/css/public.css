@@ -276,7 +276,7 @@
 }
 
 /* Layout */
-.pt-cv-2-col .pt-cv-title {
+.pt-cv-view .pt-cv-2-col .pt-cv-title {
 	clear: none !important;
 	display: flex;
 }

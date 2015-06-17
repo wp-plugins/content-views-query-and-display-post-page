@@ -1254,11 +1254,10 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		public static function view_link( $view_id, $action = array() ) {
-
 			$edit_link = admin_url( 'admin.php?page=' . PT_CV_DOMAIN . '-add' );
 			if ( !empty( $view_id ) ) {
 				$query_args	 = array( 'id' => $view_id ) + $action;
-				$edit_link	 = esc_url( add_query_arg( $query_args, $edit_link ) );
+				$edit_link	 = add_query_arg( $query_args, $edit_link );
 			}
 
 			return $edit_link;
