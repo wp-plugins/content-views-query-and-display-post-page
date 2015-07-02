@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Asset management
  *
@@ -10,8 +11,7 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
-if ( ! class_exists( 'PT_CV_Asset' ) ) {
+if ( !class_exists( 'PT_CV_Asset' ) ) {
 
 	/**
 	 * @name PT_CV_Asset
@@ -20,26 +20,27 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 	class PT_CV_Asset {
 
 		// Prefix for handle of all assets
-		static $prefix = PT_CV_PREFIX;
+		static $prefix	 = PT_CV_PREFIX;
 		// Array of style & script
-		static $assets = array();
+		static $assets	 = array();
+
 		/**
 		 * version of assets
 		 * if an asset doesn't have configed version, it will get plugin version as asset version
 		 */
 		static $version = array(
-			'bootstrap'           => '3.3.0',
-			'bootstrap-paginator' => '0.5',
-			'select2'             => '3.4.5',
-			'select2-bootstrap'   => '3.4.5',
+			'bootstrap'				 => '3.3.0',
+			'bootstrap-paginator'	 => '0.5',
+			'select2'				 => '3.4.5',
+			'select2-bootstrap'		 => '3.4.5',
 		);
 
 		/**
 		 * Register assets to enqueue later
 		 */
 		static function register() {
-			self::$assets['style']  = self::style();
-			self::$assets['script'] = self::script();
+			self::$assets[ 'style' ]	 = self::style();
+			self::$assets[ 'script' ]	 = self::script();
 		}
 
 		/**
@@ -53,8 +54,8 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		static function enqueue( $name, $type = 'script', $data = '', $prefix = '' ) {
 
 			// If asset is registered, get handle information $data
-			if ( array_key_exists( $name, self::$assets[$type] ) ) {
-				$data = self::$assets[$type][$name];
+			if ( array_key_exists( $name, self::$assets[ $type ] ) ) {
+				$data = self::$assets[ $type ][ $name ];
 			}
 
 			// Do action
@@ -68,13 +69,13 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		 */
 		static function style() {
 			return array(
-				'bootstrap'         => array(
+				'bootstrap'			 => array(
 					'src' => plugins_url( 'assets/bootstrap/css/bootstrap.min.css', PT_CV_FILE ),
 				),
-				'select2'           => array(
+				'select2'			 => array(
 					'src' => plugins_url( 'assets/select2/select2.min.css', PT_CV_FILE ),
 				),
-				'select2-bootstrap' => array(
+				'select2-bootstrap'	 => array(
 					'src' => plugins_url( 'assets/select2/select2-bootstrap.min.css', PT_CV_FILE ),
 				),
 			);
@@ -87,17 +88,17 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		 */
 		static function script() {
 			return array(
-				'bootstrap'           => array(
-					'src'  => plugins_url( 'assets/bootstrap/js/bootstrap.min.js', PT_CV_FILE ),
-					'deps' => array( 'jquery' ),
+				'bootstrap'				 => array(
+					'src'	 => plugins_url( 'assets/bootstrap/js/bootstrap.min.js', PT_CV_FILE ),
+					'deps'	 => array( 'jquery' ),
 				),
-				'bootstrap-paginator' => array(
+				'bootstrap-paginator'	 => array(
 					'src' => plugins_url( 'assets/bootstrap-paginator/bootstrap-paginator.min.js', PT_CV_FILE ),
-					// 'deps' => array( PT_CV_PREFIX . 'bootstrap' . '-' . 'script' ),
+				// 'deps' => array( PT_CV_PREFIX . 'bootstrap' . '-' . 'script' ),
 				),
-				'select2'             => array(
-					'src'  => plugins_url( 'assets/select2/select2.min.js', PT_CV_FILE ),
-					'deps' => array( 'jquery' ),
+				'select2'				 => array(
+					'src'	 => plugins_url( 'assets/select2/select2.min.js', PT_CV_FILE ),
+					'deps'	 => array( 'jquery' ),
 				),
 			);
 		}
@@ -112,12 +113,12 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		 */
 		static function get_version( $name, $data ) {
 
-			if ( isset( $data['ver'] ) ) {
-				return $data['ver'];
+			if ( isset( $data[ 'ver' ] ) ) {
+				return $data[ 'ver' ];
 			}
 
 			if ( array_key_exists( $name, self::$version ) ) {
-				return self::$version[$name];
+				return self::$version[ $name ];
 			}
 
 			return PT_CV_Functions::plugin_info( PT_CV_FILE, 'Version' );
@@ -133,17 +134,17 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		 * @param string $prefix Prefix string for asset
 		 */
 		static function action( $name, $data, $type, $action, $prefix ) {
-			$prefix_ = ! empty( $prefix ) ? $prefix : self::$prefix;
-			$handle  = $prefix_ . $name . '-' . $type;
-			$src     = isset( $data['src'] ) ? $data['src'] : '';
-			$deps    = isset( $data['deps'] ) ? $data['deps'] : '';
-			$ver     = self::get_version( $name, $data );
+			$prefix_ = !empty( $prefix ) ? $prefix : self::$prefix;
+			$handle	 = $prefix_ . $name . '-' . $type;
+			$src	 = isset( $data[ 'src' ] ) ? $data[ 'src' ] : '';
+			$deps	 = isset( $data[ 'deps' ] ) ? $data[ 'deps' ] : '';
+			$ver	 = self::get_version( $name, $data );
 
 			if ( $type == 'style' ) {
-				$last_param = isset( $data['media'] ) ? $data['media'] : 'all';
+				$last_param = isset( $data[ 'media' ] ) ? $data[ 'media' ] : 'all';
 			} else {
 				// Auto enqueue script in footer
-				$last_param = isset( $data['in_footer'] ) ? $data['in_footer'] : true;
+				$last_param = isset( $data[ 'in_footer' ] ) ? $data[ 'in_footer' ] : true;
 			}
 			$function = "wp_{$action}_{$type}";
 			if ( function_exists( $function ) ) {
@@ -159,10 +160,11 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		 * @param string $translation_array Array of translation strings
 		 * @param string $prefix            Prefix string for asset
 		 */
-		static function localize_script( $name, $object_name, $translation_array, $prefix = '' ) {
-			$type    = 'script';
-			$prefix_ = ! empty( $prefix ) ? $prefix : self::$prefix;
-			$handle  = $prefix_ . $name . '-' . $type;
+		static function localize_script( $name, $object_name, $translation_array,
+								   $prefix = '' ) {
+			$type	 = 'script';
+			$prefix_ = !empty( $prefix ) ? $prefix : self::$prefix;
+			$handle	 = $prefix_ . $name . '-' . $type;
 
 			wp_localize_script( $handle, $object_name, $translation_array );
 		}
@@ -176,8 +178,8 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		 * @param string $prefix Prefix string for asset
 		 */
 		static function include_inline( $name, $src, $type, $prefix = '' ) {
-			$prefix_ = ! empty( $prefix ) ? $prefix : self::$prefix;
-			$handle  = $prefix_ . $name . '-' . $type;
+			$prefix_ = !empty( $prefix ) ? $prefix : self::$prefix;
+			$handle	 = $prefix_ . $name . '-' . $type;
 
 			switch ( $type ) {
 				case 'js':
@@ -191,6 +193,7 @@ if ( ! class_exists( 'PT_CV_Asset' ) ) {
 		}
 
 	}
+
 }
 
 // Call to run
