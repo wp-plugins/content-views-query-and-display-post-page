@@ -202,7 +202,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 				$fields_html = apply_filters( PT_CV_PREFIX_ . 'fields_html', $fields_html, $post );
 
 				// Get HTML content of view type, with specific style
-				$file_path = $view_type_dir . '/' . 'html' . '/' . $style . '.' . 'php';
+				$file_path = apply_filters( PT_CV_PREFIX_ . 'view_type_file', $view_type_dir . '/' . 'html' . '/' . $style . '.' . 'php' );
 
 				if ( file_exists( $file_path ) ) {
 					ob_start();
@@ -654,7 +654,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 						// Get date wrapper class
 						$date_class	 = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'entry-date', 'date' );
 						$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'date' );
-						$date		 = apply_filters( PT_CV_PREFIX_ . 'field_meta_date_final', get_the_date(), get_the_time( 'U' ) );
+						$date		 = apply_filters( PT_CV_PREFIX_ . 'field_meta_date_final', get_the_date( '', $post ), get_the_time( 'U' ) );
 
 						$html[ 'date' ] = sprintf( '<span class="%s">%s <time datetime="%s">%s</time></span>', esc_html( $date_class ), balanceTags( $prefix_text ), esc_attr( get_the_date( 'c' ) ), esc_html( $date ) );
 						break;

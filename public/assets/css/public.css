@@ -278,7 +278,6 @@
 /* Layout */
 .pt-cv-view .pt-cv-2-col .pt-cv-title {
 	clear: none !important;
-	display: flex;
 }
 
 /* @Panels-minified */
