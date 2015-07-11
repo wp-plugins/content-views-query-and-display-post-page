@@ -297,8 +297,7 @@ class PT_Content_Views_Admin {
 		 * Add a settings page for this plugin to the Settings menu.
 		 */
 		// Get user role settings option
-		$options	 = get_option( PT_CV_OPTION_NAME );
-		$user_role	 = current_user_can( 'administrator' ) ? 'administrator' : ( isset( $options[ 'access_role' ] ) ? $options[ 'access_role' ] : 'edit_posts' );
+		$user_role = current_user_can( 'administrator' ) ? 'administrator' : PT_CV_Functions::get_option_value( 'access_role', 'edit_posts' );
 
 		$this->plugin_screen_hook_suffix = add_menu_page(
 		__( 'Content View Settings', $this->plugin_slug ), __( 'Content View Settings', $this->plugin_slug ), $user_role, $this->plugin_slug, array( $this, 'display_plugin_admin_page' ), '', '45.6'

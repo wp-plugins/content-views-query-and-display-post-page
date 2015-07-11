@@ -601,11 +601,21 @@
 			$( '.pt-wrap' ).trigger( _prefix + 'multi-level-toggle' );
 		},
 		/**
+		 * Validate number: prevent negative value
+		 * @returns {undefined}
+		 */
+		validate_number: function () {
+			$( 'input[type="number"]' ).on( 'keypress', function ( event ) {
+				var min = $( this ).prop( 'min' );
+				if ( min == 0 && !( event.charCode >= 48 && event.charCode <= 57 ) )
+					event.preventDefault();
+			} );
+		},
+		/**
 		 * Custom js for elements
 		 * @returns {undefined}
 		 */
 		custom: function () {
-
 			var $self = this;
 			var _prefix = $self.options._prefix;
 
@@ -662,6 +672,9 @@
 					return message;
 				}
 			};
+
+			// Validate number
+			$self.validate_number();
 		}
 	};
 }( jQuery ) );

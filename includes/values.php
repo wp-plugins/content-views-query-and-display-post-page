@@ -28,7 +28,7 @@ if ( !class_exists( 'PT_CV_Values' ) ) {
 		static function post_types( $args = array(), $excludes_ = array() ) {
 			$excludes	 = array_merge( array( 'attachment' ), $excludes_ );
 			$result		 = array();
-			$args		 = array_merge( array( 'public' => true, 'show_ui' => true, '_builtin' => true ), $args );
+			$args		 = array_merge( array( 'public' => true, '_builtin' => true ), $args );
 			$args		 = apply_filters( PT_CV_PREFIX_ . 'post_types', $args );
 			$post_types	 = get_post_types( $args, 'objects' );
 

@@ -57,14 +57,17 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 		 *
 		 * @param array $content_items The array of Raw HTML output (is not wrapped) of each item
 		 * @param array $content       The output array
+		 * @param int $column          The expected column
+		 * @param int $class           Predefined class name
 		 *
 		 * @return array Array of rows, each row contains columns
 		 */
-		static function grid_wrapper( $content_items, &$content ) {
+		static function grid_wrapper( $content_items, &$content, $column = 0,
+								$class = '' ) {
 
 			$enable_filter = PT_CV_Functions::get_global_variable( 'enable_filter' );
 
-			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width();
+			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width( $column );
 
 			// Split items to rows
 			$columns_item = array_chunk( $content_items, $columns, true );
@@ -78,7 +81,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 					$_span_width = ( $idx == count( $items_per_row ) - 1 ) ? $span_width_last : $span_width;
 
 					// Wrap content of item
-					$item_classes	 = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width ), $_span_width );
+					$item_classes	 = apply_filters( PT_CV_PREFIX_ . 'item_col_class', array( $span_class . $_span_width, $class ), $_span_width );
 					$item_class		 = implode( ' ', array_filter( $item_classes ) );
 					$row_html[]		 = PT_CV_Html::content_item_wrap( $content_item, $item_class, $post_id );
 

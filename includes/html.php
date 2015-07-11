@@ -271,7 +271,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( empty( $content_items ) ) {
-				return '';
+				return 'empty content_items';
 			}
 
 			// Assign as global variable
@@ -448,7 +448,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 				$title = __( '(no title)', PT_CV_DOMAIN );
 			}
 
-			$title = apply_filters( PT_CV_PREFIX_ . 'field_title_result', $title, $fargs );
+			$title = apply_filters( PT_CV_PREFIX_ . 'field_title_result', $title, $fargs, $post->ID );
 
 			$html = sprintf(
 			'<%1$s class="%2$s">%3$s</%1$s>', $tag, esc_attr( $title_class ), self::_field_href( $oargs, $post, $title )
@@ -798,9 +798,6 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			// Mark as processed
 			$pt_cv_glb[ $pt_cv_id ][ 'applied_assets' ] = 1;
 
-			// Get settings option
-			$options = get_option( PT_CV_OPTION_NAME );
-
 			// Print inline view styles & scripts
 			if ( apply_filters( PT_CV_PREFIX_ . 'assets_verbose_loading', 1 ) ) {
 				$assets			 = array( 'css', 'js' );
@@ -871,11 +868,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @param bool $is_admin Whether or not in WP Admin
 		 */
 		static function frontend_scripts( $is_admin = false ) {
-
-			// Get settings option
-			$options = get_option( PT_CV_OPTION_NAME );
-
-			if ( $is_admin || !isset( $options[ 'unload_bootstrap' ] ) ) {
+			$unload_bootstrap = PT_CV_Functions::get_option_value( 'unload_bootstrap' );
+			if ( $is_admin || empty( $unload_bootstrap ) ) {
 				// Load bootstrap js
 				PT_CV_Asset::enqueue( 'bootstrap' );
 			}
@@ -927,11 +921,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @global bool $is_IE
 		 */
 		static function frontend_styles() {
-
-			// Get settings option
-			$options = get_option( PT_CV_OPTION_NAME );
-
-			if ( !is_admin() && !isset( $options[ 'unload_bootstrap' ] ) ) {
+			$unload_bootstrap = PT_CV_Functions::get_option_value( 'unload_bootstrap' );
+			if ( !is_admin() && empty( $unload_bootstrap ) ) {
 				PT_CV_Asset::enqueue( 'bootstrap', 'style' );
 			}
 

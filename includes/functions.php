@@ -166,6 +166,17 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		}
 
 		/**
+		 * Get value of option Content Views Settings page
+		 * @param string $option_name
+		 * @param mixed $default
+		 * @return mixed
+		 */
+		static function get_option_value( $option_name, $default = '' ) {
+			$options = get_option( PT_CV_OPTION_NAME );
+			return isset( $options[ $option_name ] ) ? $options[ $option_name ] : $default;
+		}
+
+		/**
 		 * Generate random string
 		 *
 		 * @param bool $prev_return Return previous generated string
