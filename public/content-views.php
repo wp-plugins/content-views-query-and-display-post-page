@@ -227,9 +227,13 @@ class PT_Content_Views {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-		$domain = $this->plugin_slug;
+		$domain	 = PT_CV_DOMAIN;
+		// WPLANG is no longer needed since 4.0
+		$locale	 = get_locale();
 
-		// Load translation file in wp-content/languages/content-views/
+		// Load mo file from wp-content/languages/content-views/
+		load_textdomain( $domain, WP_LANG_DIR . "/{$domain}/{$domain}-{$locale}.mo" );
+		// Load mo file from sub-folder /languages of this plugin
 		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( PT_CV_FILE ) ) . '/languages/' );
 	}
 

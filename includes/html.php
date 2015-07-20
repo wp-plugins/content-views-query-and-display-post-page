@@ -957,15 +957,16 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @return string
 		 */
-		static function inline_script( $js, $wrap = true ) {
+		static function inline_script( $js, $wrap = true, $prefix = 'inline' ) {
 			// Generate random id for script tag
 			$random_id = PT_CV_Functions::string_random();
 
 			ob_start();
 			?>
-			<script type="text/javascript" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-script-' . $random_id ); ?>">
+			<script type="text/javascript" id="<?php echo esc_attr( PT_CV_PREFIX . $prefix . '-script-' . $random_id ); ?>">
 			<?php
-			$format = $wrap ? "(function ($) {\n $(function () { %s }); \n}(jQuery));" : '%s';
+			$newline = "\n";
+			$format	 = $wrap ? "(function($){\$(function(){ {$newline}%s{$newline} });}(jQuery));" : '%s';
 			printf( $format, $js );
 			?>
 			</script>
@@ -980,13 +981,13 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @return string
 		 */
-		static function inline_style( $css ) {
+		static function inline_style( $css, $prefix = 'inline' ) {
 			// Generate random id for style tag
 			$random_id = PT_CV_Functions::string_random();
 
 			ob_start();
 			?>
-			<style type="text/css" id="<?php echo esc_attr( PT_CV_PREFIX . 'inline-style-' . $random_id ); ?>"><?php echo '' . $css; ?></style>
+			<style type="text/css" id="<?php echo esc_attr( PT_CV_PREFIX . $prefix . '-style-' . $random_id ); ?>"><?php echo '' . $css; ?></style>
 			<?php
 			return ob_get_clean();
 		}
