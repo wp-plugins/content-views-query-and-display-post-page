@@ -191,7 +191,7 @@ class PT_Content_Views {
 	 *
 	 * @return   array|false    The blog ids, false if no matches.
 	 */
-	private static function get_blog_ids() {
+	public static function get_blog_ids() {
 
 		global $wpdb;
 
@@ -208,7 +208,7 @@ class PT_Content_Views {
 	 *
 	 * @since    1.0.0
 	 */
-	private static function single_activate() {
+	public static function single_activate() {
 		update_option( PT_CV_OPTION_VERSION, PT_CV_VERSION );
 	}
 
@@ -217,7 +217,7 @@ class PT_Content_Views {
 	 *
 	 * @since    1.0.0
 	 */
-	private static function single_deactivate() {
+	public static function single_deactivate() {
 		delete_option( PT_CV_OPTION_VERSION );
 	}
 

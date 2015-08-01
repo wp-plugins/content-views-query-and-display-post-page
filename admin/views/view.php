@@ -34,6 +34,7 @@ PT_CV_Functions::view_submit();
 ?>
 
 <div class="wrap form-horizontal pt-wrap">
+	<?php do_action( PT_CV_PREFIX_ . 'admin_view_header' ); ?>
 
 	<h2><?php echo esc_html( $id ? __( 'Edit View', PT_CV_DOMAIN ) : get_admin_page_title()  ); ?></h2>
 

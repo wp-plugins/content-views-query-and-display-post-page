@@ -196,7 +196,10 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 					$fargs[ 'layout-format' ] = $dargs[ 'layout-format' ];
 
 					// Get HTML output of field
-					$fields_html[ $field_name ] = self::field_item_html( $field_name, $post, $fargs );
+					$item_html = self::field_item_html( $field_name, $post, $fargs );
+					if ( $item_html ) {
+						$fields_html[ $field_name ] = $item_html;
+					}
 				}
 
 				$fields_html = apply_filters( PT_CV_PREFIX_ . 'fields_html', $fields_html, $post );
@@ -353,6 +356,9 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 				$output = $html;
 			}
 
+			// Unlock Session
+			session_write_close();
+
 			return balanceTags( $before_output ) . balanceTags( $output );
 		}
 
@@ -454,7 +460,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			'<%1$s class="%2$s">%3$s</%1$s>', $tag, esc_attr( $title_class ), self::_field_href( $oargs, $post, $title )
 			);
 
-			return $html;
+			return apply_filters( PT_CV_PREFIX_ . 'field_title_extra', $html, $post );
 		}
 
 		/**

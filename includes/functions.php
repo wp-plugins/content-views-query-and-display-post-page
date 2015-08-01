@@ -375,7 +375,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function post_terms( $post ) {
-			global $pt_cv_glb;
+			global $pt_cv_glb, $pt_cv_id;
 
 			if ( !isset( $pt_cv_glb[ 'item_terms' ] ) ) {
 				$pt_cv_glb[ 'item_terms' ] = array();
@@ -406,7 +406,8 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$pt_cv_glb[ 'item_terms' ][ $post_id ][ $term->slug ] = $term->name;
 			}
 
-			return implode( ', ', $links );
+			// Adjust terms list
+			return implode( ', ', apply_filters( PT_CV_PREFIX_ . 'terms_list', $links, $pt_cv_id ) );
 		}
 
 		/**
@@ -594,6 +595,10 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			global $pt_cv_glb, $pt_cv_id;
+			if ( !is_array( $pt_cv_glb ) )
+				$pt_cv_glb	 = array();
+			if ( !isset( $pt_cv_glb ) )
+				$pt_cv_id	 = 0;
 
 			$view_id = !empty( $id ) ? $id : PT_CV_Functions::string_random();
 
@@ -634,7 +639,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			$view_type								 = PT_CV_Functions::setting_value( PT_CV_PREFIX . 'view-type', $view_settings );
 			$pt_cv_glb[ $view_id ][ 'view_type' ]	 = $view_type;
 
-			// If is pagination request
+			// Get session id, not empty if is pagination request
 			$session_id = ( $pargs && isset( $pargs[ 'session_id' ] ) ) ? $pargs[ 'session_id' ] : 0;
 
 			// Store main View ID
@@ -645,13 +650,16 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$pt_cv_main_id = $view_id;
 			}
 
+			// If is pagination request
 			if ( $session_id ) {
 				if ( empty( $pt_cv_id ) ) {
 					$pt_cv_id = $session_id;
 				}
 
-				$session_data	 = array_merge(
-				array( '$args' => '', '$dargs' => '' ), ( false === ( $saved_settings	 = get_transient( PT_CV_PREFIX . 'view-data-' . $session_id ) ) ) ? array() : $saved_settings
+				$saved_settings = isset( $_SESSION[ PT_CV_PREFIX . 'view-data-' . $session_id ] ) ? $_SESSION[ PT_CV_PREFIX . 'view-data-' . $session_id ] : array();
+
+				$session_data = array_merge(
+				array( '$args' => '', '$dargs' => '' ), $saved_settings
 				);
 
 				$args	 = $session_data[ '$args' ];
@@ -661,7 +669,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$pt_cv_id	 = $session_id	 = $view_id;
 
 				// Store settings
-				set_transient( PT_CV_PREFIX . 'view-settings-' . $session_id, $settings, 7 * DAY_IN_SECONDS );
+				$_SESSION[ PT_CV_PREFIX . 'view-settings-' . $session_id ] = $settings;
 			}
 
 			// Extract Query & Display settings from settings array
@@ -670,11 +678,9 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$args	 = apply_filters( PT_CV_PREFIX_ . 'query_parameters', PT_CV_Functions::view_filter_settings( $content_type, $view_settings ) );
 
 				// Store view data
-				set_transient(
-				PT_CV_PREFIX . 'view-data-' . $session_id, array(
+				$_SESSION[ PT_CV_PREFIX . 'view-data-' . $session_id ] = array(
 					'$args'	 => $args,
 					'$dargs' => $dargs,
-				), 7 * DAY_IN_SECONDS
 				);
 			}
 
@@ -926,9 +932,10 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 
 						// Status
 						case 'status':
-							$args = array_merge(
+							$status	 = PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_status', $view_settings, 'publish' ) );
+							$args	 = array_merge(
 							$args, array(
-								'post_status' => PT_CV_Functions::string_to_array( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post_status', $view_settings, 'publish' ) ),
+								'post_status' => apply_filters( PT_CV_PREFIX_ . 'post_status', $status ),
 							)
 							);
 							break;
@@ -1311,7 +1318,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			$session_id = empty( $_POST[ 'sid' ] ) ? '' : esc_sql( $_POST[ 'sid' ] );
 
 			// Get saved $settings
-			$settings = get_transient( PT_CV_PREFIX . 'view-settings-' . $session_id );
+			$settings = isset( $_SESSION[ PT_CV_PREFIX . 'view-settings-' . $session_id ] ) ? $_SESSION[ PT_CV_PREFIX . 'view-settings-' . $session_id ] : array();
 
 			// If empty, get settings by ID
 			if ( !$settings ) {
