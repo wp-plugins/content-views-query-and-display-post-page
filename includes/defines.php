@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Defines common constant
  *
@@ -8,7 +9,6 @@
  * @link      http://www.contentviewspro.com/
  * @copyright 2014 PT Guy
  */
-
 define( 'PT_CV_DOMAIN', 'content-views' );
 define( 'PT_CV_PREFIX', 'pt-cv-' );
 define( 'PT_CV_PREFIX_', 'pt_cv_' );
