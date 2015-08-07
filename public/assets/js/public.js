@@ -66,6 +66,7 @@
 					bootstrapMajorVersion: 3,
 					currentPage: current_page,
 					totalPages: total_pages,
+					numberOfPages: PT_CV_PUBLIC.page_to_show,
 					shouldShowPage: function ( type, page, current ) {
 						if ( total_pages && total_pages < 10 ) {
 							switch ( type ) {
@@ -140,8 +141,9 @@
 		 * @returns void
 		 */
 		_get_page: function ( session_id, selected_page, spinner, pages_holder, callback ) {
-
 			var $self = this;
+			var _prefix = PT_CV_PUBLIC._prefix;
+
 			// Show content of page if it existed
 			var page_existed = $self._active_page( selected_page, pages_holder, callback );
 			// If page is loaded, exit
@@ -176,6 +178,13 @@
 
 				// Active current page
 				$self._active_page( selected_page, pages_holder, callback );
+
+				if ( callback && typeof callback === 'function' ) {
+					callback();
+				}
+
+				// Trigger to make Pinterest layout works when do pagination
+				$( 'body' ).trigger( _prefix + 'pagination-finished' );
 			} );
 		},
 		/**
@@ -190,7 +199,6 @@
 			var _prefix = PT_CV_PUBLIC._prefix;
 			var page_existed = false;
 			var page_selector = '#' + _prefix + 'page' + '-' + parseInt( selected_page );
-
 			if ( pages_holder.children( page_selector ).length ) {
 				page_existed = true;
 
@@ -205,13 +213,6 @@
 					scrollTop: pages_holder.children( page_selector ).offset().top - 160
 				}, 1000 );
 			}
-
-			if ( callback && typeof callback === 'function' ) {
-				callback();
-			}
-
-			// Trigger to make Pinterest layout works when do pagination
-			$( 'body' ).trigger( _prefix + 'pagination-finished' );
 
 			return page_existed;
 		}

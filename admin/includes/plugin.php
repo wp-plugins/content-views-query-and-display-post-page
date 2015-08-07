@@ -167,7 +167,7 @@ if ( !class_exists( 'PT_CV_Plugin' ) ) {
 			$field_name = 'unload_bootstrap';
 
 			self::_field_print(
-			$field_name, 'checkbox', __( "Don't load <b>Bootstrap 3</b> style & script (in frontend of website)", PT_CV_DOMAIN ), __( 'Only check this option if Bootstrap has been loaded by active theme or other plugins', PT_CV_DOMAIN )
+			$field_name, 'checkbox', __( "Don't load <b>Bootstrap 3</b> style & script (in frontend of website)", PT_CV_DOMAIN ), __( 'Only tick this option if Bootstrap has been loaded by active theme or other plugins', PT_CV_DOMAIN )
 			);
 		}
 

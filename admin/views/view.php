@@ -318,7 +318,7 @@ PT_CV_Functions::view_submit();
 													'options'	 => PT_CV_Values::taxonomy_list(),
 													'std'		 => '',
 													'class'		 => 'taxonomy-item',
-													'desc'		 => __( 'Check checkbox of taxonomies to filter posts by their terms', PT_CV_DOMAIN ),
+													'desc'		 => __( 'Tick checkbox of taxonomies to filter posts by their terms', PT_CV_DOMAIN ),
 												),
 											),
 										),
