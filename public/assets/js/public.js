@@ -142,6 +142,8 @@
 		 */
 		_get_page: function ( session_id, selected_page, spinner, pages_holder, callback ) {
 			var $self = this;
+			var _prefix = PT_CV_PUBLIC._prefix;
+
 			// Show content of page if it existed
 			var page_existed = $self._active_page( selected_page, pages_holder, callback );
 			// If page is loaded, exit
@@ -176,6 +178,13 @@
 
 				// Active current page
 				$self._active_page( selected_page, pages_holder, callback );
+
+				if ( callback && typeof callback === 'function' ) {
+					callback();
+				}
+
+				// Trigger to make Pinterest layout works when do pagination
+				$( 'body' ).trigger( _prefix + 'pagination-finished' );
 			} );
 		},
 		/**
@@ -202,14 +211,7 @@
 				// Scroll to this page
 				$( 'html, body' ).animate( {
 					scrollTop: pages_holder.children( page_selector ).offset().top - 160
-				} ).promise().done( function () {
-					if ( callback && typeof callback === 'function' ) {
-						callback();
-					}
-
-					// Trigger to make Pinterest layout works when do pagination
-					$( 'body' ).trigger( _prefix + 'pagination-finished' );
-				} );
+				}, 1000 );
 			}
 
 			return page_existed;
