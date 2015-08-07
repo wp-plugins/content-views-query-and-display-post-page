@@ -684,6 +684,9 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				);
 			}
 
+			// Unlock Session
+			session_write_close();
+
 			// Pagination settings
 			PT_CV_Functions::view_get_pagination_settings( $dargs, $args, $pargs );
 
@@ -776,8 +779,8 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 					global $post;
 
 					// Output HTML for this item
-					$post_id = apply_filters( PT_CV_PREFIX_ . 'show_this_post', $post->ID );
-					if ( $post_id ) {
+					$_post = apply_filters( PT_CV_PREFIX_ . 'show_this_post', $post );
+					if ( $_post ) {
 						$content_items[ $post->ID ] = PT_CV_Html::view_type_output( $view_type, $post );
 					}
 				}

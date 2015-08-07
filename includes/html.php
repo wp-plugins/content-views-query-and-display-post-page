@@ -356,9 +356,6 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 				$output = $html;
 			}
 
-			// Unlock Session
-			session_write_close();
-
 			return balanceTags( $before_output ) . balanceTags( $output );
 		}
 
@@ -623,7 +620,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			if ( $load_thumbnail ) {
 				$thumbnail_size	 = count( $dimensions ) > 1 ? $dimensions : $dimensions[ 0 ];
 				$html			 = wp_get_attachment_image( (int) $thumbnail_id, $thumbnail_size, false, $gargs );
-				$html			 = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_image', $html, $post_id, $dimensions, $fargs );
+				$html			 = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_image', $html, $post, $dimensions, $fargs );
 			} else {
 				$html = apply_filters( PT_CV_PREFIX_ . 'field_thumbnail_not_found', $html, $post, $dimensions, $gargs );
 			}
@@ -895,6 +892,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			PT_CV_Asset::localize_script(
 			'public', PT_CV_PREFIX_UPPER . 'PUBLIC', array(
 				'_prefix'		 => PT_CV_PREFIX,
+				'page_to_show'	 => apply_filters( PT_CV_PREFIX_ . 'pages_to_show', 5 ),
 				'_nonce'		 => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
 				'is_admin'		 => is_admin(),
 				'is_mobile'		 => wp_is_mobile(),
