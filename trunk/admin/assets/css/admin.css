@@ -1,0 +1,238 @@
+/**
+ * Common styles for WP admin
+ *
+ * @package   PT_Content_Views_Admin
+ * @author    PT Guy <palaceofthemes@gmail.com>
+ * @license   GPL-2.0+
+ * @link      http://www.contentviewspro.com/
+ * @copyright 2014 PT Guy
+ */
+
+/* Overwrite WP */
+.wrap .updated,
+.wrap .error,
+.update-nag {
+	display: none;
+}
+.pt-wrap a:focus {
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+/* Fix Bootstrap box-sizing "border-box" problem */
+.pt-wrap *,
+.pt-wrap *:before,
+.pt-wrap *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:    border-box;
+	box-sizing:         border-box;
+}
+
+/* Fix small error when use Bootstrap */
+html {
+	background: none;
+}
+
+.pt-wrap select {
+	height: 34px !important;
+}
+
+.pt-wrap .text-muted {
+	clear:  both;
+	margin: 2px 0;
+	float:  left;
+}
+
+/* Overwrite Bootstrap */
+.form-control:focus {
+	border-color:       #66afe9 !important;
+	outline:            0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6) !important;
+	box-shadow:         inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6) !important;
+}
+
+.form-horizontal .control-label {
+	text-align: left !important;
+}
+
+.nav-tabs a {
+	font-weight: 600;
+	font-size:   1.3em;
+}
+
+/* Other settings */
+.hide {
+	display: none;
+}
+
+#pt-cv-form-view .tab-content {
+	display: block !important;
+}
+
+#pt-cv-form-view .nav .glyphicon {
+	margin-right: 6px;
+}
+
+#pt-cv-form-view *, .preview-wrapper label {
+	font-size: 14px;
+}
+
+.preview-wrapper .text-muted {
+	margin-top: 8px;
+}
+
+.pt-wrap h2 {
+	margin-bottom: 20px;
+}
+
+.pt-wrap .tab-content {
+	margin-top: 20px;
+}
+
+.pt-wrap .form-group.pt-form-group {
+	margin-bottom: 8px;
+}
+
+.pt-cv-color {
+	width: 100px !important;
+}
+
+.pt-cv-full-fields .checkbox {
+	width: 100% !important;
+}
+
+.pt-cv-w50 select,
+.pt-cv-w50 radio {
+	width: 50%;
+	float: left;
+}
+
+.pt-cv-w200 select,
+.pt-cv-w200 input,
+.pt-cv-w200 radio {
+	width: 200px;
+	float: left;
+}
+
+.pt-wrap .updated {
+	display: none;
+}
+
+/* Group type */
+.panel-group .pt-cv-group {
+	margin-top: 10px;
+}
+
+.pt-cv-group .form-group {
+	margin-bottom: 6px;
+}
+
+.pt-cv-group .panel-body {
+	padding: 10px 15px;
+}
+
+.pt-cv-group .control-label, .pt-form-group .pt-form-group .control-label {
+	font-weight: 400;
+}
+
+.pt-cv-group .checkbox {
+	width: 50%;
+	float: left;
+}
+
+.pt-cv-group .radio {
+	/*	width: 33%;
+		float: left;
+		margin-bottom: 10px !important;*/
+}
+
+.pt-cv-group .radio img {
+	height: 100px;
+}
+
+.pt-cv-group .checkbox {
+	background: none;
+}
+
+.pt-cv-no-panel {
+	margin-top: 0px;
+}
+
+.pt-cv-text {
+	margin-top: 7px;
+}
+
+.pt-wrap .input-group {
+	width: 200px;
+}
+
+/* Accordion */
+.pt-cv-group .pt-accordion .panel-heading {
+	cursor:       pointer;
+	padding-left: 30px;
+}
+
+.pt-cv-group .clickable {
+	cursor: pointer;
+}
+
+.pt-cv-group .panel-heading span {
+	margin-top: -15px;
+	font-size:  15px;
+}
+
+/* Activate group */
+#pt-cv-filter-settings .pt-cv-group-activate {
+	-webkit-box-shadow: inset 0 1px 1px rgba(255, 105, 105, 0.075), 0 0 8px rgba(0, 142, 255, 0.6) !important;
+	box-shadow:         inset 0 1px 1px rgba(255, 105, 105, 0.075), 0 0 8px rgba(0, 142, 255, 0.6) !important;
+}
+
+#pt-cv-filter-settings .pt-cv-group-activate .panel-body {
+	background: #FFCFCF;
+}
+
+/* Preview */
+#pt-cv-preview-box {
+	margin-bottom: 5px;
+	height:        300px;
+	padding:       20px;
+	position:      relative;
+	overflow-y:    scroll;
+	overflow-x:    hidden;
+}
+
+#pt-cv-preview-box + .text-muted {
+	margin-top: 8px;
+}
+
+#pt-cv-show-preview {
+	position: fixed;
+	right:    20px;
+	bottom:   120px;
+	z-index:  1001;
+}
+
+/* Field dislay */
+.pt-cv-bg-none {
+	background: #fff;
+}
+
+/* Sortable */
+.pt-wrap .ui-sortable {
+	background: #FFF9D7;
+}
+
+/* Custom css for Settings Group/Option */
+#pt-cv-group-excerpt-settings {
+	margin-bottom: 20px;
+}
+
+/* View shortcode text */
+#view-shortcode {
+	background:    #ADFFAD;
+	cursor:        pointer;
+	margin-bottom: 20px;
+	float:         left;
+	position:      relative;
+	width:         50%;
+}
