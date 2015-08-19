@@ -34,3 +34,6 @@ define( 'PT_CV_PUBLIC_ASSETS_URI', plugins_url( 'public/assets/', PT_CV_FILE ) )
 
 // View type directory (HTML + CSS + JS)
 define( 'PT_CV_VIEW_TYPE_OUTPUT', plugin_dir_path( PT_CV_FILE ) . 'public/templates/' );
+
+// Enable/Disable debug mode
+define( 'PT_CV_DEBUG', false );

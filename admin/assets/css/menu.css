@@ -9,6 +9,6 @@
  */
 
 #adminmenu #toplevel_page_content-views .menu-icon-generic div.wp-menu-image:before {
-	background: url(../images/icon.png) no-repeat 0 7px;
+	background: url(../images/icon.png) no-repeat 0 14px;
 	content:    '' !important;
 }
