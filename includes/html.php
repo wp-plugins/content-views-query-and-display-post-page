@@ -274,7 +274,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( empty( $content_items ) ) {
-				return 'empty content_items';
+				return PT_CV_Functions::debug_output( 'empty content_items', 'No posts found!' );
 			}
 
 			// Assign as global variable

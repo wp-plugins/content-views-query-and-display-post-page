@@ -741,6 +741,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$max_num_pages = ceil( $total_items / $args[ 'posts_per_page' ] );
 
 				// Output pagination
+				$current_page = apply_filters( PT_CV_PREFIX_ . 'active_page', $current_page, $max_num_pages, $pt_cv_id );
 				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $current_page, $session_id );
 			}
 
@@ -798,7 +799,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			// Restore $wp_query and original Post Data
 			wp_reset_query();
 
-			return array( 'content_items' => apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items ), 'pt_query' => $pt_query );
+			return array( 'content_items' => apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items, $view_type ), 'pt_query' => $pt_query );
 		}
 
 		/**
@@ -1506,6 +1507,14 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			$value = isset( $pt_cv_glb[ $pt_cv_id ][ $variable ] ) ? $pt_cv_glb[ $pt_cv_id ][ $variable ] : null;
 
 			return $value;
+		}
+
+		/**
+		 * Output debug message (if debug is enable) / nice message (otherwise)
+		 * @param type $message
+		 */
+		static function debug_output( $log, $message = '' ) {
+			return defined( 'PT_CV_DEBUG' ) ? ( PT_CV_DEBUG ? $log : $message ) : $message;
 		}
 
 	}
