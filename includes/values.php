@@ -223,7 +223,7 @@ if ( !class_exists( 'PT_CV_Values' ) ) {
 		 */
 		static function pagination_styles() {
 			$result = array(
-				'regular' => __( 'Regular pagination', PT_CV_DOMAIN ),
+				'regular' => __( 'Numbered pagination', PT_CV_DOMAIN ),
 			);
 
 			$result = apply_filters( PT_CV_PREFIX_ . 'pagination_styles', $result );

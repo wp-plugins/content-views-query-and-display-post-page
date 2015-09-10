@@ -187,6 +187,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			if ( $prev_return ) {
 				return PT_CV_Functions::$prev_random_string;
 			}
+			// Don't use uniqid(), it will cause bug when multiple elements have same ID
 			PT_CV_Functions::$prev_random_string = substr( md5( rand() ), 0, 10 );
 
 			return PT_CV_Functions::$prev_random_string;
@@ -798,7 +799,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			// Restore $wp_query and original Post Data
 			wp_reset_query();
 
-			return array( 'content_items' => apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items ), 'pt_query' => $pt_query );
+			return array( 'content_items' => apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items, $view_type ), 'pt_query' => $pt_query );
 		}
 
 		/**
@@ -815,10 +816,14 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			 * Set default values
 			 */
 			$args = array(
-				'post_type'				 => $content_type,
-				'post_status'			 => 'publish',
-				'ignore_sticky_posts'	 => apply_filters( PT_CV_PREFIX_ . 'ignore_sticky_posts', 1 ),
+				'post_type'		 => $content_type,
+				'post_status'	 => apply_filters( PT_CV_PREFIX_ . 'post_status', array( 'publish' ) ),
 			);
+
+			// Ignore sticky posts
+			if ( in_array( $content_type, array( 'post', 'page' ) ) ) {
+				$args[ 'ignore_sticky_posts' ] = apply_filters( PT_CV_PREFIX_ . 'ignore_sticky_posts', 1 );
+			}
 
 			// Post in
 			if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $view_settings ) ) {
@@ -1506,6 +1511,14 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			$value = isset( $pt_cv_glb[ $pt_cv_id ][ $variable ] ) ? $pt_cv_glb[ $pt_cv_id ][ $variable ] : null;
 
 			return $value;
+		}
+
+		/**
+		 * Output debug message (if debug is enable) / nice message (otherwise)
+		 * @param type $message
+		 */
+		static function debug_output( $log, $message = '' ) {
+			return defined( 'PT_CV_DEBUG' ) ? ( PT_CV_DEBUG ? $log : $message ) : $message;
 		}
 
 	}

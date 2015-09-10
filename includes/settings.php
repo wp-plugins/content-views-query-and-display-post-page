@@ -200,7 +200,6 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 											'name'		 => $prefix . 'style',
 											'options'	 => PT_CV_Values::pagination_styles(),
 											'std'		 => PT_CV_Functions::array_get_first_key( PT_CV_Values::pagination_styles() ),
-											'desc'		 => __( 'Output style for Ajax pagination', PT_CV_DOMAIN ),
 										),
 									),
 									'dependence' => array( $prefix . 'type', 'normal', '!=' ),

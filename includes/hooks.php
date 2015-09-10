@@ -29,7 +29,7 @@ if ( !class_exists( 'PT_CV_Hooks' ) ) {
 		/**
 		 * Validate settings filter
 		 *
-		 * @param string $error The error message
+		 * @param string $errors The error message
 		 * @param array  $args  The Query parameters array
 		 */
 		public static function filter_validate_settings( $errors, $args ) {

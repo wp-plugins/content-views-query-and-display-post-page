@@ -148,6 +148,11 @@
 			var page_existed = $self._active_page( selected_page, pages_holder, callback );
 			// If page is loaded, exit
 			if ( page_existed ) {
+				// Run callback
+				if ( callback && typeof callback === 'function' ) {
+					callback();
+				}
+
 				return;
 			}
 
@@ -179,6 +184,7 @@
 				// Active current page
 				$self._active_page( selected_page, pages_holder, callback );
 
+				// Run callback
 				if ( callback && typeof callback === 'function' ) {
 					callback();
 				}
@@ -199,6 +205,8 @@
 			var _prefix = PT_CV_PUBLIC._prefix;
 			var page_existed = false;
 			var page_selector = '#' + _prefix + 'page' + '-' + parseInt( selected_page );
+
+			// If found this page, show it, scroll to its top
 			if ( pages_holder.children( page_selector ).length ) {
 				page_existed = true;
 
