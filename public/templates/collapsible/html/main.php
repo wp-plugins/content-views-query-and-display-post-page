@@ -44,7 +44,7 @@ switch ( $layout ) {
 
 $random_id	 = PT_CV_Functions::string_random();
 ?>
-<div class="panel panel-default">
+<div class="panel panel-default pt-cv-content-item">
 	<div class="panel-heading">
 		<a class="panel-title" data-toggle="collapse" data-parent="#<?php echo esc_attr( PT_CV_PREFIX_UPPER . 'ID' ); ?>" href="#<?php echo esc_attr( $random_id ); ?>">
 			<?php echo balanceTags( strip_tags( $heading ) ); ?>

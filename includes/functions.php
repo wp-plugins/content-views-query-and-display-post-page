@@ -187,6 +187,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			if ( $prev_return ) {
 				return PT_CV_Functions::$prev_random_string;
 			}
+			// Don't use uniqid(), it will cause bug when multiple elements have same ID
 			PT_CV_Functions::$prev_random_string = substr( md5( rand() ), 0, 10 );
 
 			return PT_CV_Functions::$prev_random_string;
@@ -741,7 +742,6 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				$max_num_pages = ceil( $total_items / $args[ 'posts_per_page' ] );
 
 				// Output pagination
-				$current_page = apply_filters( PT_CV_PREFIX_ . 'active_page', $current_page, $max_num_pages, $pt_cv_id );
 				$html .= "\n" . PT_CV_Html::pagination_output( $max_num_pages, $current_page, $session_id );
 			}
 
@@ -816,10 +816,14 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			 * Set default values
 			 */
 			$args = array(
-				'post_type'				 => $content_type,
-				'post_status'			 => 'publish',
-				'ignore_sticky_posts'	 => apply_filters( PT_CV_PREFIX_ . 'ignore_sticky_posts', 1 ),
+				'post_type'		 => $content_type,
+				'post_status'	 => apply_filters( PT_CV_PREFIX_ . 'post_status', array( 'publish' ) ),
 			);
+
+			// Ignore sticky posts
+			if ( in_array( $content_type, array( 'post', 'page' ) ) ) {
+				$args[ 'ignore_sticky_posts' ] = apply_filters( PT_CV_PREFIX_ . 'ignore_sticky_posts', 1 );
+			}
 
 			// Post in
 			if ( PT_CV_Functions::setting_value( PT_CV_PREFIX . 'post__in', $view_settings ) ) {

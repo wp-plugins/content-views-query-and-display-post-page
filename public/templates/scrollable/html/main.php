@@ -26,7 +26,7 @@ if ( !empty( $img ) ) {
 $others_html = implode( "\n", $fields_html );
 
 // Get wrapper class of caption
-$caption_class	 = apply_filters( PT_CV_PREFIX_ . 'scrollable_caption_class', array( 'carousel-caption', $ex_cap_cls ) );
+$caption_class	 = apply_filters( PT_CV_PREFIX_ . 'scrollable_caption_class', array( 'pt-cv-carousel-caption', $ex_cap_cls ) );
 $html[]			 = sprintf( '<div class="%s">%s</div>', esc_attr( implode( ' ', array_filter( $caption_class ) ) ), balanceTags( $others_html ) );
 
 echo balanceTags( implode( "\n", $html ) );

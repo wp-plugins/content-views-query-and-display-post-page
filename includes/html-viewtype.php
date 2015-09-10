@@ -261,7 +261,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 					$li[]	 = sprintf( '<li data-target="#%s" data-slide-to="%s" class="%s"></li>', esc_attr( $wrapper_id ), esc_attr( $index ), $class );
 				}
 
-				$output = '<ol class="carousel-indicators">' . implode( "\n", $li ) . '</ol>';
+				$output = '<ol class="pt-cv-carousel-indicators">' . implode( "\n", $li ) . '</ol>';
 			}
 
 			return $output;

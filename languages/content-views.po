@@ -407,10 +407,6 @@ msgstr ""
 msgid "Pagination style"
 msgstr ""
 
-#: code/includes/settings.php:203
-msgid "Output style for Ajax pagination"
-msgstr ""
-
 #: code/includes/settings.php:231
 msgid "Open item in"
 msgstr ""
@@ -561,7 +557,7 @@ msgid "Normal"
 msgstr ""
 
 #: code/includes/values.php:226
-msgid "Regular pagination"
+msgid "Numbered pagination"
 msgstr ""
 
 #: code/includes/values.php:241

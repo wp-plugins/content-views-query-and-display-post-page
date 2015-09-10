@@ -133,8 +133,6 @@
 }
 
 .pt-cv-spinner {
-	position: absolute;
-	top:      66px;
 	margin:   0 auto !important;
 
 	display:            inline-block;
@@ -167,6 +165,7 @@
 	box-shadow: none !important;
 	margin-left: 0;
 	border: 0;
+	padding: 0;
 }
 
 .pt-cv-pagination a {
@@ -188,7 +187,7 @@
 }
 
 .pt-cv-collapsible .panel-body {
-	margin: 10px;
+	padding: 10px;
 }
 
 .pt-cv-view .collapse {
@@ -205,14 +204,14 @@
 /* View type : Scrollable List */
 
 /* Caption */
-.pt-cv-view .carousel-caption {
+.pt-cv-view .pt-cv-carousel-caption {
 	text-align: left;
 	left:       0;
 	right:      15px;
 	bottom:     1.8em;
 }
 
-.pt-cv-view .carousel-caption * {
+.pt-cv-view .pt-cv-carousel-caption * {
 	text-shadow: none;
 }
 
@@ -259,18 +258,18 @@
 }
 
 /* Indicator */
-.pt-cv-view .carousel-indicators {
+.pt-cv-view .pt-cv-carousel-indicators {
 	bottom:        0;
 	margin-bottom: 4px;
 }
 
-.pt-cv-view .carousel-indicators li {
+.pt-cv-view .pt-cv-carousel-indicators li {
 	background: #cecece;
 	border:     1px solid #cecece;
 	margin:     0 0;
 }
 
-.pt-cv-view .carousel-indicators li.active {
+.pt-cv-view .pt-cv-carousel-indicators li.active {
 	background: #428bca;
 	border:     1px solid #428bca;
 }
@@ -292,10 +291,12 @@
 
 .pt-cv-view .panel-default {
 	border-color: #dddddd;
+	padding-bottom: 0;
 }
 
 .pt-cv-view .panel-default > .panel-heading {
 	color:            #333333;
 	background-color: #f5f5f5;
 	border-color:     #dddddd;
+	margin-bottom: 0 !important;
 }
