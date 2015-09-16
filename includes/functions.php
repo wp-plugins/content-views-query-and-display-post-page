@@ -494,7 +494,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			endif;
 
 			// Restore $wp_query and original Post Data
-			wp_reset_query();
+			self::reset_query();
 
 			return $post_id;
 		}
@@ -797,7 +797,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			}
 
 			// Restore $wp_query and original Post Data
-			wp_reset_query();
+			self::reset_query();
 
 			return array( 'content_items' => apply_filters( PT_CV_PREFIX_ . 'content_items', $content_items, $view_type ), 'pt_query' => $pt_query );
 		}
@@ -1519,6 +1519,13 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 */
 		static function debug_output( $log, $message = '' ) {
 			return defined( 'PT_CV_DEBUG' ) ? ( PT_CV_DEBUG ? $log : $message ) : $message;
+		}
+
+		// Reset WP query
+		static function reset_query() {
+			if ( apply_filters( PT_CV_PREFIX_ . 'reset_query', true ) ) {
+				wp_reset_query();
+			}
 		}
 
 	}

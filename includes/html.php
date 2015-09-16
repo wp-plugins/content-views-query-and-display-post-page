@@ -177,7 +177,12 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			}
 
 			// Get view type directory
-			$view_type_dir = apply_filters( PT_CV_PREFIX_ . 'view_type_dir', PT_CV_VIEW_TYPE_OUTPUT . $view_type, $view_type );
+			$view_type_dir	 = apply_filters( PT_CV_PREFIX_ . 'view_type_dir', PT_CV_VIEW_TYPE_OUTPUT, $view_type ) . $view_type;
+			// Compatible code for other Pro versions
+			$view_type_dir	 = apply_filters( PT_CV_PREFIX_ . 'view_type_dir_special', $view_type_dir, $view_type );
+			if ( strpos( $view_type_dir, $view_type . $view_type ) !== false ) {
+				$view_type_dir = str_replace( $view_type . $view_type, $view_type, $view_type_dir );
+			}
 
 			// Get asset directory
 			$view_type_assets_dir = apply_filters( PT_CV_PREFIX_ . 'view_type_asset', $view_type_dir, $view_type );
