@@ -42,7 +42,7 @@
 		</div>
 	</div>
 
-	<h3>&raquo; <a style="font-size: 18px;" href="http://sample.contentviewspro.com/?utm_source=settings_page" target="_blank">See all features</a></h3>
+	<h3>&raquo; <a style="font-size: 18px;" href="http://www.contentviewspro.com/features/?utm_source=settings_page" target="_blank">See all features</a></h3>
 	<br>
 </div>
 

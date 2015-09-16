@@ -177,7 +177,12 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			}
 
 			// Get view type directory
-			$view_type_dir = apply_filters( PT_CV_PREFIX_ . 'view_type_dir', PT_CV_VIEW_TYPE_OUTPUT, $view_type ) . $view_type;
+			$view_type_dir	 = apply_filters( PT_CV_PREFIX_ . 'view_type_dir', PT_CV_VIEW_TYPE_OUTPUT, $view_type ) . $view_type;
+			// Compatible code for other Pro versions
+			$view_type_dir	 = apply_filters( PT_CV_PREFIX_ . 'view_type_dir_special', $view_type_dir, $view_type );
+			if ( strpos( $view_type_dir, $view_type . $view_type ) !== false ) {
+				$view_type_dir = str_replace( $view_type . $view_type, $view_type, $view_type_dir );
+			}
 
 			// Get asset directory
 			$view_type_assets_dir = apply_filters( PT_CV_PREFIX_ . 'view_type_asset', $view_type_dir, $view_type );
@@ -253,7 +258,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			do_action( PT_CV_PREFIX_ . 'item_extra_html', $post_id );
 			$html_item .= ob_get_clean();
 
-			$result = sprintf( '<div class="%s" %s>%s</div>', esc_attr( implode( ' ', $item_class ) ), $item_filter, balanceTags( $html_item ) );
+			$result = sprintf( '<div class="%s" %s>%s</div>', esc_attr( implode( ' ', $item_class ) ), $item_filter, force_balance_tags( $html_item ) );
 
 			return apply_filters( PT_CV_PREFIX_ . 'before_item', '', $post_id ) . $result . apply_filters( PT_CV_PREFIX_ . 'after_item', '', $post_id );
 		}
@@ -274,7 +279,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
 			if ( empty( $content_items ) ) {
-				return 'empty content_items';
+				return PT_CV_Functions::debug_output( 'empty content_items', 'No posts found!' );
 			}
 
 			// Assign as global variable
@@ -328,7 +333,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			$content_list = balanceTags( implode( "\n", $content ) );
 
 			// Custom attribute of a page
-			$page_attr_	 = apply_filters( PT_CV_PREFIX_ . 'page_attr', '', $view_type, $content_items );
+			$col_count	 = sprintf( 'data-cvc="%s"', (int) $dargs[ 'number-columns' ] );
+			$page_attr_	 = apply_filters( PT_CV_PREFIX_ . 'page_attr', $col_count, $view_type, $content_items, $dargs );
 			$page_attr	 = strip_tags( $page_attr_ );
 
 			// Wrap items in 'page' wrapper
@@ -569,7 +575,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 
 			// Generate a tag
 			$html = sprintf(
-			'<a href="%s" class="%s" target="%s" %s>%s</a>', $href, implode( ' ', array_filter( $href_class ) ), $open_in, implode( ' ', array_filter( $custom_attr ) ), balanceTags( $content )
+			'<a href="%s" class="%s" target="%s" %s>%s</a>', $href, implode( ' ', array_filter( $href_class ) ), $open_in, implode( ' ', array_filter( $custom_attr ) ), force_balance_tags( $content )
 			);
 
 			return $html;
@@ -657,7 +663,8 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 						// Get date wrapper class
 						$date_class	 = apply_filters( PT_CV_PREFIX_ . 'field_meta_class', 'entry-date', 'date' );
 						$prefix_text = apply_filters( PT_CV_PREFIX_ . 'field_meta_prefix_text', '', 'date' );
-						$date		 = apply_filters( PT_CV_PREFIX_ . 'field_meta_date_final', get_the_date( '', $post ), get_the_time( 'U' ) );
+						$date_format = apply_filters( PT_CV_PREFIX_ . 'field_meta_date_format', '' ); // set empty to get default option of WP
+						$date		 = apply_filters( PT_CV_PREFIX_ . 'field_meta_date_final', get_the_date( $date_format, $post ), get_the_time( 'U' ) );
 
 						$html[ 'date' ] = sprintf( '<span class="%s">%s <time datetime="%s">%s</time></span>', esc_html( $date_class ), balanceTags( $prefix_text ), esc_attr( get_the_date( 'c' ) ), esc_html( $date ) );
 						break;
@@ -746,7 +753,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			$meta_html = implode( $seperator, (array) $meta_html );
 
 			// Wrap
-			$html = sprintf( $wrapper, balanceTags( $meta_html ) );
+			$html = sprintf( $wrapper, force_balance_tags( $meta_html ) );
 
 			return $html;
 		}
@@ -895,7 +902,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 				'page_to_show'	 => apply_filters( PT_CV_PREFIX_ . 'pages_to_show', 5 ),
 				'_nonce'		 => wp_create_nonce( PT_CV_PREFIX_ . 'ajax_nonce' ),
 				'is_admin'		 => is_admin(),
-				'is_mobile'		 => wp_is_mobile(),
+				'is_mobile'		 => apply_filters( PT_CV_PREFIX_ . 'is_mobile', wp_is_mobile() ),
 				'ajaxurl'		 => admin_url( 'admin-ajax.php' ),
 				'lang'			 => PT_CV_Functions::get_language(), #Get current language of site
 				'move_bootstrap' => apply_filters( PT_CV_PREFIX_ . 'move_bootstrap', 1 ), #Should I move Bootstrap to top of all styles

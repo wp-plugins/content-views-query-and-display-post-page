@@ -65,7 +65,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 		static function grid_wrapper( $content_items, &$content, $column = 0,
 								$class = '' ) {
 
-			$enable_filter = PT_CV_Functions::get_global_variable( 'enable_filter' );
+			$enable_shuffle_filter = PT_CV_Functions::get_global_variable( 'enable_shuffle_filter' );
 
 			list( $columns, $span_width_last, $span_width, $span_class, $row_class ) = self::process_column_width( $column );
 
@@ -91,7 +91,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 				$list_item = implode( "\n", $row_html );
 
 				// Only wrap in row if shuffle filter is not enable
-				if ( $enable_filter != 'yes' ) {
+				if ( $enable_shuffle_filter != 'yes' ) {
 					$list_item = sprintf( '<div class="%s">%s</div>', esc_attr( $row_class ), $list_item );
 				}
 
@@ -261,7 +261,7 @@ if ( !class_exists( 'PT_CV_Html_ViewType' ) ) {
 					$li[]	 = sprintf( '<li data-target="#%s" data-slide-to="%s" class="%s"></li>', esc_attr( $wrapper_id ), esc_attr( $index ), $class );
 				}
 
-				$output = '<ol class="carousel-indicators">' . implode( "\n", $li ) . '</ol>';
+				$output = '<ol class="pt-cv-carousel-indicators">' . implode( "\n", $li ) . '</ol>';
 			}
 
 			return $output;

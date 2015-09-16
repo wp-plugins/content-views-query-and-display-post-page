@@ -38,6 +38,8 @@ class PT_Content_Views {
 	 * @since     1.0.0
 	 */
 	private function __construct() {
+		// Init session
+		add_action( 'init', array( $this, 'register_session' ), 1 );
 
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 11 );
@@ -219,6 +221,14 @@ class PT_Content_Views {
 	 */
 	public static function single_deactivate() {
 		delete_option( PT_CV_OPTION_VERSION );
+	}
+
+	/**
+	 * Start SESSION
+	 */
+	public function register_session() {
+		if ( !session_id() )
+			session_start();
 	}
 
 	/**

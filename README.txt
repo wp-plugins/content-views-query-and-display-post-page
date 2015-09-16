@@ -3,8 +3,8 @@ Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, column, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
-Tested up to: 4.2.4
-Stable tag: 1.6.5.1
+Tested up to: 4.3.1
+Stable tag: 1.6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +164,24 @@ function my_move_bootstrap( $args ) {
 
 
 == Changelog ==
+
+= 1.6.7 =
+* Bug fixed: One page sections of some themes are not shown when put View shortcode to content of a page section
+* Update: Revert filter "view_type_dir"
+* Tested up to: 4.3.1
+
+= 1.6.6 =
+* Bug fixed: Layout of Scrollable List was broken if active theme uses classes of Bootstrap carousel
+* Bug fixed: Page is not activated when click on pagination button in Preview
+* Update: Little improvement on output of Collapsible List
+* Update: Add filter to modify date format
+* Update: Rename 'Regular pagination' to 'Numbered pagination'
+
+= 1.6.5.2 =
+* Tested in WordPress 4.3
+* Update: Update Content Views icon
+* Update: Add new filter to customize current page of pagination
+* Update: Print debug message (if the debug mode is enable: PT_CV_DEBUG = true)
 
 = 1.6.5.1 =
 * Bug fixed: Duplicate callback called after pagination finished
