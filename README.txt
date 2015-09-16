@@ -166,7 +166,7 @@ function my_move_bootstrap( $args ) {
 == Changelog ==
 
 = 1.6.7 =
-* Bug fixed: One page sections of some themes are not shown when put View shortcode to content of a page section
+* Bug fixed: Missing section in some one-page themes when put multiple View shortcodes to sections
 * Update: Revert filter "view_type_dir"
 * Tested up to: 4.3.1
 
