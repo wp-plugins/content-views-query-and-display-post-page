@@ -79,8 +79,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 * @param string $content   Content
 		 * @param bool   $show      Show/hide the content
 		 */
-		static function html_collapse_one( $parent_id, $id, $heading, $content = '',
-									 $show = true ) {
+		static function html_collapse_one( $parent_id, $id, $heading, $content = '', $show = true ) {
 			$class = $show ? 'in' : '';
 			ob_start();
 			?>
@@ -155,8 +154,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @return string
 		 */
-		static function link_button( $link, $style, $text = 'Button', $class = '',
-							   $size = '' ) {
+		static function link_button( $link, $style, $text = 'Button', $class = '', $size = '' ) {
 			return sprintf( '<a href="%s" class="btn btn-%s %s %s">%s</a>', $link, $style, $class, $size, $text );
 		}
 
@@ -248,8 +246,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 			}
 
 			// Get wrapper class of a item
-			$layout		 = $dargs[ 'layout-format' ];
-			$item_class	 = apply_filters( PT_CV_PREFIX_ . 'content_item_class', array( $class, PT_CV_PREFIX . 'content-item', PT_CV_PREFIX . $layout ) );
+			$item_class = apply_filters( PT_CV_PREFIX_ . 'content_item_class', array( $class, PT_CV_PREFIX . 'content-item', PT_CV_PREFIX . $dargs[ 'layout-format' ] ) );
 
 			$item_filter = apply_filters( PT_CV_PREFIX_ . 'content_item_filter_value', '', $post_id );
 
@@ -273,8 +270,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		 *
 		 * @return string Full HTML output for Content View
 		 */
-		static function content_items_wrap( $content_items, $current_page,
-									  $post_per_page, $id ) {
+		static function content_items_wrap( $content_items, $current_page, $post_per_page, $id ) {
 			global $pt_cv_glb, $pt_cv_id;
 			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
 
@@ -368,7 +364,7 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 		/**
 		 * HTML output of a field (thumbnail, title, content, meta fields...)
 		 *
-		 * @param string $field_name The name of field
+		 * @param string $field_name The field name
 		 * @param object $post       The post object
 		 * @param array  $fargs      The array of Field settings
 		 *
@@ -511,13 +507,15 @@ if ( !class_exists( 'PT_CV_Html' ) ) {
 
 					// Get excerpt
 					if ( $length > 0 ) {
-						$content_to_extract	 = apply_filters( PT_CV_PREFIX_ . 'field_content_to_extract', get_the_content(), $post );
-						// Extract excerpt from content
-						$excerpt			 = PT_CV_Functions::wp_trim_words( $content_to_extract, $length );
-						// Get manual excerpt
-						$excerpt			 = apply_filters( PT_CV_PREFIX_ . 'field_content_excerpt', $excerpt, $fargs, $post );
+						// Get manual excerpt, apply filters
+						$full_excerpt = apply_filters( PT_CV_PREFIX_ . 'field_content_excerpt', get_the_content(), $fargs, $post );
+
+						// Limit length
+						$trimmed_excerpt = PT_CV_Functions::wp_trim_words( $full_excerpt, $length );
+						$excerpt		 = apply_filters( PT_CV_PREFIX_ . 'trim_length_excerpt', $trimmed_excerpt, $full_excerpt, $length );
+
 						// Append readmore button
-						$content			 = $excerpt . $readmore_html;
+						$content = $excerpt . $readmore_html;
 					} else {
 						// Display only readmore button if length <= 0
 						$content = $readmore_btn;

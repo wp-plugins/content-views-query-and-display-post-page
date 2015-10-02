@@ -634,7 +634,7 @@
 			$self._thumbnail_settings();
 
 			// Select 2
-			$( '.' + _prefix + 'select2' ).select2();
+			$( 'select.' + _prefix + 'select2' ).select2();
 
 			// Change class of panel inside panel
 			$( '.' + _prefix + 'group .panel .panel' ).each( function () {

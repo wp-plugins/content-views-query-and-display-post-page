@@ -162,7 +162,7 @@ if ( !class_exists( 'PT_CV_Values' ) ) {
 
 			$term_slug_name = array();
 			foreach ( $terms as $term ) {
-				$term_slug_name[ $term->slug ] = $term->name;
+				$term_slug_name[ PT_CV_Functions::term_slug_sanitize( $term->slug ) ] = $term->name;
 			}
 
 			// Sort values of param by saved order

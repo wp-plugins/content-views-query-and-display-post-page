@@ -227,8 +227,10 @@ class PT_Content_Views {
 	 * Start SESSION
 	 */
 	public function register_session() {
-		if ( !session_id() )
+		if ( !session_id() ) {
+			do_action( PT_CV_PREFIX_ . 'session_start' );
 			session_start();
+		}
 	}
 
 	/**

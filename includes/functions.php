@@ -116,8 +116,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 * @param string $sub_page    Slug of sub menu
 		 * @param string $class       Class name which contains function to output content of page created by this menu
 		 */
-		static function menu_add_sub( $parent_slug, $page_title, $menu_title,
-								$user_role, $sub_page, $class ) {
+		static function menu_add_sub( $parent_slug, $page_title, $menu_title, $user_role, $sub_page, $class ) {
 			return add_submenu_page(
 			$parent_slug, $page_title, $menu_title, $user_role, $parent_slug . '-' . $sub_page, array( $class, 'display_sub_page_' . $sub_page )
 			);
@@ -238,13 +237,53 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			// Strip HTML tags
 			$result = self::pt_strip_tags( $text );
 
-			// Split words
-			$array = preg_split( "/[\n\r\t ]+/", $result, $num_words + 1, PREG_SPLIT_NO_EMPTY );
+			return self::trim_words( $result, $num_words );
+		}
 
-			//  Already short enough, return the whole thing
-			if ( count( $array ) > $num_words ) {
-				array_splice( $array, $num_words );
-				$result = implode( ' ', $array );
+		/**
+		 * Trim string by words length, but keep content/text of HTML tags
+		 *
+		 * @param string $result
+		 * @param int $num_words
+		 * @return string
+		 */
+		static function trim_words( $result, $num_words ) {
+			// Skip HTML tag name & properties, don't skip tag text
+			$text_result	 = preg_split( '/<[a-z\/]+[^>]+>/', $result, NULL, PREG_SPLIT_OFFSET_CAPTURE );
+			$words_length	 = $split_index	 = 0;
+			foreach ( $text_result as $part ) {
+				$substr			 = isset( $part[ 0 ] ) ? $part[ 0 ] : '';
+				$substr_index	 = isset( $part[ 1 ] ) ? $part[ 1 ] : 0;
+				if ( !empty( $substr ) ) {
+					$words_in_str = str_word_count( $substr, 2 );
+					$words_length += count( $words_in_str );
+
+					if ( $words_length > $num_words ) {
+						$words_count_to_get = count( $words_in_str ) - ($words_length - $num_words);
+						if ( $words_count_to_get ) {
+							$words_to_get	 = array_slice( $words_in_str, 0, $words_count_to_get, true );
+							end( $words_to_get );
+							$last_word_idx	 = key( $words_to_get );
+							$split_index	 = $substr_index + $last_word_idx + strlen( $words_to_get[ $last_word_idx ] ) + 1;
+						} else {
+							$split_index = $substr_index;
+						}
+
+						break;
+					}
+				}
+			}
+
+			if ( $split_index > 0 ) {
+				$result	 = substr( $result, 0, $split_index );
+				// Remove start of HTML tag at end of string
+				$result	 = preg_replace( '/<[a-z\/]+[^>]+>$/', '', $result );
+			}
+
+			// Changes double line-breaks in the text into HTML paragraphs (<p>, <br>)
+			$dargs = PT_CV_Functions::get_global_variable( 'dargs' );
+			if ( !empty( $dargs[ 'field-settings' ][ 'content' ][ 'allow_html' ] ) || apply_filters( PT_CV_PREFIX_ . 'wpautop', 0 ) ) {
+				$result = wpautop( $result );
 			}
 
 			return $result;
@@ -258,26 +297,37 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 * @return string
 		 */
 		static function pt_strip_tags( $string ) {
+			# Remove script, style tags
 			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
 
-			# allow some tags
+			# Remove language tag of qTranslateX 3.4.4
+			$string = preg_replace( '/\[:[a-z]{0,2}\]/', '', $string );
 
+			# Predefined allowable HTML tags
 			$dargs			 = PT_CV_Functions::get_global_variable( 'dargs' );
-			# predefined allowable HTML tags
-			$allowable_tags	 = (array) apply_filters( PT_CV_PREFIX_ . 'allowable_tags', array( '<a>', '<br>', '<strong>', '<em>', '<strike>', '<i>', '<ul>', '<ol>', '<li>' ) );
 			$allowed_tags	 = '';
-			if ( apply_filters( PT_CV_PREFIX_ . 'enable_options', !empty( $dargs[ 'field-settings' ][ 'content' ][ 'allow_html' ] ), 'allow_html' ) ) {
-				$allowed_tags = implode( '', $allowable_tags );
-
-				// Changes double line-breaks in the text into HTML paragraphs (<p>, <br>)
-				if ( apply_filters( PT_CV_PREFIX_ . 'wpautop', 0 ) ) {
-					$string = wpautop( $string );
-				}
+			if ( !empty( $dargs[ 'field-settings' ][ 'content' ][ 'allow_html' ] ) ) {
+				$allowable_tags	 = (array) apply_filters( PT_CV_PREFIX_ . 'allowable_tags', array( '<a>', '<br>', '<strong>', '<em>', '<strike>', '<i>', '<ul>', '<ol>', '<li>' ) );
+				$allowed_tags	 = implode( '', $allowable_tags );
 			}
 
 			$string = strip_tags( $string, $allowed_tags );
 
 			return trim( $string );
+		}
+
+		/**
+		 * Handle slug of non-latin languages
+		 *
+		 * @param string $slug
+		 * @return string
+		 */
+		static function term_slug_sanitize( $slug ) {
+			if ( preg_match( '/%[0-9a-f][0-9a-f]/', $slug ) ) {
+				$slug = str_replace( '%', '', $slug );
+			}
+
+			return $slug;
 		}
 
 		/**
@@ -312,8 +362,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 * @param array  $array_to_get  Array to get values of wanted setting fields
 		 * @param string $prefix        Prefix string to looking for fields in $array_to_get
 		 */
-		static function settings_values( $fields, &$array_to_save, $array_to_get,
-								   $prefix ) {
+		static function settings_values( $fields, &$array_to_save, $array_to_get, $prefix ) {
 			foreach ( $fields as $tsetting ) {
 				$array_to_save[ $tsetting ] = PT_CV_Functions::setting_value( $prefix . $tsetting, $array_to_get );
 			}
@@ -397,14 +446,18 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 			$terms = wp_get_object_terms( $post_id, $taxonomies );
 
 			foreach ( $terms as $term ) {
-				$links[] = sprintf(
-				'<a href="%1$s" title="%2$s %3$s" class="%4$s">%3$s</a>', esc_url( get_term_link( $term, $term->taxonomy ) ), __( 'View all posts in', PT_CV_DOMAIN ), $term->name, PT_CV_PREFIX . 'tax-' . $term->slug
-				);
+				$include_this = apply_filters( PT_CV_PREFIX_ . 'terms_include_this', true, $term );
+				if ( $include_this ) {
+					$links[] = sprintf(
+					'<a href="%1$s" title="%2$s %3$s" class="%4$s">%3$s</a>', esc_url( get_term_link( $term, $term->taxonomy ) ), __( 'View all posts in', PT_CV_DOMAIN ), $term->name, PT_CV_PREFIX . 'tax-' . PT_CV_Functions::term_slug_sanitize( $term->slug )
+					);
+				}
 
+				// Add this term to terms list of an item
 				if ( !isset( $pt_cv_glb[ 'item_terms' ][ $post_id ] ) ) {
 					$pt_cv_glb[ 'item_terms' ][ $post_id ] = array();
 				}
-				$pt_cv_glb[ 'item_terms' ][ $post_id ][ $term->slug ] = $term->name;
+				$pt_cv_glb[ 'item_terms' ][ $post_id ][ PT_CV_Functions::term_slug_sanitize( $term->slug ) ] = $term->name;
 			}
 
 			// Adjust terms list
@@ -545,7 +598,12 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 				/* Backward compatibility
 				 * since 1.3.2
 				 */
-				self::view_backward_comp( $view_settings );
+				$trans_name	 = PT_CV_PREFIX . 'compatible-' . $post_id;
+				$trans		 = get_transient( $trans_name );
+				if ( empty( $trans ) ) {
+					self::view_backward_comp( $view_settings );
+					set_transient( $trans_name, 1, 10 * YEAR_IN_SECONDS );
+				}
 
 				return is_array( $view_settings ) ? $view_settings : array();
 			}
@@ -1390,8 +1448,7 @@ if ( !class_exists( 'PT_CV_Functions' ) ) {
 		 * @param int $current_page  Current page number
 		 * @param int $pages_to_show Number of page to show
 		 */
-		static function pagination( $total_pages, $current_page = 1,
-							  $pages_to_show = 4 ) {
+		static function pagination( $total_pages, $current_page = 1, $pages_to_show = 4 ) {
 			if ( $total_pages == 1 )
 				return '';
 

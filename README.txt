@@ -1,86 +1,72 @@
-=== Query posts by category... and display posts on page in grid layout without coding - Content Views ===
+=== Display posts in grid layout without coding - Content Views ===
 Contributors: pt-guy
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JGUF974QBRKQE
 Tags: post, posts, page, pages, query, queries, search, display, show, grid, column, layout, author, blog, categories, category, comment, content, custom, editor, filter, Formatting, image, list, meta, plugin, responsive, shortcode, excerpt, title, tag, term, Taxonomy, thumbnail, pagination, date, scrollable, slider, collapsible
 Requires at least: 3.3
 Tested up to: 4.3.1
-Stable tag: 1.6.7
+Stable tag: 1.6.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-It is easy as 1, 2, 3 to query posts by category, tag, author... and display posts on any Page in responsive Grid layout without coding!
+It is easy as ABC to query posts by category, tag, author... and display posts on any page in responsive Grid layout without coding!
 
 == Description ==
 
-Do you want to display posts by category on WordPress homepage, in responsive grid layout?
+Do you want to display posts on any WordPress page in responsive, customizable Grid layout?
 
 Or:
 
-* display posts in grid of 2 columns, 3 columns
-* display posts in grid layout in a specific page
-* display posts in grid layout in a widget of sidebar
-* display posts by a specific tag
-* display posts by an author
-* display posts in descending order of Title
-* replace boring Next, Prev button of WordPress theme by a beautiful pagination
+* display posts by category, tag, author, keyword
+* display posts in order of title, date, ID
+* display posts with nice pagination
 * display thumbnail in different size than 150x150 or 300x300
 
-With **Content Views** plugin, you can do above things in minutes, without any line of code!
+With **Content Views**, you can do above things in minutes, without any line of code!
 
-[youtube https://www.youtube.com/watch?v=drxqtCiaw4I]
+With [Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Get Content Views Pro"), you can do more than you expect!
 
-With [Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Get Content Views Pro"), you can do even more than you expect!
+**Content Views** provides an intuitive form to query posts and display posts in responsive layouts (grid layout, slider/scrollable list, accordion/collapsible list) quickly & easily, in 3 simple steps:
 
-**Content Views** provides an intuitive form to query posts and display posts in **responsive** layouts (grid layout, slider/scrollable list, accordion/collapsible list) quickly & easily, in very 3 simple steps:
-
-* Step 1 : Customize filters (category, tag, author, order...) to query your desired posts
-* Step 2 : Customize output (select a layout from 3 responsive layout, show title/content/excerpt/pagination ? ...)
-* Step 3 : Save View then paste the generated shortcode **[pt_view id="VIEW_ID"]** to editor of page/Text widget where you want to display your posts. If you are a developer, you can paste `<?php echo do_shortcode('[pt_view id="VIEW_ID"]'); ?>` to file in WordPress theme
+* Step 1 : Query your posts by category, tag, author...
+* Step 2 : Select a layout to display your posts. You can select what fields (title, content/excerpt, thumbnail, meta fields) to display, too.
+* Step 3 : Paste shortcode **[pt_view id="VIEW_ID"]** to content of page, widget where you want to display your posts. Or you can paste `<?php echo do_shortcode('[pt_view id="VIEW_ID"]'); ?>` to WordPress theme file.
 
 
-= A features list of Content Views plugin: =
+
+= With Content Views plugin, you can: =
 
 **in Step 1:**
 
-* query single/multiple post(s)
-* query posts by category, tag, author
+* query any posts by IDs, category, tag, author, keyword, status
 * query child pages of a parent page
-* query posts by status (publish, draft, private...)
-* query posts which contain a specific keyword
-* sort posts by Id, Title, Created date, Modified date in Ascending, Descending order
+* include/exclude posts to display
+* sort posts by Id, Title, Date in ascending, descending order
+* limit number of posts to display
 
 **in Step 2:**
 
-* Select a responsive layout to display posts: Grid, List(Collapsible/Slider)
-* Select number of columns in Grid layout
-* Display fields (thumbnail, title, content, meta fields) in vertical direction. Or display thumbnail in left/right side of other fields
-* Select what fields (thumbnail, title, content, meta fields) to display
-* Select thumbnail sizes
-* Display full content, or display excerpt with specific amount of words
-* Select what meta fields (date, author, terms [categories, tags], comment count) to display
-* Enable/Disable pagination
-* Open in new tab, current tab (when click on title, thumbnail of post)
+* select a responsive layout to display posts: Grid, Scrollable list, Collapsible list
+* select number of columns in Grid layout
+* display fields (thumbnail, title, content, meta fields) in vertical direction. Or display thumbnail in left/right side of other fields
+* select what above fields to display
+* select thumbnail sizes
+* display full content, or display excerpt with specific number of words
+* select what meta-fields (date, author, categories/tags, comment count) to display
+* enable/disable pagination
+* open in new tab, current tab (when click on post title, thumbnail)
 
 
-= Need more awesome features? =
+= With Content Views Pro, you have: =
 
-* More amazing layouts: **Pinterest, Timeline**
-* Completely **replace WordPress layout** in Category page, Author page, Search page... by Grid, Pinterest, Timeline layout
-* Display **WooCommerce** product in beautiful output
-* Display **Portfolio** with shuffle animation
-* More beautiful output & powerful settings for Grid, List layout
-* **Drag & drop** to change display order of fields (thumbnail, title, content, meta fields)
-* Customize **Font, Color** settings of Title, Content, Meta fields
-* Custom **style of Thumbnail**: round, circle, border
-* Customize style & text of **Read more** button
-* Ajax **Load more** pagination
+* More amazing layouts: **Pinterest, Facebook Timeline, Masonry**...
+* **Replace WordPress layout** in Category page, Search result page, Archive page... by amazing & customizable layout
+* **Drag & drop** to change display order of thumbnail, title, content, meta fields
+* Display any custom posts (**WooCommerce product, EDD** ...) in beautiful output
+* Customize **font, color, style** of title, content, read-more button...
+* **Load more, Infinite scroll** pagination
 * And much more...
 
-Please check [Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Get Content Views Pro")
-
-Just give a try (30 day money back guarantee), then you will know how it is awesome :)
-
-
+[Get Content Views Pro](http://www.contentviewspro.com/?utm_source=wordpress&utm_medium=plugin&utm_campaign=content-views "Get Content Views Pro").
 
 == Installation ==
 
@@ -138,6 +124,27 @@ You can create Unlimited Views, in Unlimited websites
 If you are using a static page as homepage, you should add View shortcode to editor of that page.
 If you are using a dynamic page (you created a front page template, such as front-page.php), you should paste this code `<?php echo do_shortcode('[pt_view id="VIEW_ID"]'); ?>` to appropriate line in that file.
 
+= session_start() error =
+
+Please add this code to file **functions.php** of your theme
+`
+// CVPro - Fix Session error
+add_action( 'pt_cv_session_start', 'my_session_start' );
+
+function my_session_start() {
+	// Get default path to save session
+	$session_save_path = ini_get( 'session.save_path' );
+	if ( empty( $session_save_path ) ) {
+		$session_save_path = "/tmp";
+		session_save_path( $session_save_path );
+	}
+	// Create it if not exist
+	if ( !file_exists( $session_save_path ) ) {
+		mkdir( $session_save_path, 0755, true );
+	}
+}
+`
+
 = [BUG] When I use Cache plugin (W3TC, WP-Super-Cache...), the grid columns does not work. How to fix it? =
 
 Please add this code to file **functions.php** of your theme
@@ -164,6 +171,16 @@ function my_move_bootstrap( $args ) {
 
 
 == Changelog ==
+
+= 1.6.8 =
+* Improvement: More elegant UI for Fields settings
+* Improvement: Performance improvement by merging filers
+* Improvement: Support HTML tags in excerpt better: get correct excerpt length, get text/content of allowed tags
+* Bug fixed: Slug of term on Non-Latin languages does not show correctly
+* Bug fixed: Fix Javascript error "Uncaught query function not defined for Select2 undefined"
+* Update: Add filter "terms_include_this" to exclude terms from meta-fields output
+* Update: CSS improvements
+
 
 = 1.6.7 =
 * Bug fixed: Missing section in some one-page themes when put multiple View shortcodes to sections
@@ -450,3 +467,5 @@ function my_move_bootstrap( $args ) {
 
 == Upgrade Notice ==
 
+= 1.6.8 =
+Major update with lot of improvements

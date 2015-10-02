@@ -133,6 +133,7 @@
 }
 
 .pt-cv-spinner {
+	width: 12px !important;
 	margin:   0 auto !important;
 
 	display:            inline-block;
@@ -166,6 +167,10 @@
 	margin-left: 0;
 	border: 0;
 	padding: 0;
+}
+
+.pt-cv-pagination li {
+    display: inline !important;
 }
 
 .pt-cv-pagination a {

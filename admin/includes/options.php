@@ -104,10 +104,11 @@ if ( !class_exists( 'PT_Options_Framework' ) ) {
 			$label			 = self::label( $group[ 'label' ], $extra_setting );
 			$params			 = self::params( $group[ 'params' ], $data, $extra_setting );
 			$random_id		 = self::_dependence_check( $group, $dependence_ );
-			$id				 = $class			 = '';
+			$id				 = '';
+			$class			 = isset( $extra_setting[ 'params' ][ 'group-class' ] ) ? $extra_setting[ 'params' ][ 'group-class' ] : '';
 			if ( $random_id ) {
-				$id		 = "id='$random_id'";
-				$class	 = 'hidden';
+				$id = "id='$random_id'";
+				$class .= ' hidden';
 			}
 
 			return "<div class='form-group pt-form-group $class' $id>$label $params</div>";
@@ -306,6 +307,10 @@ if ( !class_exists( 'PT_Options_Framework' ) ) {
 			$description = apply_filters( PT_CV_PREFIX_ . 'options_description', $description, $param );
 
 			if ( !empty( $description ) ) {
+				// Append dot to end of description
+				if ( trim( strip_tags( $description ) ) != '' && substr( $description, -1 ) != '?' ) {
+					$description .= '.';
+				}
 				$html .= "<p class='text-muted'>$description</p>";
 			}
 

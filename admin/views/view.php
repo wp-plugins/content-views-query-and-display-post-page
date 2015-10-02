@@ -189,7 +189,7 @@ PT_CV_Functions::view_submit();
 												'type'	 => 'text',
 												'name'	 => 'post__in',
 												'std'	 => '',
-												'desc'	 => __( 'List of post ids to retrieve (comma-separated values, e.g. 1,2,3)<br>A post is displayed only if its ID is equal to any of the values IN this list', PT_CV_DOMAIN ),
+												'desc'	 => __( 'List of post ids to retrieve (comma-separated values, e.g. 1,2,3).<br>A post is displayed only if its ID is equal to any of the values IN this list', PT_CV_DOMAIN ),
 											),
 										),
 									),
@@ -355,7 +355,7 @@ PT_CV_Functions::view_submit();
 													'options'	 => PT_CV_Values::taxonomy_relation(),
 													'std'		 => PT_CV_Functions::array_get_first_key( PT_CV_Values::taxonomy_relation() ),
 													'class'		 => 'taxonomy-relation',
-													'desc'		 => __( 'Select AND to show posts which match ALL settings of selected taxonomies<br>Select OR to show posts which match settings of at least one selected taxonomy', PT_CV_DOMAIN ),
+													'desc'		 => __( 'Select AND to show posts which match ALL settings of selected taxonomies.<br>Select OR to show posts which match settings of at least one selected taxonomy', PT_CV_DOMAIN ),
 												),
 											),
 										),
@@ -447,7 +447,7 @@ PT_CV_Functions::view_submit();
 													'type'	 => 'text',
 													'name'	 => 's',
 													'std'	 => '',
-													'desc'	 => __( 'Enter the keyword to searching for posts', PT_CV_DOMAIN ) . apply_filters( PT_CV_PREFIX_ . 'searchby_keyword_desc', '' ),
+													'desc'	 => __( 'Enter the keyword to searching for posts.', PT_CV_DOMAIN ) . apply_filters( PT_CV_PREFIX_ . 'searchby_keyword_desc', '' ),
 												),
 											),
 										),
@@ -470,7 +470,7 @@ PT_CV_Functions::view_submit();
 					// View Type
 					array(
 						'label'	 => array(
-							'text' => __( 'View type', PT_CV_DOMAIN ),
+							'text' => __( 'View type (Layout)', PT_CV_DOMAIN ),
 						),
 						'params' => array(
 							array(

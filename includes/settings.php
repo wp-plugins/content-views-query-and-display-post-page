@@ -156,7 +156,7 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 							'std'			 => '5',
 							'placeholder'	 => 'e.g. 5',
 							'append_text'	 => '1 &rarr; 100',
-							'desc'			 => __( 'The number of items per page<br>If value of "Limit" option is not blank (empty), this value should be smaller than "Limit" value', PT_CV_DOMAIN ),
+							'desc'			 => __( 'The number of items per page.<br>If value of "Limit" option is not blank (empty), this value should be smaller than "Limit" value', PT_CV_DOMAIN ),
 						),
 					),
 					'dependence' => array( 'enable-pagination', 'yes' ),
@@ -286,7 +286,7 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 					'params'		 => array(
 						array(
 							'type'		 => 'html',
-							'content'	 => sprintf( '<p class="text-muted" style="margin-top: -10px; margin-bottom: 15px;">&rarr; %s</p>', __( 'Customize display order of above fields by a simple drag-and-drop ?', PT_CV_DOMAIN ) . sprintf( ' <a href="%s" target="_blank">%s</a>', esc_url( 'http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view' ), __( 'Please upgrade to Pro', PT_CV_DOMAIN ) ) ),
+							'content'	 => sprintf( '<p class="text-muted" style="margin-top: -15px; margin-bottom: 5px;">&rarr; %s</p>', __( 'Customize display order of above fields by a simple drag-and-drop ?', PT_CV_DOMAIN ) . sprintf( ' <a href="%s" target="_blank">%s</a>', esc_url( 'http://www.contentviewspro.com/pricing/?utm_source=client&utm_medium=view' ), __( 'Please upgrade to Pro', PT_CV_DOMAIN ) ) ),
 						),
 					),
 				) : '',
@@ -299,7 +299,8 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'extra_setting'	 => array(
 						'params' => array(
-							'wrap-class' => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'thumbnail-setting' . ' ' . PT_CV_PREFIX . 'w50',
+							'group-class'	 => PT_CV_PREFIX . 'field-setting',
+							'wrap-class'	 => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'thumbnail-setting' . ' ' . PT_CV_PREFIX . 'w50',
 						),
 					),
 					'params'		 => array(
@@ -312,10 +313,15 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 				),
 				// Content settings
 				array(
-					'label'		 => array(
+					'label'			 => array(
 						'text' => __( 'Content settings', PT_CV_DOMAIN ),
 					),
-					'params'	 => array(
+					'extra_setting'	 => array(
+						'params' => array(
+							'group-class' => PT_CV_PREFIX . 'field-setting' . ' ' . PT_CV_PREFIX . 'content-setting',
+						),
+					),
+					'params'		 => array(
 						array(
 							'type'		 => 'radio',
 							'name'		 => $prefix . 'content-show',
@@ -326,7 +332,7 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 							'std'		 => 'excerpt',
 						),
 					),
-					'dependence' => array( $prefix2 . 'content', 'yes' ),
+					'dependence'	 => array( $prefix2 . 'content', 'yes' ),
 				),
 				// Excerpt settings
 				array(
@@ -335,7 +341,8 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'extra_setting'	 => array(
 						'params' => array(
-							'wrap-id' => PT_CV_Html::html_group_id( 'excerpt-settings' ),
+							'group-class'	 => PT_CV_PREFIX . 'field-setting' . ' ' . PT_CV_PREFIX . 'excerpt-setting',
+							'wrap-id'		 => PT_CV_Html::html_group_id( 'excerpt-settings' ),
 						),
 					),
 					'params'		 => array(
@@ -381,7 +388,6 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 											'name'		 => $prefix . 'excerpt-allow_html',
 											'options'	 => PT_CV_Values::yes_no( 'yes', __( 'Allow HTML tags (a, br, strong, em, strike, i, ul, ol, li) in excerpt', PT_CV_DOMAIN ) ),
 											'std'		 => '',
-											'desc'		 => __( 'This option can cause broken HTML output. Please be careful when tick it', PT_CV_DOMAIN ),
 										),
 									),
 								),
@@ -398,7 +404,8 @@ if ( !class_exists( 'PT_CV_Settings' ) ) {
 					),
 					'extra_setting'	 => array(
 						'params' => array(
-							'wrap-class' => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'meta-fields-settings',
+							'group-class'	 => PT_CV_PREFIX . 'field-setting' . ' ' . PT_CV_PREFIX . 'metafield-setting',
+							'wrap-class'	 => PT_CV_Html::html_group_class() . ' ' . PT_CV_PREFIX . 'meta-fields-settings',
 						),
 					),
 					'params'		 => array(
